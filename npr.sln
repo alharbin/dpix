@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dpix", "dpix\src\dpix.vcproj", "{7782F3BC-23B3-470F-B5B8-A9FF2068F1A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77101E04-550E-406B-83FB-69590F837692} = {77101E04-550E-406B-83FB-69590F837692}
+		{53503F0E-DFC8-433C-B105-F68BFEADEF30} = {53503F0E-DFC8-433C-B105-F68BFEADEF30}
+		{7F4E5ACB-9116-46D9-A74E-FC73CBB1184F} = {7F4E5ACB-9116-46D9-A74E-FC73CBB1184F}
+		{D41D8CD9-8F00-3204-A980-0998ECF8427E} = {D41D8CD9-8F00-3204-A980-0998ECF8427E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cda", "libcda\libsrc\cda.vcproj", "{53503F0E-DFC8-433C-B105-F68BFEADEF30}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qglviewer", "dpix\qglviewer\qglviewer.vcproj", "{7F4E5ACB-9116-46D9-A74E-FC73CBB1184F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "npr", "libnpr\libsrc\npr.vcproj", "{77101E04-550E-406B-83FB-69590F837692}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gq", "libgq\libsrc\gq.vcproj", "{D41D8CD9-8F00-3204-A980-0998ECF8427E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7782F3BC-23B3-470F-B5B8-A9FF2068F1A7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7782F3BC-23B3-470F-B5B8-A9FF2068F1A7}.Debug|Win32.Build.0 = Debug|Win32
+		{7782F3BC-23B3-470F-B5B8-A9FF2068F1A7}.Release|Win32.ActiveCfg = Release|Win32
+		{7782F3BC-23B3-470F-B5B8-A9FF2068F1A7}.Release|Win32.Build.0 = Release|Win32
+		{53503F0E-DFC8-433C-B105-F68BFEADEF30}.Debug|Win32.ActiveCfg = Debug|Win32
+		{53503F0E-DFC8-433C-B105-F68BFEADEF30}.Debug|Win32.Build.0 = Debug|Win32
+		{53503F0E-DFC8-433C-B105-F68BFEADEF30}.Release|Win32.ActiveCfg = Release|Win32
+		{53503F0E-DFC8-433C-B105-F68BFEADEF30}.Release|Win32.Build.0 = Release|Win32
+		{7F4E5ACB-9116-46D9-A74E-FC73CBB1184F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7F4E5ACB-9116-46D9-A74E-FC73CBB1184F}.Debug|Win32.Build.0 = Debug|Win32
+		{7F4E5ACB-9116-46D9-A74E-FC73CBB1184F}.Release|Win32.ActiveCfg = Release|Win32
+		{7F4E5ACB-9116-46D9-A74E-FC73CBB1184F}.Release|Win32.Build.0 = Release|Win32
+		{77101E04-550E-406B-83FB-69590F837692}.Debug|Win32.ActiveCfg = Debug|Win32
+		{77101E04-550E-406B-83FB-69590F837692}.Debug|Win32.Build.0 = Debug|Win32
+		{77101E04-550E-406B-83FB-69590F837692}.Release|Win32.ActiveCfg = Release|Win32
+		{77101E04-550E-406B-83FB-69590F837692}.Release|Win32.Build.0 = Release|Win32
+		{D41D8CD9-8F00-3204-A980-0998ECF8427E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D41D8CD9-8F00-3204-A980-0998ECF8427E}.Debug|Win32.Build.0 = Debug|Win32
+		{D41D8CD9-8F00-3204-A980-0998ECF8427E}.Release|Win32.ActiveCfg = Release|Win32
+		{D41D8CD9-8F00-3204-A980-0998ECF8427E}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

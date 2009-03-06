@@ -1,0 +1,256 @@
+<ui version="4.0" >
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>415</width>
+    <height>293</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>FFMPEG Command:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QLineEdit" name="commandEdit" >
+       <property name="text" >
+        <string>ffmpeg</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="browseCommandButton" >
+       <property name="text" >
+        <string>Browse...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QLabel" name="label_2" >
+     <property name="text" >
+      <string>FPS:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QDoubleSpinBox" name="fpsSpinBox" >
+     <property name="minimum" >
+      <double>10.000000000000000</double>
+     </property>
+     <property name="maximum" >
+      <double>120.000000000000000</double>
+     </property>
+     <property name="singleStep" >
+      <double>0.100000000000000</double>
+     </property>
+     <property name="value" >
+      <double>29.969999999999999</double>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="label_3" >
+     <property name="text" >
+      <string>Bitrate (kb/s):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="QDoubleSpinBox" name="bitrateSpinBox" >
+     <property name="decimals" >
+      <number>0</number>
+     </property>
+     <property name="minimum" >
+      <double>200.000000000000000</double>
+     </property>
+     <property name="maximum" >
+      <double>2000.000000000000000</double>
+     </property>
+     <property name="value" >
+      <double>200.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" >
+    <widget class="QLabel" name="label_5" >
+     <property name="text" >
+      <string>Input Options</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" >
+    <widget class="QLineEdit" name="inputOptionsLineEdit" />
+   </item>
+   <item row="4" column="0" >
+    <widget class="QLabel" name="label_6" >
+     <property name="text" >
+      <string>Output Options</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" >
+    <widget class="QLineEdit" name="outputOptionsLineEdit" />
+   </item>
+   <item row="5" column="0" colspan="2" >
+    <widget class="QLabel" name="label_4" >
+     <property name="text" >
+      <string>Example Command Line:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2" >
+    <widget class="QTextEdit" name="exampleCommandEdit" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="readOnly" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2" >
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+  <action name="actionUpdate_Example" >
+   <property name="text" >
+    <string>Update_Example</string>
+   </property>
+  </action>
+  <action name="actionUpdateInputOptionsString" >
+   <property name="text" >
+    <string>updateOptionsString</string>
+   </property>
+  </action>
+  <action name="actionActionUpdateOutputOptionsString" >
+   <property name="text" >
+    <string>actionUpdateOutputOptionsString</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>278</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>153</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>346</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>282</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commandEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>actionUpdate_Example</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>225</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fpsSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>actionUpdateInputOptionsString</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>154</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bitrateSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>actionActionUpdateOutputOptionsString</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>154</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>207</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>inputOptionsLineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>actionUpdate_Example</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>260</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

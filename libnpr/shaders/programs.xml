@@ -1,0 +1,194 @@
+<glsl_programs>
+    <program name="stroke_render_atlas">
+        <shader type="vertex">
+            <source filename="passthrough.vert"/>
+        </shader>
+        <shader type="geometry" input_type="points" 
+                output_type="triangle_strip" vertices_out="4">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="stroke_render_atlas.geom"/>
+        </shader>
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="common.glsl"/>
+            <source filename="stroke_render_atlas.frag"/>
+        </shader>
+    </program>
+
+    <program name="stroke_render_spine">
+        <shader type="vertex">
+            <source filename="version.glsl"/>            <source filename="stroke_render_spine_120.vert"/>        </shader>
+        <shader type="geometry" input_type="lines" 
+                output_type="triangle_strip" vertices_out="4">
+            <source filename="version.glsl"/>
+            <source filename="spine_test_common.glsl"/>
+            <source filename="stroke_render_spine_120.geom"/>        </shader>
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="spine_test_common.glsl"/>
+            <source filename="supersample_common.glsl"/>
+            <source filename="stroke_render_spine_120.frag"/>        </shader>
+    </program>
+    
+    <!--
+    <program name="stroke_render_spine">
+        <shader type="vertex">
+            <source filename="version130.glsl"/>
+            <source filename="stroke_render_spine.vert"/>
+        </shader>
+        <shader type="geometry" input_type="lines" 
+                output_type="triangle_strip" vertices_out="4">
+            <source filename="version130.glsl"/>
+            <source filename="spine_test_common.glsl"/>
+            <source filename="stroke_render_spine.geom"/>
+        </shader>
+        <shader type="fragment">
+            <source filename="version130.glsl"/>
+            <source filename="spine_test_common.glsl"/>
+            <source filename="supersample_common.glsl"/>
+            <source filename="stroke_render_spine.frag"/>
+        </shader>
+    </program>
+    -->
+
+    <program name="priority_buffer">
+        <shader type="vertex">
+            <source filename="passthrough.vert"/>
+        </shader>
+        <shader type="geometry" input_type="points" 
+                output_type="triangle_strip" vertices_out="4">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="priority_buffer.geom"/>
+        </shader>
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="common.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="priority_buffer.frag"/>
+        </shader>
+    </program>
+
+    <program name="polygon_focus">
+        <shader type="vertex">
+            <source filename="version.glsl"/>
+            <source filename="standard.vert"/>
+        </shader>
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="common.glsl"/>
+            <source filename="polygon_focus.frag"/>
+        </shader>
+    </program>
+
+    <program name="clip_buffer">
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="clip_buffer.frag"/>
+        </shader>
+    </program>
+
+    <program name="clip_buffer_sum">
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="clip_buffer_sum.frag"/>
+        </shader>
+    </program>
+
+    <program name="clip_buffer_viz">
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="clip_buffer_viz.frag"/>
+        </shader>
+    </program>
+
+    <program name="segment_atlas">
+        <shader type="vertex">
+            <source filename="passthrough.vert"/>
+        </shader>
+        <shader type="geometry" input_type="points" 
+            output_type="line_strip" vertices_out="6">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="segment_atlas.geom"/>
+        </shader>
+
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="supersample_common.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="segment_atlas.frag"/>
+        </shader>
+    </program>
+
+    <program name="segment_atlas_priority">
+        <shader type="vertex">
+            <source filename="passthrough.vert"/>
+        </shader>
+        <shader type="geometry" input_type="points" 
+            output_type="line_strip" vertices_out="6">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="segment_atlas.geom"/>
+        </shader>
+
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="segment_atlas_priority.frag"/>
+        </shader>
+    </program>
+
+    <program name="bilateral_filter_atlas">
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="bilateral_filter_atlas.frag"/>
+        </shader>
+    </program>
+
+    <program name="median_filter_atlas">
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="median_filter_atlas.frag"/>
+        </shader>
+    </program>
+
+    <program name="smooth_and_threshold_atlas">
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="common.glsl"/>
+            <source filename="segment_atlas_common.glsl"/>
+            <source filename="smooth_and_threshold_atlas.frag"/>
+        </shader>
+    </program>
+
+    <program name="pos_and_normal">
+        <shader type="vertex">
+            <source filename="version.glsl"/>
+            <source filename="standard.vert"/>
+        </shader>
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="pos_and_normal.frag"/>
+        </shader>
+    </program>
+
+    <program name="float_depth_buffer">
+        <shader type="vertex">
+            <source filename="version.glsl"/>
+            <source filename="standard.vert"/>
+        </shader>
+        <shader type="fragment">
+            <source filename="version.glsl"/>
+            <source filename="float_depth_buffer.frag"/>
+        </shader>
+    </program>
+
+
+</glsl_programs>
+

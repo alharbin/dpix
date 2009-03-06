@@ -1,0 +1,2178 @@
+<ui version="4.0" >
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>982</width>
+    <height>958</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground" >
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QGridLayout" >
+    <property name="margin" >
+     <number>4</number>
+    </property>
+    <item row="0" column="0" >
+     <widget class="GLViewer" native="1" name="viewer" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>982</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuRecent_Scenes" >
+     <property name="title" >
+      <string>Recent Scenes</string>
+     </property>
+    </widget>
+    <addaction name="actionOpen_Scene" />
+    <addaction name="menuRecent_Scenes" />
+    <addaction name="actionSave_Scene" />
+    <addaction name="actionSave_Scene_As" />
+    <addaction name="separator" />
+    <addaction name="actionSave_Screenshot" />
+    <addaction name="separator" />
+    <addaction name="actionQuit" />
+   </widget>
+   <widget class="QMenu" name="menuWindow" >
+    <property name="title" >
+     <string>Window</string>
+    </property>
+    <widget class="QMenu" name="menuSet_Window_Size" >
+     <property name="title" >
+      <string>Set Window Size</string>
+     </property>
+     <addaction name="actionWindow_128x128" />
+     <addaction name="actionWindow_256x256" />
+     <addaction name="actionWindow_512x512" />
+     <addaction name="actionWindow_640x480" />
+     <addaction name="actionWindow_400x800" />
+     <addaction name="actionWindow_600x800" />
+     <addaction name="actionWindow_800x600" />
+     <addaction name="actionWindow_800x800" />
+     <addaction name="actionWindow_1024x512" />
+     <addaction name="actionWindow_1024x768" />
+    </widget>
+    <addaction name="menuSet_Window_Size" />
+    <addaction name="separator" />
+    <addaction name="actionShow_Stylized_Focus_Widget" />
+    <addaction name="actionShow_Line_Visibility_Widget" />
+    <addaction name="actionShow_Scene_Graph_Widget" />
+    <addaction name="actionShow_Pen_Style_Widget" />
+    <addaction name="actionShow_Lighting_Widget" />
+    <addaction name="actionShow_Statistics_Widget" />
+    <addaction name="separator" />
+    <addaction name="actionShow_Console" />
+   </widget>
+   <widget class="QMenu" name="menuLighting" >
+    <property name="title" >
+     <string>&amp;Lighting</string>
+    </property>
+    <widget class="QMenu" name="menuLighting_Model" >
+     <property name="title" >
+      <string>Lighting Model</string>
+     </property>
+     <addaction name="actionLighting_Lambertian" />
+     <addaction name="actionLighting_Front_and_Back" />
+     <addaction name="actionLighting_Warm_and_Cool" />
+    </widget>
+    <addaction name="actionEnable_Lighting" />
+    <addaction name="separator" />
+    <addaction name="menuLighting_Model" />
+    <addaction name="separator" />
+    <addaction name="actionLighting_Ambient_Component" />
+    <addaction name="actionLighting_Diffuse_Component" />
+    <addaction name="actionLighting_Specular_Component" />
+    <addaction name="separator" />
+    <addaction name="actionFlat_Shading" />
+   </widget>
+   <widget class="QMenu" name="menuRecord" >
+    <property name="title" >
+     <string>Session</string>
+    </property>
+    <addaction name="actionStart_Recording" />
+    <addaction name="actionStop_Recording" />
+    <addaction name="separator" />
+    <addaction name="actionReplay_Session" />
+    <addaction name="actionReplay_as_fast_as_possible" />
+    <addaction name="actionReplay_and_Save_Movie" />
+    <addaction name="actionReplay_and_Save_Screenshots" />
+    <addaction name="actionStop_Replaying" />
+    <addaction name="separator" />
+    <addaction name="actionReplay_Settings" />
+   </widget>
+   <widget class="QMenu" name="menuCamera" >
+    <property name="title" >
+     <string>Camera</string>
+    </property>
+    <widget class="QMenu" name="menuSet_Vertical_FoV" >
+     <property name="title" >
+      <string>Set Vertical FoV</string>
+     </property>
+     <addaction name="actionCamera_FoV_30_Degrees" />
+     <addaction name="actionCamera_FoV_45_Degrees" />
+     <addaction name="actionCamera_FoV_90_Degrees" />
+    </widget>
+    <addaction name="menuSet_Vertical_FoV" />
+    <addaction name="separator" />
+    <addaction name="actionCamera_Perspective" />
+   </widget>
+   <widget class="QMenu" name="menu_Effect" >
+    <property name="title" >
+     <string>&amp;Style</string>
+    </property>
+    <addaction name="actionOpen_Style" />
+    <addaction name="actionSave_Style" />
+    <addaction name="actionSave_Style_As" />
+    <addaction name="separator" />
+    <addaction name="actionPaper_Texture" />
+    <addaction name="actionBackground_Texture" />
+    <addaction name="actionBackground_Color" />
+    <addaction name="separator" />
+    <addaction name="actionPen_Color" />
+    <addaction name="actionPen_Texture" />
+    <addaction name="separator" />
+    <addaction name="actionDraw_Background_Texture" />
+    <addaction name="actionDraw_Paper_Texture" />
+   </widget>
+   <widget class="QMenu" name="menuDebug" >
+    <property name="title" >
+     <string>Debug Options</string>
+    </property>
+    <widget class="QMenu" name="menuVisualizations" >
+     <property name="title" >
+      <string>Visualizations</string>
+     </property>
+     <addaction name="actionShow_Tristrips" />
+     <addaction name="actionShow_Clipping_Buffer" />
+     <addaction name="actionShow_Priority_Buffer" />
+    </widget>
+    <widget class="QMenu" name="menuLine_Options" >
+     <property name="title" >
+      <string>Line Options</string>
+     </property>
+     <addaction name="actionEnable_Stylized_Lines" />
+     <addaction name="separator" />
+     <addaction name="actionCheck_Visibility" />
+     <addaction name="actionCheck_Priority" />
+     <addaction name="actionCheck_At_Spine" />
+     <addaction name="separator" />
+     <addaction name="actionFilter_Visibility" />
+     <addaction name="actionFilter_Priority" />
+     <addaction name="separator" />
+     <addaction name="actionColor_Lines_By_ID" />
+     <addaction name="separator" />
+     <addaction name="actionDraw_Invisible_Lines" />
+     <addaction name="separator" />
+     <addaction name="actionDraw_Profiles" />
+    </widget>
+    <widget class="QMenu" name="menuPolygon_Options" >
+     <property name="title" >
+      <string>Polygon Options</string>
+     </property>
+     <addaction name="actionDraw_Transparent_Faces" />
+     <addaction name="separator" />
+     <addaction name="actionEnable_Color_Blur" />
+    </widget>
+    <addaction name="menuVisualizations" />
+    <addaction name="separator" />
+    <addaction name="actionCompute_PVS" />
+    <addaction name="actionUse_VBOs_for_Geometry" />
+    <addaction name="separator" />
+    <addaction name="actionShow_FPS" />
+    <addaction name="separator" />
+    <addaction name="actionDraw_Lines" />
+    <addaction name="menuLine_Options" />
+    <addaction name="separator" />
+    <addaction name="actionDraw_Polygons" />
+    <addaction name="menuPolygon_Options" />
+    <addaction name="separator" />
+    <addaction name="actionReload_Shaders" />
+   </widget>
+   <addaction name="menu_File" />
+   <addaction name="menu_Effect" />
+   <addaction name="menuLighting" />
+   <addaction name="menuCamera" />
+   <addaction name="menuRecord" />
+   <addaction name="menuWindow" />
+   <addaction name="menuDebug" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QDockWidget" name="focusDockWidget" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>200</width>
+     <height>220</height>
+    </size>
+   </property>
+   <property name="allowedAreas" >
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle" >
+    <string>Stylized Focus</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="geometry" >
+      <rect>
+       <x>30</x>
+       <y>0</y>
+       <width>146</width>
+       <height>52</height>
+      </rect>
+     </property>
+     <property name="title" >
+      <string>Focus Mode</string>
+     </property>
+     <layout class="QHBoxLayout" >
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <item>
+       <widget class="QRadioButton" name="focusOffButton" >
+        <property name="text" >
+         <string>Off</string>
+        </property>
+        <property name="checked" >
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="focus2DButton" >
+        <property name="text" >
+         <string>2D</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="focus3DButton" >
+        <property name="text" >
+         <string>3D</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QFrame" name="frame" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>181</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QSlider" name="v1Slider" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>20</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="maximum" >
+       <number>100</number>
+      </property>
+      <property name="singleStep" >
+       <number>1</number>
+      </property>
+      <property name="orientation" >
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="transferComboBox" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>50</y>
+        <width>111</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text" >
+        <string>Focus</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Line Opacity</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Line Texture</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Line Width</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Line Overshoot</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Color Fade</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Color Desat.</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Color Blur</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Priority Width</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Priority Count</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>Paper Params</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>SC Threshold</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
+        <string>RV Threshold</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QSlider" name="v2Slider" >
+      <property name="geometry" >
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>20</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="maximum" >
+       <number>100</number>
+      </property>
+      <property name="singleStep" >
+       <number>1</number>
+      </property>
+      <property name="pageStep" >
+       <number>10</number>
+      </property>
+      <property name="orientation" >
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QSlider" name="nearSlider" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>110</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="maximum" >
+       <number>100</number>
+      </property>
+      <property name="singleStep" >
+       <number>1</number>
+      </property>
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QSlider" name="farSlider" >
+      <property name="geometry" >
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="maximum" >
+       <number>100</number>
+      </property>
+      <property name="singleStep" >
+       <number>1</number>
+      </property>
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QDoubleSpinBox" name="cameraInterpSpeedBox" >
+     <property name="geometry" >
+      <rect>
+       <x>110</x>
+       <y>220</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="singleStep" >
+      <double>0.050000000000000</double>
+     </property>
+     <property name="value" >
+      <double>1.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>220</y>
+       <width>95</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text" >
+      <string>Cam. Interp. Speed</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="lineVisibilityDockWidget" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>200</width>
+     <height>200</height>
+    </size>
+   </property>
+   <property name="allowedAreas" >
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle" >
+    <string>Line Visibility</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6" >
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>117</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title" >
+      <string>Visibility Method</string>
+     </property>
+     <widget class="QRadioButton" name="itembufferSegmentAtlasButton" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>91</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Segment Atlas</string>
+      </property>
+      <property name="checked" >
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="itembufferSpineTestButton" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>91</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Spine Test</string>
+      </property>
+      <property name="checked" >
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>120</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title" >
+      <string>Quality</string>
+     </property>
+     <widget class="QRadioButton" name="mediumQualityButton" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>91</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Medium (9x2)</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="highQualityButton" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>84</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>High (16x3)</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="lowQualityButton" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>101</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Low (1x1)</string>
+      </property>
+      <property name="checked" >
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="sceneDockWidget" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>218</width>
+     <height>102</height>
+    </size>
+   </property>
+   <property name="maximumSize" >
+    <size>
+     <width>524287</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="allowedAreas" >
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle" >
+    <string>Scene Graph</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_9" >
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QTreeView" name="sceneGraphTreeView" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Expanding" hsizetype="Minimum" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize" >
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="selectionMode" >
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="rootIsDecorated" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="lightingDockWidget" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>200</width>
+     <height>87</height>
+    </size>
+   </property>
+   <property name="allowedAreas" >
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle" >
+    <string>Lighting</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_8" >
+    <layout class="QGridLayout" >
+     <item row="0" column="0" colspan="2" >
+      <widget class="QComboBox" name="lightingPositionComboBox" >
+       <property name="currentIndex" >
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="lightingDepthLabel" >
+       <property name="text" >
+        <string>Depth</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" >
+      <widget class="QSlider" name="lightingDepthSlider" >
+       <property name="maximum" >
+        <number>2000</number>
+       </property>
+       <property name="singleStep" >
+        <number>10</number>
+       </property>
+       <property name="pageStep" >
+        <number>100</number>
+       </property>
+       <property name="value" >
+        <number>1000</number>
+       </property>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="statsDockWidget" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>200</width>
+     <height>102</height>
+    </size>
+   </property>
+   <property name="allowedAreas" >
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle" >
+    <string>Statistics</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_20" >
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QTreeView" name="statsTreeView" >
+       <property name="uniformRowHeights" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="penStyleDockWidget" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>200</width>
+     <height>240</height>
+    </size>
+   </property>
+   <property name="allowedAreas" >
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle" >
+    <string>Pen Style</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents" >
+    <widget class="QComboBox" name="penStyleTypeBox" >
+     <property name="geometry" >
+      <rect>
+       <x>70</x>
+       <y>10</y>
+       <width>131</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text" >
+       <string>Base Style</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string>Crease</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string>Profile</string>
+      </property>
+     </item>
+     <item>
+      <property name="text" >
+       <string>Invisible</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_4" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>51</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text" >
+      <string>Line Type</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="penStyleSameAsBaseCheck" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="geometry" >
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>141</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text" >
+      <string>Same as base style</string>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+     <property name="tristate" >
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QFrame" name="penStyleControlFrame" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>191</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="styleSheet" >
+      <string notr="true" />
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QDoubleSpinBox" name="penWidthBox" >
+      <property name="geometry" >
+       <rect>
+        <x>90</x>
+        <y>70</y>
+        <width>42</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="decimals" >
+       <number>1</number>
+      </property>
+      <property name="minimum" >
+       <double>1.000000000000000</double>
+      </property>
+      <property name="singleStep" >
+       <double>0.500000000000000</double>
+      </property>
+      <property name="value" >
+       <double>4.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7" >
+      <property name="enabled" >
+       <bool>true</bool>
+      </property>
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>46</width>
+        <height>14</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Texture</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>70</y>
+        <width>46</width>
+        <height>14</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Width</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>46</width>
+        <height>14</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Color</string>
+      </property>
+     </widget>
+     <widget class="QFrame" name="penColorFrame" >
+      <property name="enabled" >
+       <bool>true</bool>
+      </property>
+      <property name="geometry" >
+       <rect>
+        <x>60</x>
+        <y>10</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground" >
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet" >
+       <string notr="true" >border: 1px solid black;background-color: rgb(255,0,0)</string>
+      </property>
+      <property name="frameShape" >
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="penTextureEditBox" >
+      <property name="enabled" >
+       <bool>true</bool>
+      </property>
+      <property name="geometry" >
+       <rect>
+        <x>60</x>
+        <y>40</y>
+        <width>101</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>a very long file name that will almost certainly not fit</string>
+      </property>
+      <property name="alignment" >
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+      <property name="readOnly" >
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="penColorBtn" >
+      <property name="geometry" >
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>25</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>...</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="penTextureBtn" >
+      <property name="geometry" >
+       <rect>
+        <x>160</x>
+        <y>40</y>
+        <width>25</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>...</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13" >
+      <property name="geometry" >
+       <rect>
+        <x>10</x>
+        <y>100</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Length Scale</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="penLengthScaleBox" >
+      <property name="geometry" >
+       <rect>
+        <x>90</x>
+        <y>100</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="decimals" >
+       <number>2</number>
+      </property>
+      <property name="minimum" >
+       <double>0.010000000000000</double>
+      </property>
+      <property name="maximum" >
+       <double>100.000000000000000</double>
+      </property>
+      <property name="singleStep" >
+       <double>0.100000000000000</double>
+      </property>
+      <property name="value" >
+       <double>1.000000000000000</double>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <action name="actionOpen_Scene" >
+   <property name="text" >
+    <string>Open Scene...</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave_Scene" >
+   <property name="text" >
+    <string>Save Scene</string>
+   </property>
+  </action>
+  <action name="actionSave_Scene_As" >
+   <property name="text" >
+    <string>Save Scene As...</string>
+   </property>
+  </action>
+  <action name="actionOpen_Style" >
+   <property name="text" >
+    <string>Open Style...</string>
+   </property>
+  </action>
+  <action name="actionSave_Style" >
+   <property name="text" >
+    <string>Save Style</string>
+   </property>
+  </action>
+  <action name="actionSave_Style_As" >
+   <property name="text" >
+    <string>Save Style As...</string>
+   </property>
+  </action>
+  <action name="actionPaper_Texture" >
+   <property name="text" >
+    <string>Paper Texture...</string>
+   </property>
+  </action>
+  <action name="actionPen_Texture" >
+   <property name="text" >
+    <string>Base Pen Texture...</string>
+   </property>
+  </action>
+  <action name="actionShow_Tristrips" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Show Tristrips</string>
+   </property>
+  </action>
+  <action name="actionShow_Item_Buffer" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Item Buffer</string>
+   </property>
+  </action>
+  <action name="actionShow_Priority_Buffer" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Priority Buffer</string>
+   </property>
+  </action>
+  <action name="actionDraw_Lines" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Lines</string>
+   </property>
+  </action>
+  <action name="actionCheck_Visibility" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Check Visibility</string>
+   </property>
+  </action>
+  <action name="actionCheck_Priority" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Check Priority</string>
+   </property>
+  </action>
+  <action name="actionSlider_Window" >
+   <property name="text" >
+    <string>Slider Window</string>
+   </property>
+  </action>
+  <action name="actionShow_FPS" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show FPS</string>
+   </property>
+  </action>
+  <action name="actionEnable_Color_Blur" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Enable Color Blur</string>
+   </property>
+  </action>
+  <action name="actionNew_Item" >
+   <property name="text" >
+    <string>New Item</string>
+   </property>
+  </action>
+  <action name="actionDraw_Suggestive_Contours" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Suggestive Contours</string>
+   </property>
+  </action>
+  <action name="actionDraw_Ridges" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Ridges</string>
+   </property>
+  </action>
+  <action name="actionDraw_Valleys" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Valleys</string>
+   </property>
+  </action>
+  <action name="actionSave_Visible_Paths" >
+   <property name="text" >
+    <string>Save Visible Paths...</string>
+   </property>
+  </action>
+  <action name="actionSave_Camera_State" >
+   <property name="text" >
+    <string>Save Camera State...</string>
+   </property>
+  </action>
+  <action name="actionSmooth_Normals" >
+   <property name="text" >
+    <string>Smooth Normals</string>
+   </property>
+  </action>
+  <action name="actionSmooth_Curvatures" >
+   <property name="text" >
+    <string>Smooth Curvatures</string>
+   </property>
+  </action>
+  <action name="actionSmooth_Curvature_Derivatives" >
+   <property name="text" >
+    <string>Smooth Curvature Derivatives</string>
+   </property>
+  </action>
+  <action name="actionSave_Camera_To_XF" >
+   <property name="text" >
+    <string>Save Camera To XF...</string>
+   </property>
+  </action>
+  <action name="actionExport_Model_OFF" >
+   <property name="text" >
+    <string>OFF</string>
+   </property>
+  </action>
+  <action name="actionExport_Model_PLY" >
+   <property name="text" >
+    <string>PLY</string>
+   </property>
+  </action>
+  <action name="actionExport_Model_NPR" >
+   <property name="checkable" >
+    <bool>false</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>NPR</string>
+   </property>
+  </action>
+  <action name="actionDraw_Polygons" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Polygons</string>
+   </property>
+  </action>
+  <action name="actionShow_Timers" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Timers</string>
+   </property>
+  </action>
+  <action name="actionBackground_Color" >
+   <property name="text" >
+    <string>Background Color...</string>
+   </property>
+  </action>
+  <action name="actionPen_Color" >
+   <property name="text" >
+    <string>Base Pen Color...</string>
+   </property>
+  </action>
+  <action name="actionReload_Shaders" >
+   <property name="text" >
+    <string>Reload Shaders</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionFlat_Shading" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Flat Shading</string>
+   </property>
+  </action>
+  <action name="actionStart_Recording" >
+   <property name="text" >
+    <string>Start Recording</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionStop_Recording" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Stop Recording</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionReplay_Session" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Replay Session</string>
+   </property>
+  </action>
+  <action name="actionSave_Session" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Save Session As...</string>
+   </property>
+  </action>
+  <action name="actionOpen_Session" >
+   <property name="text" >
+    <string>Open Session...</string>
+   </property>
+  </action>
+  <action name="actionReplay_and_Save_Paths" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Replay and Save MATLAB Paths</string>
+   </property>
+  </action>
+  <action name="actionStop_Replaying" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Stop Replaying</string>
+   </property>
+  </action>
+  <action name="actionDraw_Polygon_Noise" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Polygon Noise</string>
+   </property>
+  </action>
+  <action name="actionSupersample_Paths_on_Replay" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Supersample Paths when Replaying</string>
+   </property>
+  </action>
+  <action name="actionBackground_Texture" >
+   <property name="text" >
+    <string>Background Texture...</string>
+   </property>
+  </action>
+  <action name="actionDraw_Background_Texture" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Background Texture</string>
+   </property>
+  </action>
+  <action name="actionDraw_Paper_Texture" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Paper Texture</string>
+   </property>
+  </action>
+  <action name="actionReplay_and_Save_Screenshots" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Replay and Save Screenshots</string>
+   </property>
+  </action>
+  <action name="actionReplay_128x128" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>128x128</string>
+   </property>
+  </action>
+  <action name="actionReplay_640x480" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>640x480</string>
+   </property>
+  </action>
+  <action name="actionReplay_256x256" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>256x256</string>
+   </property>
+  </action>
+  <action name="actionReplay_Window_Size" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Window Size</string>
+   </property>
+  </action>
+  <action name="actionWindow_128x128" >
+   <property name="text" >
+    <string>128x128</string>
+   </property>
+  </action>
+  <action name="actionWindow_256x256" >
+   <property name="text" >
+    <string>256x256</string>
+   </property>
+  </action>
+  <action name="actionWindow_640x480" >
+   <property name="text" >
+    <string>640x480</string>
+   </property>
+  </action>
+  <action name="actionCamera_Space" >
+   <property name="text" >
+    <string>Camera Space</string>
+   </property>
+  </action>
+  <action name="actionLighting_Tracks_Camera" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Lighting Tracks Camera</string>
+   </property>
+  </action>
+  <action name="actionReplay_and_Save_Movie" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Replay and Save Movie</string>
+   </property>
+  </action>
+  <action name="actionDebug_Cutaway" >
+   <property name="text" >
+    <string>Debug Cutaway</string>
+   </property>
+  </action>
+  <action name="actionShow_Console" >
+   <property name="text" >
+    <string>Show Console</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionReplay_Settings" >
+   <property name="text" >
+    <string>Replay Settings...</string>
+   </property>
+  </action>
+  <action name="actionEnable_Line_Artmaps" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Enable Line Artmaps</string>
+   </property>
+  </action>
+  <action name="actionShow_Clipping_Buffer" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Clipping Buffer</string>
+   </property>
+  </action>
+  <action name="actionEnable_Cutaway" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Enable Cutaway</string>
+   </property>
+  </action>
+  <action name="actionLighting_Ambient_Component" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Ambient Component</string>
+   </property>
+  </action>
+  <action name="actionLighting_Diffuse_Component" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Diffuse Component</string>
+   </property>
+  </action>
+  <action name="actionLighting_Specular_Component" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Specular Component</string>
+   </property>
+  </action>
+  <action name="actionCamera_FoV_30_Degrees" >
+   <property name="checkable" >
+    <bool>false</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>30 Degrees</string>
+   </property>
+  </action>
+  <action name="actionCamera_FoV_45_Degrees" >
+   <property name="checkable" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>45 Degrees</string>
+   </property>
+  </action>
+  <action name="actionCamera_FoV_90_Degrees" >
+   <property name="checkable" >
+    <bool>false</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>90 Degrees</string>
+   </property>
+  </action>
+  <action name="actionDraw_Boundaries" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Boundaries</string>
+   </property>
+  </action>
+  <action name="actionDraw_Isophotes" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Isophotes</string>
+   </property>
+  </action>
+  <action name="actionShow_Stylized_Focus_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Stylized Focus</string>
+   </property>
+  </action>
+  <action name="actionShow_Line_Visibility_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Line Visibility</string>
+   </property>
+  </action>
+  <action name="actionShow_Cutaway_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Cutaway</string>
+   </property>
+  </action>
+  <action name="actionShow_Scene_Graph_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Scene Graph</string>
+   </property>
+  </action>
+  <action name="actionShow_Pen_Style_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Pen Style</string>
+   </property>
+  </action>
+  <action name="actionShow_Lighting_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Lighting</string>
+   </property>
+  </action>
+  <action name="actionWindow_1024x768" >
+   <property name="text" >
+    <string>1024x768</string>
+   </property>
+  </action>
+  <action name="actionSave_Screenshot" >
+   <property name="text" >
+    <string>Save Screenshot...</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExport_Scene_Yafray" >
+   <property name="text" >
+    <string>Yafray</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Standard" >
+   <property name="text" >
+    <string>Standard</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Maximum_Curvature" >
+   <property name="text" >
+    <string>Maximum Curvature</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Maximum_Curvature_Derivative" >
+   <property name="text" >
+    <string>Maximum Curvature Derivative</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Directional_Radial_Curvature" >
+   <property name="text" >
+    <string>Directional Radial Curvature</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_View_Dependent_Curvature" >
+   <property name="text" >
+    <string>View Dependent Curvature</string>
+   </property>
+  </action>
+  <action name="actionEnable_Lighting" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Enable Lighting</string>
+   </property>
+  </action>
+  <action name="actionSubdivide_Loop" >
+   <property name="text" >
+    <string>Subdivide (Loop)</string>
+   </property>
+  </action>
+  <action name="actionDraw_Apparent_Ridges" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Apparent Ridges</string>
+   </property>
+  </action>
+  <action name="actionDraw_Occluding_Contours" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Occluding Contours</string>
+   </property>
+  </action>
+  <action name="actionClassify_Boundaries" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Classify Boundaries</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Lighting_Modulated_Curvature" >
+   <property name="text" >
+    <string>Lighting Modulated Curvature</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_First_Principal_Direction" >
+   <property name="text" >
+    <string>First Principal Direction</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Second_Principal_Direction" >
+   <property name="text" >
+    <string>Second Principal Direction</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Projected_First_Principal_Direction" >
+   <property name="text" >
+    <string>Projected First Principal Direction</string>
+   </property>
+  </action>
+  <action name="actionVertex_Colors_Projected_Second_Principal_Direction" >
+   <property name="text" >
+    <string>Projected Second Principal Direction</string>
+   </property>
+  </action>
+  <action name="actionColor_Lines_By_ID" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Color Lines By ID</string>
+   </property>
+  </action>
+  <action name="actionSave_Itembuffers" >
+   <property name="text" >
+    <string>Save Itembuffers...</string>
+   </property>
+  </action>
+  <action name="actionReplay_as_fast_as_possible" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Replay as Fast as Possible</string>
+   </property>
+  </action>
+  <action name="actionScene_Statistics" >
+   <property name="text" >
+    <string>Scene Statistics...</string>
+   </property>
+  </action>
+  <action name="actionShow_Statistics_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Statistics</string>
+   </property>
+  </action>
+  <action name="actionCompute_PVS" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Compute PVS</string>
+   </property>
+  </action>
+  <action name="actionShow_Cutaway_Surface" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Cutaway Surface</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionDirection" >
+   <property name="text" >
+    <string>Direction</string>
+   </property>
+  </action>
+  <action name="actionDraw_Cutaway_Lines" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Cutaway Lines</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionCutaway_Advanced" >
+   <property name="text" >
+    <string>Advanced...</string>
+   </property>
+  </action>
+  <action name="actionShow_Cutaway_Params" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Cutaway Params</string>
+   </property>
+  </action>
+  <action name="actionAnimation_Advanced" >
+   <property name="text" >
+    <string>Advanced...</string>
+   </property>
+  </action>
+  <action name="actionCamera_Perspective" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Perspective</string>
+   </property>
+  </action>
+  <action name="actionCutaway_Shade_Backfaces" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Shade Backfaces</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionWindow_512x512" >
+   <property name="text" >
+    <string>512x512</string>
+   </property>
+  </action>
+  <action name="actionWindow_800x600" >
+   <property name="text" >
+    <string>800x600</string>
+   </property>
+  </action>
+  <action name="actionWindow_800x800" >
+   <property name="text" >
+    <string>800x800</string>
+   </property>
+  </action>
+  <action name="actionWindow_400x800" >
+   <property name="text" >
+    <string>400x800</string>
+   </property>
+  </action>
+  <action name="actionWindow_600x800" >
+   <property name="text" >
+    <string>600x800</string>
+   </property>
+  </action>
+  <action name="actionWindow_1024x512" >
+   <property name="text" >
+    <string>1024x512</string>
+   </property>
+  </action>
+  <action name="actionQuit" >
+   <property name="text" >
+    <string>Quit</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionShow_Partitions_Widget" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Show Partitions</string>
+   </property>
+  </action>
+  <action name="actionUse_VBOs_for_Geometry" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Use VBOs for Geometry</string>
+   </property>
+  </action>
+  <action name="actionDraw_Profiles" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Profiles</string>
+   </property>
+  </action>
+  <action name="actionDraw_Transparent" >
+   <property name="text" >
+    <string>Draw Transparent</string>
+   </property>
+  </action>
+  <action name="actionDraw_Transparent_Faces" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Transparent Faces</string>
+   </property>
+  </action>
+  <action name="actionEnable_Stylized_Lines" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Enable Stylized Lines</string>
+   </property>
+  </action>
+  <action name="actionDraw_Invisible_Lines" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Draw Invisible Lines</string>
+   </property>
+  </action>
+  <action name="actionSave_Positions_and_Normals" >
+   <property name="text" >
+    <string>Save Positions and Normals...</string>
+   </property>
+  </action>
+  <action name="actionLoad_Camera_State" >
+   <property name="text" >
+    <string>Load Camera State...</string>
+   </property>
+  </action>
+  <action name="actionFilter_Visibility" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Filter Visibility</string>
+   </property>
+  </action>
+  <action name="actionFilter_Priority" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Filter Priority</string>
+   </property>
+  </action>
+  <action name="actionCheck_At_Spine" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Check At Spine</string>
+   </property>
+  </action>
+  <actiongroup name="actiongroupLighting" >
+   <action name="actionLighting_Lambertian" >
+    <property name="checkable" >
+     <bool>true</bool>
+    </property>
+    <property name="checked" >
+     <bool>true</bool>
+    </property>
+    <property name="text" >
+     <string>Lambertian</string>
+    </property>
+   </action>
+   <action name="actionLighting_Warm_and_Cool" >
+    <property name="checkable" >
+     <bool>true</bool>
+    </property>
+    <property name="text" >
+     <string>Warm and Cool</string>
+    </property>
+   </action>
+   <action name="actionLighting_Front_and_Back" >
+    <property name="checkable" >
+     <bool>true</bool>
+    </property>
+    <property name="text" >
+     <string>Front and Back</string>
+    </property>
+   </action>
+  </actiongroup>
+  <actiongroup name="actiongroupRenderer" >
+   <action name="actionRenderer_Normal" >
+    <property name="checkable" >
+     <bool>true</bool>
+    </property>
+    <property name="checked" >
+     <bool>true</bool>
+    </property>
+    <property name="text" >
+     <string>Normal</string>
+    </property>
+   </action>
+   <action name="actionRenderer_Noise" >
+    <property name="checkable" >
+     <bool>true</bool>
+    </property>
+    <property name="text" >
+     <string>Noise</string>
+    </property>
+   </action>
+   <action name="actionRenderer_Cutaway" >
+    <property name="checkable" >
+     <bool>true</bool>
+    </property>
+    <property name="checked" >
+     <bool>false</bool>
+    </property>
+    <property name="text" >
+     <string>Cutaway</string>
+    </property>
+   </action>
+  </actiongroup>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GLViewer</class>
+   <extends>QWidget</extends>
+   <header>GLViewer.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>490</x>
+     <y>478</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

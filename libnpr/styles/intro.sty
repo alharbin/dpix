@@ -1,0 +1,44 @@
+<!DOCTYPE npr_style>
+<npr_style>
+ <header>
+  <version>3</version>
+ </header>
+ <textures>
+  <texture name="paper" file="textures/paper/000.ppm" />
+ </textures>
+ <transfer_functions>
+  <vec4 name="focus_transfer" >0 1 0.08 0.78</vec4>
+  <vec4 name="line_opacity" >0.131579 0.763158 0 0.695652</vec4>
+  <vec4 name="line_texture" >0 1 0 0.753623</vec4>
+  <vec4 name="line_width" >0 0 0 1</vec4>
+  <vec4 name="line_overshoot" >0.092105 0.210526 0 1</vec4>
+  <vec4 name="color_fade" >0.25 0.9 0 0.67</vec4>
+  <vec4 name="color_desat" >0 0.710526 0 0.442029</vec4>
+  <vec4 name="color_blur" >0.078947 0.526316 0 1</vec4>
+  <vec4 name="priority_width" >0.078947 0.171053 0 1</vec4>
+  <vec4 name="priority_count" >0 1 0.2 0.8</vec4>
+  <vec4 name="paper_params" >0.131579 0 0 1</vec4>
+  <vec4 name="sc_threshold" >0 0 0 0</vec4>
+  <vec4 name="rv_threshold" >0 0 0 0</vec4>
+ </transfer_functions>
+ <pen_styles>
+  <pen_style name="Base Style" >
+   <color>0.1 0.1 0.1</color>
+   <texture>textures/thin_wobble.pgm</texture>
+   <strip_width>2</strip_width>
+   <endcap_width>0.25</endcap_width>
+   <endcap_length>2</endcap_length>
+   <length_scale>1</length_scale>
+  </pen_style>
+ </pen_styles>
+ <colors>
+  <vec3 name="background" >0.99 0.95 0.81</vec3>
+ </colors>
+ <parameters>
+  <float value="1" name="priority_min_width" />
+  <float value="30" name="priority_max_width" />
+  <float value="0.01" name="sc_threshold" />
+  <float value="0.01" name="rv_threshold" />
+  <float value="0.01" name="app_ridge_threshold" />
+ </parameters>
+</npr_style>
