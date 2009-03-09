@@ -25,8 +25,6 @@ public:
     NPRTransfer() : v1(0), v2(0), vnear(0), vfar(0) {}
 
     void load( const QDomElement& element );
-    // legacy reading code
-    void loadV1( const char* buf );
     void save( QDomDocument& doc, QDomElement& element );
 
     void set( float v1, float v2, float vnear, float vfar );
@@ -59,8 +57,7 @@ public:
     GQTexture*          texture()                    { return _texture; }
 
     float               stripWidth() const           { return _strip_width; }
-    float               endcapWidth() const          { return _endcap_width; }
-    int                 endcapLength() const         { return _endcap_length; }
+    float               elisionWidth() const         { return _elision_width; }
     float               lengthScale() const          { return _length_scale; }
 
     void setName( const QString& name ) { _name = name; }
@@ -69,20 +66,18 @@ public:
     bool setTexture( GQTexture* texture ) { _texture = texture; return true; }
 
     void setStripWidth( float width ) { _strip_width = width; }
-    void setEndcapWidth( float width ) { _endcap_width = width; }
-    void setEndcapLength( int length ) { _endcap_length = length; }
+    void setElisionWidth( float width ) { _elision_width = width; }
     void setLengthScale( float scale ) { _length_scale = scale; }
 
 protected:
     QString     _name;
     vec         _color;
     QString     _texture_file;
-    GQTexture* _texture;
+    GQTexture*  _texture;
 
     float       _strip_width;
-    float       _endcap_width;  // fraction of base strip width
-    int         _endcap_length; // length of endcap in triangles
-    float       _length_scale;  // texture scale along the line's length
+    float       _elision_width;
+    float       _length_scale;  // Texture scale along the line's length.
 };
 
 
@@ -109,28 +104,21 @@ public:
     const GQTexture* backgroundTexture() const { return _background_texture; }
 
 
-    // enumerated set of transfer functions
     typedef enum 
     {
         FOCUS_TRANSFER,
 
-        // rendering from focus values                      
         LINE_OPACITY,
         LINE_TEXTURE,
         LINE_WIDTH,
         LINE_OVERSHOOT,           
+        LINE_ELISION,
 
         COLOR_FADE,
         COLOR_DESAT,
         COLOR_BLUR,      
 
-        PRIORITY_WIDTH,
-        PRIORITY_COUNT,
-
         PAPER_PARAMS,
-
-        SC_THRESHOLD,
-        RV_THRESHOLD,
 
         NUM_TRANSFER_FUNCTIONS
     } TransferFunc;
@@ -140,15 +128,6 @@ public:
     NPRTransfer& transferByName( const QString& name );
 
     inline const vec&   backgroundColor() const      { return _background_color; }
-    inline float        priorityMinWidth() const     { return _priority_min_width; }
-    inline float        priorityMaxWidth() const     { return _priority_max_width; }
-    inline float        scThreshold() const     { return _sc_threshold; }
-    inline float        rvThreshold() const     { return _rv_threshold; }
-    inline float        appRidgeThreshold() const     { return _app_ridge_threshold; }
-
-    inline void         setSCThreshold( float threshold ) { _sc_threshold = threshold; }
-    inline void         setRVThreshold( float threshold ) { _rv_threshold = threshold; }
-    inline void         setAppRidgeThreshold( float threshold ) { _app_ridge_threshold = threshold; }
 
     void         setBackgroundColor( const vec& color ) { _background_color = color; }
 
@@ -161,7 +140,6 @@ public:
     const NPRPenStyle*  penStyle (const QString& name) const;
     NPRPenStyle*        penStyle(const QString& name);
     bool                hasPenStyle(const QString& name) const;
-    void                mapLineTypesToPenStyles(vector<int>& map) const;
 
     void                addPenStyle(NPRPenStyle* style);
     bool                deletePenStyle( int which );
@@ -177,16 +155,10 @@ protected:
     vec         _background_color;       
 
     QString     _paper_file;
-    GQTexture* _paper_texture;
+    GQTexture*  _paper_texture;
 
     QString     _background_file;
-    GQTexture* _background_texture;
-    
-    float _priority_min_width;
-    float _priority_max_width;
-    float _sc_threshold;
-    float _rv_threshold;
-    float _app_ridge_threshold;
+    GQTexture*  _background_texture;
 
     bool _path_style_dirty;
 

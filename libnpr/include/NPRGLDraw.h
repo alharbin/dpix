@@ -6,7 +6,6 @@
 
 class NPRStyle;
 class NPRScene;
-class GQTexture3D;
 class GQTexture2D;
 class GQFramebufferObject;
 class GQShaderRef;

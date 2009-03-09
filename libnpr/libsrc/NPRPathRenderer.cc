@@ -193,14 +193,14 @@ void NPRPathRenderer::setUniformPriorityBufferParams(const GQShaderRef& shader,
 
     const NPRStyle* style = scene.globalStyle();
 
-    float max_width = style->priorityMaxWidth();
+    float max_width = style->penStyle(0)->elisionWidth();
 
     shader.setUniform1f("max_width", max_width);
 
     float transfer[4];
     style->transfer(NPRStyle::FOCUS_TRANSFER).toArray(transfer);
     shader.setUniform4fv("transfer_focus", transfer);
-    style->transfer(NPRStyle::PRIORITY_WIDTH).toArray(transfer);
+    style->transfer(NPRStyle::LINE_ELISION).toArray(transfer);
     shader.setUniform4fv("transfer_width", transfer);
 
     GLfloat proj[16]; 

@@ -10,6 +10,8 @@
 #include <QFile>
 #include <QMessageBox>
 
+const int CURRENT_VERSION = 4;
+
 //
 // Helper function
 //
@@ -121,9 +123,8 @@ NPRPenStyle::NPRPenStyle()
     _texture = NULL;
     _color = vec(0.1f, 0.1f, 0.1f);
     _strip_width = 1.0f;
-    _endcap_width  = 1.0f;
-    _endcap_length = 0;
     _length_scale = 1.0f;
+    _elision_width = 1.0f;
 }
 
 void NPRPenStyle::clear()
@@ -154,40 +155,13 @@ void NPRPenStyle::load( const QDomElement& element )
 
     _texture_file = element.firstChildElement("texture").text();
     _strip_width = element.firstChildElement("strip_width").text().toFloat();
-    _endcap_width = element.firstChildElement("endcap_width").text().toFloat();
-    _endcap_length = element.firstChildElement("endcap_length").text().toInt();
+    _elision_width = element.firstChildElement("elision_width").text().toFloat();
     _length_scale = element.firstChildElement("length_scale").text().toFloat();
 
-    if (_texture)
+    bool ret = setTexture(_texture_file);
+    if (!ret)
     {
-        delete _texture;
         _texture = NULL;
-    }
-
-    if (!_texture_file.isEmpty())
-    {
-    	if (GQTexture::is3D(_texture_file))
-    		_texture = new GQTexture3D();
-    	else
-    		_texture = new GQTexture2D();
-
-        QString absfilename = QDir::cleanPath(NPRSettings::instance().workingDir().absoluteFilePath(_texture_file));
-        if (QFileInfo(absfilename).exists())
-        {
-        	bool ret = _texture->load(absfilename);
-            if (!ret)
-            {
-                QMessageBox::critical(NULL, "Open Failed", 
-                    QString("Could not load pen style %2 texture \"%1\" (corrupt texture?)").arg(absfilename).arg(_name));
-                delete _texture;
-                _texture = NULL;
-            }
-        }
-        else
-        {
-            QMessageBox::critical(NULL, "Open Failed", 
-                QString("Could not find pen style %2 texture \"%1\"").arg(absfilename).arg(_name));
-        }
     }
 }
 
@@ -198,56 +172,52 @@ void NPRPenStyle::save( QDomDocument& doc, QDomElement& element )
     appendTextNode(doc, element, QString("color"), QString("%1 %2 %3").arg(_color[0]).arg(_color[1]).arg(_color[2]));
     appendTextNode(doc, element, QString("texture"), _texture_file);
     appendTextNode(doc, element, QString("strip_width"), QString("%1").arg(_strip_width));
-    appendTextNode(doc, element, QString("endcap_width"), QString("%1").arg(_endcap_width));
-    appendTextNode(doc, element, QString("endcap_length"), QString("%1").arg(_endcap_length));
+    appendTextNode(doc, element, QString("elision_width"), QString("%1").arg(_elision_width));
     appendTextNode(doc, element, QString("length_scale"), QString("%1").arg(_length_scale));
 }
 
 bool NPRPenStyle::setTexture( const QString& filename )
 {
-    bool ret = false;
     QString absfilename = QDir::cleanPath(NPRSettings::instance().workingDir().absoluteFilePath(filename));
-    if (!filename.isEmpty())
+    if (filename.isEmpty())
     {
-        if (QFileInfo(absfilename).exists())
-        {
-            GQTexture* new_texture;
-        	if (GQTexture::is3D(absfilename))
-        		new_texture = new GQTexture3D();
-        	else
-        		new_texture = new GQTexture2D();
-
-            if (new_texture->load(absfilename))
-            {
-                if (_texture)
-                {
-                    delete _texture;
-                }
-                _texture = new_texture;
-                _texture_file = filename;
-                ret = true;
-            }
-            else
-            {
-                QMessageBox::critical(NULL, "Open Failed", QString("Could not load pen texture \"%1\" (corrupt texture?)").arg(absfilename));
-            }
-        }
-        else
-        {
-            QMessageBox::critical(NULL, "Open Failed", QString("Could not find pen texture \"%1\"").arg(absfilename));
-        }
+        return false;
     }
-    return ret;
+
+    if (!QFileInfo(absfilename).exists())
+    {
+        QMessageBox::critical(NULL, "Open Failed", 
+            QString("Could not find pen texture \"%1\"").arg(absfilename));
+        return false;
+    }
+
+    GQTexture* new_texture = new GQTexture2D();
+
+    if (!new_texture->load(absfilename))
+    {
+        QMessageBox::critical(NULL, "Open Failed", 
+            QString("Could not load pen texture \"%1\" (corrupt texture?)").arg(absfilename));
+        delete new_texture;
+        return false;
+    }
+
+    if (_texture)
+    {
+        delete _texture;
+    }
+    _texture = new_texture;
+    _texture_file = filename;
+
+    return true;
 }
 
-//
+
 // NPRStyle
-//
 
 NPRStyle::NPRStyle()
 {
-	_paper_texture = NULL;
-	_background_texture = NULL;
+    _paper_texture = NULL;
+    _background_texture = NULL;
     loadDefaults();
 }
 
@@ -275,40 +245,29 @@ void NPRStyle::clear()
 
 void NPRStyle::loadDefaults()
 {
-    // some reasonable default values
     clear();
 
+    // Some reasonable default values.
     _background_color = vec(1.0f, 1.0f, 1.0f);
     
     _transfers[LINE_OPACITY].set(0.0f, 0.5f, 0.0f, 1.0f);
     _transfers[LINE_TEXTURE].set(0.0f, 1.0f, 0.0f, 1.0f);
     _transfers[LINE_WIDTH].set(0.0f, 0.5f, 0.0f, 1.0f);
+    _transfers[LINE_OVERSHOOT].set(0.0f, 0.0f, 0.2f, 0.8f);
+    _transfers[LINE_ELISION].set(0.0f, 0.0f, 0.0f, 1.0f);
     
     _transfers[COLOR_FADE].set(0.4f, 0.8f, 0.0f, 1.0f);
     _transfers[COLOR_DESAT].set(0.0f, 0.8f, 0.0f, 1.0f);
     _transfers[COLOR_BLUR].set(0.0f, 0.3f, 0.0f, 1.0f);
     
     _transfers[FOCUS_TRANSFER].set(0.0f, 1.0f, 0.2f, 0.8f);
-    _transfers[PRIORITY_WIDTH].set(0.1f, 0.3f, 0.0f, 1.0f);
-    _transfers[PRIORITY_COUNT].set(0.0f, 1.0f, 0.2f, 0.8f);
-
-    _transfers[LINE_OVERSHOOT].set(0.0f, 0.0f, 0.2f, 0.8f);
 
     _transfers[PAPER_PARAMS].set(0.15f, 0.0f, 0.0f, 1.0f);
-
-
-    _priority_min_width = 1.0f;
-    _priority_max_width = 30.0f;
-
-    _sc_threshold = 0.01f;
-    _rv_threshold = 0.01f;
-    _app_ridge_threshold = 0.01f;
 
     _pen_styles.push_back( new NPRPenStyle() );
     _pen_styles[0]->setName("Base Style");
 }
 
-const int CURRENT_VERSION = 3;
 
 bool NPRStyle::load( const QString& filename )
 {
@@ -350,7 +309,7 @@ bool NPRStyle::load( const QDomElement& root )
 	assert(!version.isNull());
 
 	int version_num = version.text().toInt();
-	if (version_num != 3 && version_num != 2)
+	if (version_num < CURRENT_VERSION)
 	{
 		qWarning("NPRStyle::load - Obsolete file version %d (current is %d)", version_num, CURRENT_VERSION );
 		return false;
@@ -418,37 +377,6 @@ bool NPRStyle::load( const QDomElement& root )
 		color = color.nextSiblingElement("vec3");
 	}
 
-	// fvalues
-	QDomElement params = root.firstChildElement("parameters");
-	QDomElement fvalue = params.firstChildElement("float");
-	while (!fvalue.isNull())
-	{
-		QString name = fvalue.attribute("name");
-		float value = fvalue.attribute("value").toFloat();
-
-		if (name == "strip_width") _pen_styles[0]->setStripWidth(value);
-		else if (name == "endcap_width") _pen_styles[0]->setEndcapWidth(value);
-		else if (name == "priority_min_width") _priority_min_width = value;
-		else if (name == "priority_max_width") _priority_max_width = value;
-		else if (name == "sc_threshold") _sc_threshold = value;
-		else if (name == "rv_threshold") _rv_threshold = value;
-		else if (name == "app_ridge_threshold") _app_ridge_threshold = value;
-
-		fvalue = fvalue.nextSiblingElement("float");
-	}
-
-	// ivalues
-	QDomElement ivalue = params.firstChildElement("int");
-	while (!ivalue.isNull())
-	{
-		QString name = ivalue.attribute("name");
-		int value = ivalue.attribute("value").toInt();
-
-		if (name == "endcap_length") _pen_styles[0]->setEndcapLength(value);
-
-		ivalue = ivalue.nextSiblingElement("int");
-	}
-
 	return true;
 }
 
@@ -514,14 +442,12 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
 							"line_texture",
 							"line_width",
 							"line_overshoot",
+                            "line_elision",
 							"color_fade",
 							"color_desat",
 							"color_blur",
-							"priority_width",
-							"priority_count",
 							"paper_params",
-							"sc_threshold",
-							"rv_threshold" };
+							};
 	for (int i = 0; i < NUM_TRANSFER_FUNCTIONS; i++)
 	{
 		QDomElement trans = doc.createElement("vec4");
@@ -548,11 +474,6 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
 	// parameters
 	QDomElement params = doc.createElement("parameters");
 	root.appendChild(params);
-	saveFloat( _priority_min_width, "priority_min_width", doc, params );
-	saveFloat( _priority_max_width, "priority_max_width", doc, params );
-	saveFloat( _sc_threshold, "sc_threshold", doc, params );
-	saveFloat( _rv_threshold, "rv_threshold", doc, params );
-	saveFloat( _app_ridge_threshold, "app_ridge_threshold", doc, params );
 
     return true;
 }
@@ -570,45 +491,39 @@ bool NPRStyle::loadBackgroundTexture(const QString& filename)
 bool NPRStyle::loadTexture(QString& output_name, GQTexture*& output_ptr, 
                            const QString& field_name, const QString& filename)
 {
-    bool ret = false;
     QString absfilename = QDir::cleanPath(NPRSettings::instance().workingDir().absoluteFilePath(filename));
-    if (!filename.isEmpty())
-    {
-        if (QFileInfo(absfilename).exists())
-        {
-    		assert(!GQTexture::is3D(absfilename));
-
-            GQTexture2D* new_texture = new GQTexture2D();
-            if (new_texture->load(absfilename))
-            {
-                if (output_ptr)
-                {
-                    delete output_ptr;
-                }
-                output_ptr = new_texture;
-            	output_name = filename;
-
-                ret = true;
-            }
-            else
-            {
-                QMessageBox::critical(NULL, "Open Failed", QString("Could not load %1 texture \"%2\" (corrupt texture?)").arg(field_name).arg(absfilename));
-            }
-        }
-        else
-        {
-            QMessageBox::critical(NULL, "Open Failed", QString("Could not find %1 texture \"%2\"").arg(field_name).arg(absfilename));
-        }
-    }
-    else
+    if (filename.isEmpty())
     {
         qWarning("NPRStyle::loadTexture - Warning: blank %s texture filename.\n", qPrintable(field_name));
         output_ptr = NULL;
         output_name = QString();
-        ret = true;
+        return true;
     }
+
+    if (!QFileInfo(absfilename).exists())
+    {
+        QMessageBox::critical(NULL, "Open Failed", 
+            QString("Could not find %1 texture \"%2\"").arg(field_name).arg(absfilename));
+        return false;
+    }
+
+    GQTexture2D* new_texture = new GQTexture2D();
+    if (!new_texture->load(absfilename))
+    {
+        QMessageBox::critical(NULL, "Open Failed", 
+            QString("Could not load %1 texture \"%2\" (corrupt texture?)").arg(field_name).arg(absfilename));
+        delete new_texture;
+        return false;
+    }
+
+    if (output_ptr)
+    {
+        delete output_ptr;
+    }
+    output_ptr = new_texture;
+	output_name = filename;
     
-    return ret;
+    return true;
 }
 
 
@@ -621,14 +536,11 @@ NPRTransfer& NPRStyle::transferByName( const QString& name )
 	else if (name == "line_texture")  func = LINE_TEXTURE;
 	else if (name == "line_width")  func = LINE_WIDTH;
 	else if (name == "line_overshoot")  func = LINE_OVERSHOOT;
+	else if (name == "line_elision")  func = LINE_ELISION;
 	else if (name == "color_fade")  func = COLOR_FADE;
 	else if (name == "color_desat")  func = COLOR_DESAT;
 	else if (name == "color_blur")  func = COLOR_BLUR;
-	else if (name == "priority_width")  func = PRIORITY_WIDTH;
-	else if (name == "priority_count")  func = PRIORITY_COUNT;
 	else if (name == "paper_params")  func = PAPER_PARAMS;
-	else if (name == "sc_threshold")  func = SC_THRESHOLD;
-	else if (name == "rv_threshold")  func = RV_THRESHOLD;
 
 	return _transfers[func];
 }
@@ -636,33 +548,10 @@ NPRTransfer& NPRStyle::transferByName( const QString& name )
 
 NPRTransfer& NPRStyle::transferRef( NPRStyle::TransferFunc func )
 {
-    if (func == PRIORITY_WIDTH || func == PRIORITY_COUNT || func == LINE_OVERSHOOT)
+    if (func == LINE_ELISION || func == LINE_OVERSHOOT)
         _path_style_dirty = true;
     
     return _transfers[func];   
-}
-
-void NPRStyle::mapLineTypesToPenStyles(vector<int>& map) const
-{
-    QStringList names;
-
-    names << "Occluding Contour" << "Suggestive Contour" << "Ridge" 
-          << "Valley" << "Isophote" << "Boundary" << "Apparent Ridge"
-          << "Crease" << "Profile" << "Invisible";
-
-    map.clear();
-    for (int i = 0; i < names.size(); i++)
-    {
-        map.push_back(0);
-        for (uint32 j = 0; j < _pen_styles.size(); j++)
-        {
-            if (_pen_styles[j]->name() == names[i])
-            {
-                map[map.size()-1] = j;
-                break;
-            }
-        }
-    }
 }
 
 const NPRPenStyle* NPRStyle::penStyle(const QString& name) const

@@ -468,11 +468,7 @@ void MainWindow::on_nearSlider_valueChanged( int value )
 void MainWindow::on_v1Slider_valueChanged( int value )
 {
     getCurrentStyle()->transferRef( (NPRStyle::TransferFunc)_currentTransferIndex ).v1 = (float)value / 100;
-    if ((NPRStyle::TransferFunc)_currentTransferIndex == NPRStyle::SC_THRESHOLD ||
-        (NPRStyle::TransferFunc)_currentTransferIndex == NPRStyle::RV_THRESHOLD)
-        _glViewer->forceFullRedraw();
-    else
-        _glViewer->updateGL(); 
+    _glViewer->updateGL(); 
 }
 
 void MainWindow::on_v2Slider_valueChanged( int value )

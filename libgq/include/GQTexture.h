@@ -20,8 +20,6 @@
 class GQTexture
 {
     public:
-        static bool is3D(const QString& filename);
-
         virtual ~GQTexture();
 
         virtual bool load( const QString& filename ) = 0;
@@ -70,37 +68,6 @@ class GQTexture2D : public GQTexture
         int _target;
         int _width;
         int _height;
-};
-
-class GQTexture3D : public GQTexture
-{
-    public:
-        GQTexture3D();
-        ~GQTexture3D();
-
-        bool load( const QString& filename );
-        bool create(int width, int height, int depth, int internalFormat, int format, int type, const void *data);
-        bool bind() const;
-        void unbind() const;
-        void enable() const; 
-        void disable() const;      
-        
-        unsigned int width() const { return _slices[0].width(); }
-        unsigned int height() const { return _slices[1].height(); }
-        unsigned int depth() const { return _num_slices; }        
-
-        int target() const;
-
-	protected:
-		bool createGLTexture();	
-
-    protected:
-        GQImage* _slices;
-        int       _num_slices;
-
-		int		  _wrap_mode_s;
-		int		  _wrap_mode_t;
-		int		  _wrap_mode_r;
 };
 
 
