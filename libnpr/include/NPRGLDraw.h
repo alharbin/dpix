@@ -26,10 +26,10 @@ const int NPR_FAILURE = 0;
 class NPRGLDraw
 {
     public:
-        static void drawMesh(const GQShaderRef* shader, const NPRScene& scene, int which, 
+        static void drawMesh(const NPRScene& scene, int which, 
                              int draw_mode = NPR_DRAW_ALL_POLYGONS);
-        static void drawMeshes(const GQShaderRef* shader, const NPRScene& scene, 
-                               const QList<int>* list = 0, int draw_mode = NPR_DRAW_ALL_POLYGONS );
+        static void drawMeshes(const NPRScene& scene, const QList<int>* list = 0, 
+                               int draw_mode = NPR_DRAW_ALL_POLYGONS );
         static void drawMeshesDepth( const NPRScene& scene );
 
 		static void drawFullScreenQuad( int texture_mode );
@@ -51,6 +51,12 @@ class NPRGLDraw
 
         static void setUniformSSParams(const GQShaderRef& shader);
         static void setUniformViewParams(const GQShaderRef& shader);
+        static void setUniformPolygonParams(const GQShaderRef& shader, 
+                                            const NPRScene& scene);
+        static void setUniformFocusParams(const GQShaderRef& shader, 
+                                          const NPRScene& scene);
+        static void setPerModelPolygonUniforms(const GQShaderRef* shader, 
+                                               const NPRScene& scene, int which );
 
         static void handleGLError(const char* file = 0, int line = 0);
 
@@ -60,8 +66,6 @@ class NPRGLDraw
         static void drawDrawablePolygons( const NPRDrawable* drawable, int type_mask );
         static void applyMaterialToGL( const CdaMaterial* material );
 
-        static void setPerModelPolygonUniforms(const GQShaderRef* shader, 
-                                               const NPRScene& scene, int which );
 
         static void init();
         static void initSupersampleTexture();

@@ -106,6 +106,13 @@ void NPRTransfer::toArray( float ar[4]) const
     ar[3] = vfar;
 }
 
+void NPRTransfer::toArray( float ar[4], float v1_multiple, float v2_multiple) const
+{
+    toArray(ar);
+    ar[0] = (1.0f - v1) * v1_multiple + v1 * v2_multiple;
+    ar[1] = (1.0f - v2) * v1_multiple + v2 * v2_multiple;
+}
+
 void NPRTransfer::set( float v1, float v2, float vnear, float vfar )
 {
         this->v1 = v1;
@@ -122,6 +129,7 @@ NPRPenStyle::NPRPenStyle()
 {
     _texture = NULL;
     _color = vec(0.1f, 0.1f, 0.1f);
+    _opacity = 1.0f;
     _strip_width = 1.0f;
     _length_scale = 1.0f;
     _elision_width = 1.0f;
@@ -154,6 +162,7 @@ void NPRPenStyle::load( const QDomElement& element )
     loadVec(_color, c);
 
     _texture_file = element.firstChildElement("texture").text();
+    _opacity = element.firstChildElement("opacity").text().toFloat();
     _strip_width = element.firstChildElement("strip_width").text().toFloat();
     _elision_width = element.firstChildElement("elision_width").text().toFloat();
     _length_scale = element.firstChildElement("length_scale").text().toFloat();
@@ -171,6 +180,7 @@ void NPRPenStyle::save( QDomDocument& doc, QDomElement& element )
 
     appendTextNode(doc, element, QString("color"), QString("%1 %2 %3").arg(_color[0]).arg(_color[1]).arg(_color[2]));
     appendTextNode(doc, element, QString("texture"), _texture_file);
+    appendTextNode(doc, element, QString("opacity"), QString("%1").arg(_opacity));
     appendTextNode(doc, element, QString("strip_width"), QString("%1").arg(_strip_width));
     appendTextNode(doc, element, QString("elision_width"), QString("%1").arg(_elision_width));
     appendTextNode(doc, element, QString("length_scale"), QString("%1").arg(_length_scale));
@@ -266,6 +276,8 @@ void NPRStyle::loadDefaults()
 
     _pen_styles.push_back( new NPRPenStyle() );
     _pen_styles[0]->setName("Base Style");
+
+    _draw_invisible_lines = false;
 }
 
 
@@ -377,6 +389,19 @@ bool NPRStyle::load( const QDomElement& root )
 		color = color.nextSiblingElement("vec3");
 	}
 
+    // ivalues
+    QDomElement params = root.firstChildElement("parameters");
+    QDomElement ivalue = params.firstChildElement("int");
+    while (!ivalue.isNull())
+    {
+        QString name = ivalue.attribute("name");
+        int value = ivalue.attribute("value").toInt();
+
+        if (name == "draw_invisible_lines") _draw_invisible_lines = (bool)value;
+
+        ivalue = ivalue.nextSiblingElement("int");
+    }
+
 	return true;
 }
 
@@ -474,6 +499,7 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
 	// parameters
 	QDomElement params = doc.createElement("parameters");
 	root.appendChild(params);
+    saveInt((int)_draw_invisible_lines, "draw_invisible_lines", doc, params);
 
     return true;
 }

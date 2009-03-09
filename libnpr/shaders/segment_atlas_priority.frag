@@ -42,5 +42,5 @@ void main()
 
     float priority = getPriorityValue(path_color, sample_window_pos);
 
-    gl_FragData[0] = vec4(path_color, priority);//*visibility);
+    gl_FragData[0] = vec4(path_color, priority*visibility);
 }

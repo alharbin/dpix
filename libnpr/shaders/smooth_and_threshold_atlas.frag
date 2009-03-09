@@ -1,6 +1,14 @@
 uniform sampler2DRect source_buffer;
 uniform float overshoot_offset;
 
+// Transfer function vector is defined as (v0, v1, near, far)
+float computeTransfer( vec4 transfer, float in_t )
+{
+    float alpha = clamp((in_t - transfer[2]) / (transfer[3] - transfer[2]), 0.0, 1.0);
+    float interp = transfer[0] + (transfer[1] - transfer[0])*alpha;
+    return interp;
+}
+
 void main()
 {
     vec2 center_coord = gl_FragCoord.xy;

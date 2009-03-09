@@ -17,8 +17,9 @@ uniform float sample_spacing;
 
 uniform float overshoot_scale;
 
-varying vec2 atlas_position;
-varying float path_start;
+varying out vec2 atlas_position;
+varying out vec4 spine_position;
+varying out float path_start;
 
 // The pen textures are parameterized with the fixed point at the middle
 // of the path. Using the midpoint helps temporal coherence because
@@ -82,8 +83,10 @@ void main()
     vec2 segment_coord = vec2(gl_PositionIn[0].x, row);
     float segment_index = coordinateToIndex(segment_coord, clip_buffer_width);
 
-    vec2 p = clipToWindow(clip_vert_0_buffer, viewport, segment_coord);
-    vec2 q = clipToWindow(clip_vert_1_buffer, viewport, segment_coord);
+    vec4 clip_p = texture2DRect(clip_vert_0_buffer, segment_coord);
+    vec4 clip_q = texture2DRect(clip_vert_1_buffer, segment_coord);
+    vec2 p = clipToWindow(clip_p, viewport);
+    vec2 q = clipToWindow(clip_q, viewport);
     vec2 tangent = q - p;
     float segment_length = length(tangent);
 
@@ -141,10 +144,12 @@ void main()
 
     // Two vertices at the p end of the segment.
     vec2 vertex_offset = getVertexOffset(prev_tangent, tangent);
+    spine_position = clip_p;
     emitVertexPair(p, vertex_offset, p_sample, tex_offsets.x); 
 
     // Two vertices at the q end of the segment.
     vertex_offset = getVertexOffset(tangent, next_tangent);
+    spine_position = clip_q;
     emitVertexPair(q, vertex_offset, q_sample, tex_offsets.y); 
 
     EndPrimitive();

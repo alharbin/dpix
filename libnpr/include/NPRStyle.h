@@ -33,6 +33,7 @@ public:
     float compute( float f ) const;
 
     void toArray( float ar[4]) const;
+    void toArray( float ar[4], float v1_multiple, float v2_multiple) const;
 
 public:
     float v1, v2, vnear, vfar;
@@ -56,6 +57,7 @@ public:
     const GQTexture*    texture() const              { return _texture; }
     GQTexture*          texture()                    { return _texture; }
 
+    float               opacity() const              { return _opacity; }
     float               stripWidth() const           { return _strip_width; }
     float               elisionWidth() const         { return _elision_width; }
     float               lengthScale() const          { return _length_scale; }
@@ -65,6 +67,7 @@ public:
     bool setTexture( const QString& filename );
     bool setTexture( GQTexture* texture ) { _texture = texture; return true; }
 
+    void setOpacity( float val ) { _opacity = val; }
     void setStripWidth( float width ) { _strip_width = width; }
     void setElisionWidth( float width ) { _elision_width = width; }
     void setLengthScale( float scale ) { _length_scale = scale; }
@@ -75,6 +78,7 @@ protected:
     QString     _texture_file;
     GQTexture*  _texture;
 
+    float       _opacity;
     float       _strip_width;
     float       _elision_width;
     float       _length_scale;  // Texture scale along the line's length.
@@ -128,8 +132,10 @@ public:
     NPRTransfer& transferByName( const QString& name );
 
     inline const vec&   backgroundColor() const      { return _background_color; }
+    inline bool  drawInvisibleLines() const { return _draw_invisible_lines; }
 
     void         setBackgroundColor( const vec& color ) { _background_color = color; }
+    void         setDrawInvisibleLines( bool set ) { _draw_invisible_lines = set; }
 
     bool         isPathStyleDirty() { return _path_style_dirty; }
     void         setPathStyleClean() { _path_style_dirty = false; }
@@ -153,6 +159,7 @@ protected:
     vector<NPRPenStyle*> _pen_styles;
 
     vec         _background_color;       
+    bool        _draw_invisible_lines;
 
     QString     _paper_file;
     GQTexture*  _paper_texture;

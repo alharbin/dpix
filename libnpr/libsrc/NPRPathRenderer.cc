@@ -53,7 +53,7 @@ void NPRPathRenderer::drawSimpleLines(const NPRScene& scene)
 
     int mode = NPR_DRAW_LINES | NPR_OPAQUE | NPR_TRANSLUCENT;
 
-    NPRGLDraw::drawMeshes( 0, scene, 0, mode );
+    NPRGLDraw::drawMeshes( scene, 0, mode );
 }
         
 // Drawing strokes without access to a segment atlas. This
@@ -85,13 +85,13 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
     int mode = NPR_DRAW_LINES | NPR_OPAQUE | NPR_TRANSLUCENT;
 
     shader.setUniform1i("test_profiles", 0);
-    NPRGLDraw::drawMeshes(&shader, scene, 0, mode );
+    NPRGLDraw::drawMeshes(scene, 0, mode );
 
     if (settings.get(NPR_EXTRACT_PROFILES))
     {
         int mode = NPR_DRAW_PROFILES | NPR_OPAQUE | NPR_TRANSLUCENT;
         shader.setUniform1i("test_profiles", 1);
-        NPRGLDraw::drawMeshes(&shader, scene, 0, mode );
+        NPRGLDraw::drawMeshes(scene, 0, mode );
     }
 }
 
@@ -126,6 +126,7 @@ void NPRPathRenderer::drawPriorityBuffer(const NPRScene& scene,
         init();
 
     GQShaderRef shader = GQShaderManager::bindProgram("priority_buffer");
+    NPRGLDraw::setUniformFocusParams(shader, scene);
     setUniformPriorityBufferParams(shader, scene);
 
     glDisable(GL_BLEND);
@@ -138,69 +139,70 @@ void NPRPathRenderer::drawPriorityBuffer(const NPRScene& scene,
 void NPRPathRenderer::setUniformPenStyleParams(const GQShaderRef& shader, 
                                                const NPRStyle& style)
 {
-    const NPRPenStyle* pen_style_1 = style.penStyle("Base Style");
-    const NPRPenStyle* pen_style_2 = style.penStyle("Invisible");
-    float pen_1_opacity = 1.0 - style.transfer(NPRStyle::LINE_OPACITY).v1;
-    float pen_2_opacity = 1.0 - style.transfer(NPRStyle::LINE_OPACITY).v2;
+    const NPRPenStyle* vis_focus = style.penStyle("Base Style");
+    const NPRPenStyle* vis_defocus = style.penStyle("Defocused");
+    const NPRPenStyle* invis_focus = style.penStyle("Invisible");
+    const NPRPenStyle* invis_defocus = style.penStyle("Defocused Invis.");
 
+    /*
     float overshoot = style.transfer(NPRStyle::LINE_OVERSHOOT).v1;
     shader.setUniform1f("overshoot_scale", overshoot );
+    */
 
-    int texture_length = 1;
     // We have to set some texture for the pen even if the user hasn't
     // selected anything to avoid a crash on mac.
-    const GQTexture* texture_1 = &_blank_texture;
-    const GQTexture* texture_2 = &_blank_texture;
+    const GQTexture* vis_focus_tex = &_blank_texture;
+    const GQTexture* vis_defocus_tex = &_blank_texture;
+    const GQTexture* invis_focus_tex = &_blank_texture;
+    const GQTexture* invis_defocus_tex = &_blank_texture;
 
-    if (pen_style_1->texture())
-        texture_1 = pen_style_1->texture();
+    if (vis_focus->texture()) vis_focus_tex = vis_focus->texture();
+    if (vis_defocus->texture()) vis_defocus_tex = vis_defocus->texture();
+    if (invis_focus->texture()) invis_focus_tex = invis_focus->texture();
+    if (invis_defocus->texture()) invis_defocus_tex = invis_defocus->texture();
 
-    if (pen_style_2->texture())
-        texture_2 = pen_style_2->texture();
+    shader.bindNamedTexture("vis_focus_texture", vis_focus_tex);
+    shader.bindNamedTexture("vis_defocus_texture", vis_defocus_tex);
+    shader.bindNamedTexture("invis_focus_texture", invis_focus_tex);
+    shader.bindNamedTexture("invis_defocus_texture", invis_defocus_tex);
 
-    texture_length = texture_1->width();
+    float invis_opacity_factor = style.drawInvisibleLines() ? 1.0f : 0.0f;
+    
+    vec4f vis_focus_color(vis_focus->color()[0], vis_focus->color()[1],
+                          vis_focus->color()[2], vis_focus->opacity());
+    vec4f vis_defocus_color(vis_defocus->color()[0], vis_defocus->color()[1],
+                          vis_defocus->color()[2], vis_defocus->opacity());
+    vec4f invis_focus_color(invis_focus->color()[0], invis_focus->color()[1],
+                          invis_focus->color()[2], 
+                          invis_focus->opacity()*invis_opacity_factor);
+    vec4f invis_defocus_color(invis_defocus->color()[0], invis_defocus->color()[1],
+                          invis_defocus->color()[2], 
+                          invis_defocus->opacity()*invis_opacity_factor);
 
-    shader.bindNamedTexture("pen_texture", texture_1);
-    vec3f c3 = pen_style_1->color();
-    vec4f color = vec4f(c3[0], c3[1], c3[2], pen_1_opacity);
-    shader.setUniform4fv("pen_color", color);
+    shader.setUniform4fv("vis_focus_color", vis_focus_color);
+    shader.setUniform4fv("vis_defocus_color", vis_defocus_color);
+    shader.setUniform4fv("invis_focus_color", invis_focus_color);
+    shader.setUniform4fv("invis_defocus_color", invis_defocus_color);
         
-    shader.bindNamedTexture("secondary_pen_texture", texture_2);
-    c3 = pen_style_2->color();
-    color = vec4f(c3[0], c3[1], c3[2], pen_2_opacity);
-    shader.setUniform4fv("secondary_pen_color", color);
+    shader.setUniform1f("pen_width", vis_focus->stripWidth());
 
-    shader.setUniform1f("use_secondary_color", 
-        NPRSettings::instance().get(NPR_ENABLE_INVISIBLE_LINES));
-    shader.setUniform1f("pen_width", pen_style_1->stripWidth());
-    shader.setUniform1f("texture_length", texture_length);
-    shader.setUniform1f("length_scale", pen_style_1->lengthScale());
-    /*shader.setUniform1f("endcap_length", pen_style_1->endcapLength());
-    shader.setUniform1f("endcap_width", pen_style_1->endcapWidth());*/
+    shader.setUniform1f("texture_length", vis_focus_tex->width());
+    shader.setUniform1f("length_scale", vis_focus->lengthScale());
 }
 
 void NPRPathRenderer::setUniformPriorityBufferParams(const GQShaderRef& shader,
                                     const NPRScene& scene)
 {
-    // cameraTransform is actually the transformation from camera to
-    // world space (i.e., the position of the camera in world), 
-    // so we want the inverse here.
-    vec camera_poa = scene.cameraInverseTransform() * scene.focalPoint();
-    shader.setUniform3fv("camera_focal_point", camera_poa);
-    shader.setUniform3fv("focal_point", scene.focalPoint());
-    shader.setUniform1i("focus_mode", NPRSettings::instance().get(NPR_FOCUS_MODE));
-    shader.setUniform1f("scene_radius", scene.sceneRadius());
-
     const NPRStyle* style = scene.globalStyle();
 
-    float max_width = style->penStyle(0)->elisionWidth();
+    float focused_width = style->penStyle("Base Style")->elisionWidth();
+    float defocused_width = style->penStyle("Defocused")->elisionWidth();
 
-    shader.setUniform1f("max_width", max_width);
+    shader.setUniform1f("max_width", std::max(focused_width, defocused_width));
 
     float transfer[4];
-    style->transfer(NPRStyle::FOCUS_TRANSFER).toArray(transfer);
-    shader.setUniform4fv("transfer_focus", transfer);
-    style->transfer(NPRStyle::LINE_ELISION).toArray(transfer);
+    style->transfer(NPRStyle::LINE_ELISION).toArray(transfer, 
+        focused_width, defocused_width);
     shader.setUniform4fv("transfer_width", transfer);
 
     GLfloat proj[16]; 
@@ -260,7 +262,10 @@ void NPRPathRenderer::drawQuads(const GQShaderRef& shader,
     shader.setUniform4fv("viewport", viewport );
     shader.setUniform1f("clip_buffer_width", atlas.clipBufferWidth() );
     shader.setUniform1f("atlas_width", atlas.atlasWrapWidth() );
-    shader.setUniform1f("sample_spacing", atlas.sampleSpacing() );
+    if (shader.uniformLocation("sample_spacing") >= 0)
+    {
+        shader.setUniform1f("sample_spacing", atlas.sampleSpacing() );
+    }
 
     _quad_vertices_vbo.bind();
 

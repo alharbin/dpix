@@ -47,27 +47,38 @@ int GQShaderRef::uniformLocation( const QString& name ) const
     return GQShaderManager::uniformLocation( _guid, name );
 }
 
+int GQShaderRef::uniformLocationExistsCheck( const QString& name ) const
+{
+    int loc = uniformLocation(name);
+    if (loc < 0)
+    {
+        qWarning("GQShaderManager::uniformLocation: Could not find uniform \"%s\"",
+                qPrintable(name));
+    }
+    return loc;
+}
+
 bool GQShaderRef::setUniform1f( const QString& name, float value ) const
 {
-    glUniform1f(uniformLocation(name), value );
+    glUniform1f(uniformLocationExistsCheck(name), value );
     return true;
 }
 
 bool GQShaderRef::setUniform1i( const QString& name, int value ) const
 {
-    glUniform1i(uniformLocation(name), value );
+    glUniform1i(uniformLocationExistsCheck(name), value );
     return true;
 }
 
 bool GQShaderRef::setUniform2f( const QString& name, float a, float b ) const
 {
-    glUniform2f(uniformLocation(name), a, b );
+    glUniform2f(uniformLocationExistsCheck(name), a, b );
     return true;
 }
 
 bool GQShaderRef::setUniform3fv( const QString& name, const float* value ) const
 {
-    glUniform3fv(uniformLocation(name), 1, value );
+    glUniform3fv(uniformLocationExistsCheck(name), 1, value );
     return true;
 }
 
@@ -75,20 +86,20 @@ bool GQShaderRef::setUniform3fv( const QString& name, const float* value ) const
 bool GQShaderRef::setUniform4f( const QString& name, float a, float b, 
                                 float c, float d ) const
 {
-    glUniform4f(uniformLocation(name), a, b, c, d );
+    glUniform4f(uniformLocationExistsCheck(name), a, b, c, d );
     return true;
 }
 
 bool GQShaderRef::setUniform4fv( const QString& name, const float* value ) const
 {
-    glUniform4fv(uniformLocation(name), 1, value );
+    glUniform4fv(uniformLocationExistsCheck(name), 1, value );
     return true;
 }
 
 bool GQShaderRef::setUniformMatrix4fv( const QString& name, const float* value ) const
 {
     const bool transpose = false;
-    glUniformMatrix4fv(uniformLocation(name), 1, transpose, value );
+    glUniformMatrix4fv(uniformLocationExistsCheck(name), 1, transpose, value );
     return true;
 }
 
@@ -352,6 +363,7 @@ int GQShaderManager::uniformLocation(int program_ref_guid,
     {
         loc = glGetUniformLocation(_programs[_current_program], 
                                    qPrintable(name) );
+       
         reportGLError();
     }
     return loc;

@@ -173,66 +173,18 @@ void NPRRendererStandard::drawPolygons(const NPRScene& scene)
         glEnable(GL_LIGHTING);
     glDisable(GL_BLEND);
 
-    GQShaderRef shader = GQShaderManager::bindProgram("polygon_focus");
-    setUniformPolygonParams( shader, scene );
+    GQShaderRef shader = GQShaderManager::bindProgram("polygon_render");
+    NPRGLDraw::setUniformPolygonParams( shader, scene );
+    NPRGLDraw::setUniformFocusParams( shader, scene );
 
     int mode = NPR_DRAW_POLYGONS | NPR_OPAQUE;
     if (NPRSettings::instance().get(NPR_ENABLE_TRANSPARENT_POLYGONS))
         mode |= NPR_TRANSLUCENT;
 
-    NPRGLDraw::drawMeshes( &shader, scene, 0, mode );
+    NPRGLDraw::drawMeshes(scene, 0, mode );
 }
 
-void NPRRendererStandard::setUniformPolygonParams(const GQShaderRef& shader, 
-                                                  const NPRScene& scene ) 
-{
-    vec camera_poa = scene.cameraInverseTransform() * scene.focalPoint();
-    shader.setUniform3fv("view_pos", scene.cameraPosition() );
-    shader.setUniform3fv("light_dir", scene.light(0)->lightDir() );
 
-    const NPRStyle* style = scene.globalStyle();
-        
-    float transfer[4];
-
-    style->transfer(NPRStyle::COLOR_DESAT).toArray(transfer);
-    shader.setUniform4fv("transfer_desat", transfer);
-
-    style->transfer(NPRStyle::COLOR_FADE).toArray(transfer);
-    shader.setUniform4fv("transfer_fade", transfer);
-    
-    shader.setUniform4f("background_color", 
-                style->backgroundColor()[0],
-                style->backgroundColor()[1],
-                style->backgroundColor()[2],
-                1.0);
-
-    style->transfer(NPRStyle::FOCUS_TRANSFER).toArray(transfer);
-    shader.setUniform4fv("transfer_focus", transfer);
-
-    shader.setUniform1i("focus_mode", NPRSettings::instance().get(NPR_FOCUS_MODE));
-    bool lighting_enabled = NPRSettings::instance().get(NPR_ENABLE_LIGHTING);
-    if (lighting_enabled)
-        shader.setUniform1i("light_mode", scene.light(0)->mode());
-    else
-        shader.setUniform1i("light_mode", -1);
-
-    float radius = scene.sceneRadius();
-
-    shader.setUniform3fv("w_poa", scene.focalPoint());
-    shader.setUniform1f("model_size", radius);
-
-    shader.setUniform3fv("c_poa", camera_poa);
-    float cameraFocalLength = fabsf(scene.focalPoint()[2]); // Assumed to be camera coordinates.
-    shader.setUniform1f("focal_length", cameraFocalLength);
-
-    GLint viewport[4];
-    glGetIntegerv(GL_VIEWPORT, viewport);
-    shader.setUniform1f("aspect_ratio", (float)viewport[2] / (float)viewport[3]);
-    // transform screen to clip coordinates
-    float cx = scene.focalPoint()[0] / ((float)viewport[2]*0.5) - 1;
-    float cy = scene.focalPoint()[1] / ((float)viewport[3]*0.5) - 1;
-    shader.setUniform2f("s_poa", cx, cy );
-}
 
 void NPRRendererStandard::drawDepthBuffer( const NPRScene& scene )
 {

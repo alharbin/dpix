@@ -44,7 +44,6 @@ class NPRRendererStandard : public NPRRenderer
     void setLineVisibilityMethod( NPRLineVisibilityMethod method );
 
     void drawPolygons(const NPRScene& scene);
-    void setUniformPolygonParams( const GQShaderRef& shader, const NPRScene& scene );
 
     void drawDepthBuffer( const NPRScene& scene );
     void drawPriorityBuffer( const NPRScene& scene );

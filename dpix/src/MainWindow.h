@@ -173,6 +173,8 @@ public slots:
     void on_penColorBtn_clicked();
     void on_penTextureBtn_clicked();
     void on_penWidthBox_valueChanged(double value);
+    void on_penOpacityBox_valueChanged(double value);
+    void on_penElisionWidthBox_valueChanged(double value);
     void on_penLengthScaleBox_valueChanged(double value);
 
     void on_cameraInterpSpeedBox_valueChanged( double value );

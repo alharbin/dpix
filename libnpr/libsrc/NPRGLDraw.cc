@@ -38,20 +38,15 @@ void NPRGLDraw::handleGLError(const char* file, int line)
 } 
 
 
-void NPRGLDraw::drawMesh(const GQShaderRef* shader, const NPRScene& scene, 
-                         int which, int draw_mode )
+void NPRGLDraw::drawMesh(const NPRScene& scene, int which, int draw_mode )
 {
-    setPerModelPolygonUniforms( shader, scene, which );
     const NPRDrawable* drawable = scene.drawable(which);
 
     drawDrawablePolygons(drawable, draw_mode);
 }
 
-void NPRGLDraw::drawMeshes(const GQShaderRef* shader, const NPRScene& scene, 
-                           const QList<int>* list, int draw_mode )
+void NPRGLDraw::drawMeshes(const NPRScene& scene, const QList<int>* list, int draw_mode )
 {
-    Q_UNUSED(shader);
-    
     const NPRGeometry* current_geom = 0;
     int count = (list) ? list->size() : scene.numDrawables();
     for (int i = 0; i < count; i++)
@@ -137,7 +132,7 @@ void NPRGLDraw::drawMeshesDepth( const NPRScene& scene )
     if (NPRSettings::instance().get(NPR_ENABLE_TRANSPARENT_POLYGONS) == true)
         mode |= NPR_TRANSLUCENT;
 
-    drawMeshes(0, scene, 0, mode);
+    drawMeshes(scene, 0, mode);
 
     NPRGLDraw::handleGLError();
 }
@@ -233,7 +228,7 @@ void NPRGLDraw::applyMaterialToGL( const CdaMaterial* material )
 
 void NPRGLDraw::setPerModelPolygonUniforms( const GQShaderRef* shader, const NPRScene& scene, int which )
 {
-    if (shader && shader->getName() == "polygon_focus")
+    if (shader && shader->getName() == "polygon_render")
     {
         const NPRStyle* style = scene.drawableStyle(which);
 
@@ -471,7 +466,7 @@ void NPRGLDraw::drawPosAndNormalBuffer( const NPRScene& scene )
     glClearDepth(1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    NPRGLDraw::drawMeshes( &shader, scene );
+    NPRGLDraw::drawMeshes( scene );
 }
         
 void NPRGLDraw::drawPosAndNormalBufferFBO( const NPRScene& scene, 
@@ -643,6 +638,63 @@ void NPRGLDraw::setUniformViewParams(const GQShaderRef& shader)
         invert(inverse_projection);
         glUniformMatrix4fv(inverse_projection_id, 1, GL_FALSE, inverse_projection);
     }
+}
+
+void NPRGLDraw::setUniformPolygonParams(const GQShaderRef& shader, 
+                                        const NPRScene& scene) 
+{
+    bool lighting_enabled = NPRSettings::instance().get(NPR_ENABLE_LIGHTING);
+    shader.setUniform3fv("light_dir", scene.light(0)->lightDir() );
+    if (lighting_enabled)
+        shader.setUniform1i("light_mode", scene.light(0)->mode());
+    else
+        shader.setUniform1i("light_mode", -1);
+
+    const NPRStyle* style = scene.globalStyle();
+
+    float transfer[4];
+
+    style->transfer(NPRStyle::COLOR_DESAT).toArray(transfer);
+    shader.setUniform4fv("transfer_desat", transfer);
+
+    style->transfer(NPRStyle::COLOR_FADE).toArray(transfer);
+    shader.setUniform4fv("transfer_fade", transfer);
+
+    shader.setUniform4f("background_color", 
+        style->backgroundColor()[0],
+        style->backgroundColor()[1],
+        style->backgroundColor()[2],
+        1.0);
+}
+
+
+void NPRGLDraw::setUniformFocusParams(const GQShaderRef& shader, 
+                                      const NPRScene& scene)
+{
+    const NPRStyle* style = scene.globalStyle();
+    float transfer[4];
+
+    // cameraTransform is actually the transformation from camera to
+    // world space (i.e., the position of the camera in world), 
+    // so we want the inverse here.
+    vec camera_poa = scene.cameraInverseTransform() * scene.focalPoint();
+
+    style->transfer(NPRStyle::FOCUS_TRANSFER).toArray(transfer);
+    shader.setUniform4fv("focus_transfer", transfer);
+    shader.setUniform1i("focus_mode", NPRSettings::instance().get(NPR_FOCUS_MODE));
+
+    float radius = scene.sceneRadius();
+
+    shader.setUniform1f("model_size", radius);
+    shader.setUniform3fv("focus_3d_poa", camera_poa);
+
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    shader.setUniform1f("screen_aspect_ratio", (float)viewport[2] / (float)viewport[3]);
+    // transform screen to clip coordinates
+    float cx = scene.focalPoint()[0] / ((float)viewport[2]*0.5) - 1;
+    float cy = scene.focalPoint()[1] / ((float)viewport[3]*0.5) - 1;
+    shader.setUniform2f("focus_2d_poa", cx, cy );
 }
 
 void NPRGLDraw::init()

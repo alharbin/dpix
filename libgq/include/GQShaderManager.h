@@ -37,6 +37,7 @@ class GQShaderRef
         const QString& getName() const { return _name; }
 
 		int  uniformLocation( const QString& name ) const;
+        int  uniformLocationExistsCheck( const QString& name ) const;
         bool setUniform1f( const QString& name, float value ) const;
         bool setUniform1i( const QString& name, int value ) const;
         bool setUniform2f( const QString& name, float a, float b ) const;

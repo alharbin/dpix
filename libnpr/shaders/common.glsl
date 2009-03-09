@@ -1,36 +1,6 @@
 // HELPER FUNCTIONS FOR FRAGMENT SHADERS
 
-// transfer vector is defined as (v0, v1, near, far)
-float computeTransfer( vec4 transfer, float in_t )
-{
-    float alpha = clamp((in_t - transfer[2]) / (transfer[3] - transfer[2]), 0.0, 1.0);
-    float interp = transfer[0] + (transfer[1] - transfer[0])*alpha;
-    return interp;
-}
 
-vec4 colorFromFocus( float focus, vec4 transfer_desat, vec4 transfer_fade, 
-                       vec4 background_color, vec4 in_color )
-{
-    // desaturate first
-    float desat = computeTransfer(transfer_desat, focus);
-    float max_channel = max(max(in_color[0], in_color[1]), in_color[2]);
-
-    vec4 out_color;
-    
-    out_color = in_color + desat*(vec4(max_channel, max_channel, max_channel, 1) - in_color);
-
-//    out_color[0] = in_color[0] + desat*(max_channel - in_color[0]);
-//    out_color[1] = in_color[1] + desat*(max_channel - in_color[1]);
-//    out_color[2] = in_color[2] + desat*(max_channel - in_color[2]);
-    
-    
-    // fade out
-    float alpha = computeTransfer(transfer_fade, focus);
-    float beta = 1.0 - alpha;
-    //background_color = vec4(0.35,0.35,0.4,1.0);
-    out_color = out_color*beta + background_color*alpha;
-    return out_color;
-}
 
 struct LightingValues
 {

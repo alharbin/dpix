@@ -12,23 +12,31 @@
         <shader type="fragment">
             <source filename="version.glsl"/>
             <source filename="common.glsl"/>
+            <source filename="focus_common.glsl"/>
+            <source filename="stroke_render_common.glsl"/>
             <source filename="stroke_render_atlas.frag"/>
         </shader>
     </program>
 
     <program name="stroke_render_spine">
         <shader type="vertex">
-            <source filename="version.glsl"/>            <source filename="stroke_render_spine_120.vert"/>        </shader>
+            <source filename="version.glsl"/>            
+            <source filename="stroke_render_spine_120.vert"/>        
+        </shader>
         <shader type="geometry" input_type="lines" 
                 output_type="triangle_strip" vertices_out="4">
             <source filename="version.glsl"/>
             <source filename="spine_test_common.glsl"/>
-            <source filename="stroke_render_spine_120.geom"/>        </shader>
+            <source filename="stroke_render_spine_120.geom"/>        
+        </shader>
         <shader type="fragment">
             <source filename="version.glsl"/>
             <source filename="spine_test_common.glsl"/>
             <source filename="supersample_common.glsl"/>
-            <source filename="stroke_render_spine_120.frag"/>        </shader>
+            <source filename="focus_common.glsl"/>
+            <source filename="stroke_render_common.glsl"/>
+            <source filename="stroke_render_spine_120.frag"/>        
+        </shader>
     </program>
     
     <!--
@@ -66,11 +74,12 @@
             <source filename="version.glsl"/>
             <source filename="common.glsl"/>
             <source filename="segment_atlas_common.glsl"/>
+            <source filename="focus_common.glsl"/>
             <source filename="priority_buffer.frag"/>
         </shader>
     </program>
 
-    <program name="polygon_focus">
+    <program name="polygon_render">
         <shader type="vertex">
             <source filename="version.glsl"/>
             <source filename="standard.vert"/>
@@ -78,7 +87,8 @@
         <shader type="fragment">
             <source filename="version.glsl"/>
             <source filename="common.glsl"/>
-            <source filename="polygon_focus.frag"/>
+            <source filename="focus_common.glsl"/>
+            <source filename="polygon_render.frag"/>
         </shader>
     </program>
 

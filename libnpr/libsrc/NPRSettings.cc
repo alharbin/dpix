@@ -167,7 +167,7 @@ void NPRSettings::loadDefaults()
 
     _bools[NPR_CHECK_LINE_VISIBILITY] = true;
     _bools[NPR_CHECK_LINE_VISIBILITY_AT_SPINE] = true;
-    _bools[NPR_CHECK_LINE_PRIORITY] = false;
+    _bools[NPR_CHECK_LINE_PRIORITY] = true;
     _bools[NPR_FILTER_LINE_VISIBILITY] = false;
     _bools[NPR_FILTER_LINE_PRIORITY] = true;
 

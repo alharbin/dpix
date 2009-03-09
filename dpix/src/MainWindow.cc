@@ -532,6 +532,9 @@ void MainWindow::updateUiFromStyle()
         _ui.penTextureEditBox->setText( penstyle->textureFile() );
         _ui.penTextureEditBox->home(false);
         _ui.penWidthBox->setValue(penstyle->stripWidth());
+        _ui.penOpacityBox->setValue(penstyle->opacity());
+        _ui.penElisionWidthBox->setValue(penstyle->elisionWidth());
+        _ui.penLengthScaleBox->setValue(penstyle->lengthScale());
     }
 }
 
@@ -1121,6 +1124,20 @@ void MainWindow::on_penWidthBox_valueChanged(double value)
 {
     QString name = _ui.penStyleTypeBox->currentText();
     getCurrentStyle()->penStyle(name)->setStripWidth(value);
+    _glViewer->forceFullRedraw();
+}
+
+void MainWindow::on_penOpacityBox_valueChanged(double value)
+{
+    QString name = _ui.penStyleTypeBox->currentText();
+    getCurrentStyle()->penStyle(name)->setOpacity(value);
+    _glViewer->forceFullRedraw();
+}
+
+void MainWindow::on_penElisionWidthBox_valueChanged(double value)
+{
+    QString name = _ui.penStyleTypeBox->currentText();
+    getCurrentStyle()->penStyle(name)->setElisionWidth(value);
     _glViewer->forceFullRedraw();
 }
 
