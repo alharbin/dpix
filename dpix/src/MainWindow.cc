@@ -627,6 +627,14 @@ void MainWindow::updateUiFromSettings()
         case 16 : _ui.highQualityButton->setChecked(true); break;
         default: break;
     }
+
+    int focus_mode = settings.get(NPR_FOCUS_MODE); 
+    switch (focus_mode)
+    {
+        case NPR_FOCUS_NONE : _ui.focusOffButton->setChecked(true); break;
+        case NPR_FOCUS_SCREEN : _ui.focus2DButton->setChecked(true); break;
+        case NPR_FOCUS_WORLD : _ui.focus3DButton->setChecked(true); break;
+    }
 }
 
 void MainWindow::updateWindowMenu()

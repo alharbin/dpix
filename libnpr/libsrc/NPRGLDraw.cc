@@ -237,7 +237,7 @@ void NPRGLDraw::setPerModelPolygonUniforms( const GQShaderRef* shader, const NPR
         if (scene.numSelectedDrawables() > 0 && !(scene.isDrawableSelected(which)))
             selection_scale = 0.2f;
 
-        style->transfer(NPRStyle::COLOR_FADE).toArray(transfer);
+        style->transfer(NPRStyle::FILL_FADE).toArray(transfer);
         transfer[0] = transfer[0] * (1.0 - selection_scale) + selection_scale;
         transfer[1] = transfer[1] * (1.0 - selection_scale) + selection_scale;
         glUniform4fv(shader->uniformLocation("transfer_fade"), 1, transfer);
@@ -654,10 +654,10 @@ void NPRGLDraw::setUniformPolygonParams(const GQShaderRef& shader,
 
     float transfer[4];
 
-    style->transfer(NPRStyle::COLOR_DESAT).toArray(transfer);
+    style->transfer(NPRStyle::FILL_DESAT).toArray(transfer);
     shader.setUniform4fv("transfer_desat", transfer);
 
-    style->transfer(NPRStyle::COLOR_FADE).toArray(transfer);
+    style->transfer(NPRStyle::FILL_FADE).toArray(transfer);
     shader.setUniform4fv("transfer_fade", transfer);
 
     shader.setUniform4f("background_color", 

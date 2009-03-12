@@ -62,6 +62,7 @@ void GLViewer::setNPR( NPRRenderer* renderer, NPRScene* npr_scene )
 { 
     _renderer = renderer; 
     _npr_scene = npr_scene;
+    setFocalPoint(npr_scene->focalPoint());
     if (_inited && _renderer)
     {
         _renderer->resize( width(), height() );
@@ -339,6 +340,12 @@ void GLViewer::setAppropriateTextColor()
         glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }
+
+void GLViewer::setFocalPoint(const vec& v)
+{
+    _focus_frame.setTranslation(v[0], v[1], v[2]);
+}
+
 
 QDomElement GLViewer::domElement(const QString& name, QDomDocument& document) const
 {

@@ -112,15 +112,13 @@ public:
     {
         FOCUS_TRANSFER,
 
+        LINE_COLOR,
         LINE_OPACITY,
         LINE_TEXTURE,
-        LINE_WIDTH,
-        LINE_OVERSHOOT,           
         LINE_ELISION,
 
-        COLOR_FADE,
-        COLOR_DESAT,
-        COLOR_BLUR,      
+        FILL_FADE,
+        FILL_DESAT,
 
         PAPER_PARAMS,
 
@@ -129,7 +127,7 @@ public:
 
     inline const NPRTransfer& transfer( TransferFunc func ) const { return _transfers[func]; }
     NPRTransfer& transferRef( TransferFunc func );
-    NPRTransfer& transferByName( const QString& name );
+    NPRTransfer* transferByName( const QString& name );
 
     inline const vec&   backgroundColor() const      { return _background_color; }
     inline bool  drawInvisibleLines() const { return _draw_invisible_lines; }

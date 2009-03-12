@@ -17,16 +17,7 @@
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QGridLayout" >
-    <property name="leftMargin" >
-     <number>4</number>
-    </property>
-    <property name="topMargin" >
-     <number>4</number>
-    </property>
-    <property name="rightMargin" >
-     <number>4</number>
-    </property>
-    <property name="bottomMargin" >
+    <property name="margin" >
      <number>4</number>
     </property>
     <item row="0" column="1" >
@@ -244,7 +235,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Stylized Focus</string>
@@ -269,16 +260,7 @@
       <property name="spacing" >
        <number>6</number>
       </property>
-      <property name="leftMargin" >
-       <number>9</number>
-      </property>
-      <property name="topMargin" >
-       <number>9</number>
-      </property>
-      <property name="rightMargin" >
-       <number>9</number>
-      </property>
-      <property name="bottomMargin" >
+      <property name="margin" >
        <number>9</number>
       </property>
       <item>
@@ -357,6 +339,11 @@
       </item>
       <item>
        <property name="text" >
+        <string>Line Color</string>
+       </property>
+      </item>
+      <item>
+       <property name="text" >
         <string>Line Opacity</string>
        </property>
       </item>
@@ -367,32 +354,17 @@
       </item>
       <item>
        <property name="text" >
-        <string>Line Width</string>
-       </property>
-      </item>
-      <item>
-       <property name="text" >
-        <string>Line Overshoot</string>
-       </property>
-      </item>
-      <item>
-       <property name="text" >
         <string>Line Elision</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Color Fade</string>
+        <string>Fill Fade</string>
        </property>
       </item>
       <item>
        <property name="text" >
-        <string>Color Desat.</string>
-       </property>
-      </item>
-      <item>
-       <property name="text" >
-        <string>Color Blur</string>
+        <string>Fill Desat.</string>
        </property>
       </item>
       <item>
@@ -478,7 +450,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Line Visibility</string>
@@ -604,12 +576,12 @@
    </property>
    <property name="maximumSize" >
     <size>
-     <width>16777215</width>
-     <height>16777215</height>
+     <width>524287</width>
+     <height>524287</height>
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Scene Graph</string>
@@ -658,7 +630,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Lighting</string>
@@ -757,7 +729,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Statistics</string>
@@ -791,7 +763,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Pen Style</string>
@@ -878,7 +850,7 @@
       </rect>
      </property>
      <property name="styleSheet" >
-      <string/>
+      <string notr="true" />
      </property>
      <property name="frameShape" >
       <enum>QFrame::StyledPanel</enum>
@@ -931,7 +903,7 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet" >
-       <string>border: 1px solid black;background-color: rgb(255,0,0)</string>
+       <string notr="true" >border: 1px solid black;background-color: rgb(255,0,0)</string>
       </property>
       <property name="frameShape" >
        <enum>QFrame::StyledPanel</enum>
@@ -1066,7 +1038,7 @@
      <property name="geometry" >
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>30</y>
        <width>121</width>
        <height>18</height>
       </rect>
@@ -1152,7 +1124,7 @@
      <property name="geometry" >
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>10</y>
        <width>121</width>
        <height>18</height>
       </rect>

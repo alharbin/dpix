@@ -12,6 +12,18 @@
 
 const int CURRENT_VERSION = 4;
 
+const char* TRANSFER_NAMES[NPRStyle::NUM_TRANSFER_FUNCTIONS] = 
+{
+    "focus_transfer",
+    "line_color",
+    "line_opacity",
+    "line_texture",
+    "line_elision",
+    "fill_fade",
+    "fill_desat",
+    "paper_params",
+};
+
 //
 // Helper function
 //
@@ -260,15 +272,13 @@ void NPRStyle::loadDefaults()
     // Some reasonable default values.
     _background_color = vec(1.0f, 1.0f, 1.0f);
     
+    _transfers[LINE_COLOR].set(0.0f, 1.0f, 0.0f, 1.0f);
     _transfers[LINE_OPACITY].set(0.0f, 1.0f, 0.0f, 1.0f);
     _transfers[LINE_TEXTURE].set(0.0f, 1.0f, 0.0f, 1.0f);
-    _transfers[LINE_WIDTH].set(0.0f, 1.0f, 0.0f, 1.0f);
-    _transfers[LINE_OVERSHOOT].set(0.0f, 1.0f, 0.2f, 0.8f);
     _transfers[LINE_ELISION].set(0.0f, 1.0f, 0.0f, 1.0f);
     
-    _transfers[COLOR_FADE].set(0.4f, 0.8f, 0.0f, 1.0f);
-    _transfers[COLOR_DESAT].set(0.0f, 0.8f, 0.0f, 1.0f);
-    _transfers[COLOR_BLUR].set(0.0f, 0.3f, 0.0f, 1.0f);
+    _transfers[FILL_FADE].set(0.4f, 0.8f, 0.0f, 1.0f);
+    _transfers[FILL_DESAT].set(0.0f, 0.8f, 0.0f, 1.0f);
     
     _transfers[FOCUS_TRANSFER].set(0.0f, 1.0f, 0.2f, 0.8f);
 
@@ -368,8 +378,11 @@ bool NPRStyle::load( const QDomElement& root )
 	QDomElement trans = transfer_functions.firstChildElement("vec4");
 	while (!trans.isNull())
 	{
-		NPRTransfer& tfunc = transferByName( trans.attribute("name") );
-		tfunc.load(trans);
+		NPRTransfer* tfunc = transferByName( trans.attribute("name") );
+        if (tfunc)
+        {
+    		tfunc->load(trans);
+        }
 		trans = trans.nextSiblingElement("vec4");
 	}
 
@@ -464,22 +477,12 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
 	// transfer functions
 	QDomElement transfer_functions = doc.createElement("transfer_functions");
 	root.appendChild(transfer_functions);
-	const char* tfunc_names[] = {"focus_transfer",
-							"line_opacity",
-							"line_texture",
-							"line_width",
-							"line_overshoot",
-                            "line_elision",
-							"color_fade",
-							"color_desat",
-							"color_blur",
-							"paper_params",
-							};
+	
 	for (int i = 0; i < NUM_TRANSFER_FUNCTIONS; i++)
 	{
 		QDomElement trans = doc.createElement("vec4");
 		_transfers[i].save( doc, trans );
-		trans.setAttribute("name", tfunc_names[i]);
+		trans.setAttribute("name", TRANSFER_NAMES[i]);
 		transfer_functions.appendChild(trans);
 	}
 
@@ -557,27 +560,25 @@ bool NPRStyle::loadTexture(QString& output_name, GQTexture*& output_ptr,
 
 
 
-NPRTransfer& NPRStyle::transferByName( const QString& name )
+NPRTransfer* NPRStyle::transferByName( const QString& name )
 {
-	TransferFunc func = NUM_TRANSFER_FUNCTIONS;
-	if (name == "focus_transfer")		func = FOCUS_TRANSFER;
-	else if (name == "line_opacity")  func = LINE_OPACITY;
-	else if (name == "line_texture")  func = LINE_TEXTURE;
-	else if (name == "line_width")  func = LINE_WIDTH;
-	else if (name == "line_overshoot")  func = LINE_OVERSHOOT;
-	else if (name == "line_elision")  func = LINE_ELISION;
-	else if (name == "color_fade")  func = COLOR_FADE;
-	else if (name == "color_desat")  func = COLOR_DESAT;
-	else if (name == "color_blur")  func = COLOR_BLUR;
-	else if (name == "paper_params")  func = PAPER_PARAMS;
+    NPRTransfer* func = 0;
+    for (int i = 0; i < NUM_TRANSFER_FUNCTIONS; i++)
+    {
+        if (TRANSFER_NAMES[i] == name)
+        {
+            func = &_transfers[i];
+            break;
+        }
+    }
 
-	return _transfers[func];
+	return func;
 }
 
 
 NPRTransfer& NPRStyle::transferRef( NPRStyle::TransferFunc func )
 {
-    if (func == LINE_ELISION || func == LINE_OVERSHOOT)
+    if (func == LINE_ELISION)
         _path_style_dirty = true;
     
     return _transfers[func];   

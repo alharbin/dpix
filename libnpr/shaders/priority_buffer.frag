@@ -1,4 +1,4 @@
-uniform sampler2DRect segment_atlas;
+uniform sampler2DRect visibility_atlas;
 uniform vec4  transfer_width;
 
 uniform vec4  viewport;
@@ -12,9 +12,7 @@ varying float path_id;
 
 void main()
 {
-    float visibility = texture2DRect(segment_atlas, atlas_position).w;
-    if (visibility < 0.001)
-        discard;
+    float visibility = texture2DRect(visibility_atlas, atlas_position).w;
 
     vec4 camera_pos_w = inverse_projection * spine_position;
     vec3 camera_pos = camera_pos_w.xyz / camera_pos_w.w;

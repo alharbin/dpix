@@ -64,6 +64,7 @@ public:
     LightPreset lightPreset() { return _light_preset; }
     void setLightDepth(float depth) { _light_depth = depth; }
     float lightDepth() { return _light_depth; }
+    void setFocalPoint(const vec& v);
 
     void setTimersAreDisplayed( bool enable ) { _display_timers = enable; }
     void setResetTimersEachFrame( bool enable ) { _reset_timers_each_frame = enable; }

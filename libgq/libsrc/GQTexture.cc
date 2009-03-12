@@ -35,11 +35,12 @@ bool GQTexture2D::genTexture(int width, int height, int internalFormat, int form
     glTexImage2D(_target, 0, internalFormat, width, height, 0, format, type, data);
 
     int wrapMode = _target == GL_TEXTURE_2D ? GL_REPEAT : GL_CLAMP;
+    int filterMode = _target == GL_TEXTURE_2D ? GL_LINEAR : GL_NEAREST;
     
     glTexParameteri(_target, GL_TEXTURE_WRAP_S, wrapMode);
     glTexParameteri(_target, GL_TEXTURE_WRAP_T, wrapMode);
-    glTexParameteri(_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(_target, GL_TEXTURE_MAG_FILTER, filterMode);
+    glTexParameteri(_target, GL_TEXTURE_MIN_FILTER, filterMode);
 
     int error = glGetError();
     if (error)

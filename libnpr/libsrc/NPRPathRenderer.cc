@@ -7,6 +7,7 @@
 
 #include "GQShaderManager.h"
 #include "GQStats.h"
+#include <assert.h>
 
 #if 1
 #define __MY_START_TIMER __START_TIMER
@@ -18,6 +19,11 @@
 #define __MY_TIME_CODE_BLOCK __TIME_CODE_BLOCK_AFTER_GL_FINISH
 #endif
 
+const int DRAW_STROKES_WITH_PRIORITY = 0;
+const int DRAW_STROKES_NO_PRIORITY = 1;
+const int DRAW_PRIORITY_WITH_VISIBILITY = 2;
+const int DRAW_PRIORITY_NO_VISIBILITY = 3;
+
 NPRPathRenderer::NPRPathRenderer()
 {
     clear();
@@ -25,7 +31,7 @@ NPRPathRenderer::NPRPathRenderer()
 
 void NPRPathRenderer::clear()
 {
-    _blank_texture.clear();
+    _blank_white_texture.clear();
     _quad_vertices_vbo.clear();
 
     _is_initialized = false;
@@ -33,7 +39,7 @@ void NPRPathRenderer::clear()
 
 void NPRPathRenderer::init()
 {
-    makeBlankTexture();
+    makeBlankTextures();
     makeQuadRenderingVBO();
 
     _is_initialized = true;
@@ -75,7 +81,6 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
         settings.get(NPR_CHECK_LINE_VISIBILITY_AT_SPINE));
     setUniformPenStyleParams(shader, *(scene.globalStyle()));
     NPRGLDraw::setUniformFocusParams(shader, scene);
-
     NPRGLDraw::setUniformSSParams(shader);
     NPRGLDraw::setUniformViewParams(shader);
 
@@ -92,7 +97,7 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
     {
         int mode = NPR_DRAW_PROFILES | NPR_OPAQUE | NPR_TRANSLUCENT;
         shader.setUniform1i("test_profiles", 1);
-        NPRGLDraw::drawMeshes(scene, 0, mode );
+        NPRGLDraw::drawMeshes(scene, 0, mode);
     }
 }
 
@@ -107,18 +112,20 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
     GQShaderRef shader = GQShaderManager::bindProgram("stroke_render_atlas");
     setUniformPenStyleParams(shader, *(scene.globalStyle()));
     NPRGLDraw::setUniformFocusParams(shader, scene);
+    NPRGLDraw::setUniformViewParams(shader);
 
-    NPRSegmentAtlas::AtlasBufferId visibility_buffer = 
-        NPRSegmentAtlas::VISIBILITY_ID;
-    if (NPRSettings::instance().get(NPR_CHECK_LINE_PRIORITY))
+    int draw_mode = DRAW_STROKES_NO_PRIORITY;
+    bool use_priority_buffer = scene.globalStyle()->enableLineElision() &&
+                               NPRSettings::instance().get(NPR_CHECK_LINE_PRIORITY);
+    if (use_priority_buffer)
     {
-        visibility_buffer = NPRSegmentAtlas::PRIORITY_ID;
+        draw_mode = DRAW_STROKES_WITH_PRIORITY;
     }
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    drawQuads(shader, atlas, visibility_buffer);
+    drawQuads(shader, atlas, draw_mode);
 }
 
 void NPRPathRenderer::drawPriorityBuffer(const NPRScene& scene, 
@@ -133,7 +140,11 @@ void NPRPathRenderer::drawPriorityBuffer(const NPRScene& scene,
 
     glDisable(GL_BLEND);
 
-    drawQuads(shader, atlas, NPRSegmentAtlas::VISIBILITY_ID);
+    if (scene.globalStyle()->drawInvisibleLines())
+    {
+        drawQuads(shader, atlas, DRAW_PRIORITY_NO_VISIBILITY);
+    }
+    drawQuads(shader, atlas, DRAW_PRIORITY_WITH_VISIBILITY);
 }
         
 
@@ -153,10 +164,10 @@ void NPRPathRenderer::setUniformPenStyleParams(const GQShaderRef& shader,
 
     // We have to set some texture for the pen even if the user hasn't
     // selected anything to avoid a crash on mac.
-    const GQTexture* vis_focus_tex = &_blank_texture;
-    const GQTexture* vis_defocus_tex = &_blank_texture;
-    const GQTexture* invis_focus_tex = &_blank_texture;
-    const GQTexture* invis_defocus_tex = &_blank_texture;
+    const GQTexture* vis_focus_tex = &_blank_white_texture;
+    const GQTexture* vis_defocus_tex = &_blank_white_texture;
+    const GQTexture* invis_focus_tex = &_blank_white_texture;
+    const GQTexture* invis_defocus_tex = &_blank_white_texture;
 
     if (vis_focus->texture()) vis_focus_tex = vis_focus->texture();
     if (vis_defocus->texture()) vis_defocus_tex = vis_defocus->texture();
@@ -190,6 +201,14 @@ void NPRPathRenderer::setUniformPenStyleParams(const GQShaderRef& shader,
 
     shader.setUniform1f("texture_length", vis_focus_tex->width());
     shader.setUniform1f("length_scale", vis_focus->lengthScale());
+
+    float color_trans[4], opacity_trans[4], texture_trans[4];
+    style.transfer(NPRStyle::LINE_COLOR).toArray(color_trans);
+    style.transfer(NPRStyle::LINE_OPACITY).toArray(opacity_trans);
+    style.transfer(NPRStyle::LINE_TEXTURE).toArray(texture_trans);
+    shader.setUniform4fv("color_transfer", color_trans);
+    shader.setUniform4fv("opacity_transfer", opacity_trans);
+    shader.setUniform4fv("texture_transfer", texture_trans);
 }
 
 void NPRPathRenderer::setUniformPriorityBufferParams(const GQShaderRef& shader,
@@ -216,7 +235,7 @@ void NPRPathRenderer::setUniformPriorityBufferParams(const GQShaderRef& shader,
 
 void NPRPathRenderer::drawQuads(const GQShaderRef& shader, 
                        const NPRSegmentAtlas& atlas,
-                       NPRSegmentAtlas::AtlasBufferId visibility_buffer)
+                       int draw_mode)
 {
     if (!_is_initialized)
         init();
@@ -258,8 +277,31 @@ void NPRPathRenderer::drawQuads(const GQShaderRef& shader,
     shader.bindNamedTexture("clip_vert_1_buffer", 
         atlas.clipBuffer(NPRSegmentAtlas::CLIP_VERTEX_1_ID));
 
-    shader.bindNamedTexture("segment_atlas", 
-        atlas.atlasBuffer(visibility_buffer));
+    switch (draw_mode)
+    {
+        case DRAW_STROKES_WITH_PRIORITY :
+            shader.bindNamedTexture("visibility_atlas", 
+                atlas.atlasBuffer(NPRSegmentAtlas::VISIBILITY_ID));
+            shader.bindNamedTexture("priority_atlas", 
+                atlas.atlasBuffer(NPRSegmentAtlas::PRIORITY_ID));
+            break;
+        case DRAW_STROKES_NO_PRIORITY :
+            shader.bindNamedTexture("visibility_atlas", 
+                atlas.atlasBuffer(NPRSegmentAtlas::VISIBILITY_ID));
+            shader.bindNamedTexture("priority_atlas", 
+                &_blank_white_texture_rect);
+            break;
+        case DRAW_PRIORITY_WITH_VISIBILITY :
+            shader.bindNamedTexture("visibility_atlas", 
+                atlas.atlasBuffer(NPRSegmentAtlas::VISIBILITY_ID));
+            break;
+        case DRAW_PRIORITY_NO_VISIBILITY :
+            shader.bindNamedTexture("visibility_atlas", 
+                &_blank_white_texture_rect);
+            break;
+        default:
+            assert(0);
+    }
 
     shader.setUniform4fv("viewport", viewport );
     shader.setUniform1f("clip_buffer_width", atlas.clipBufferWidth() );
@@ -299,7 +341,7 @@ void NPRPathRenderer::drawQuads(const GQShaderRef& shader,
         
 // Creates a blank dummy texture for rendering quads when the user
 // hasn't selected a texture.
-void NPRPathRenderer::makeBlankTexture()
+void NPRPathRenderer::makeBlankTextures()
 {
     int size = 16;
     GQImage blank_img(size, size, 4);
@@ -308,7 +350,8 @@ void NPRPathRenderer::makeBlankTexture()
         blank_img.raster()[i] = 255;
     }
 
-    _blank_texture.create(blank_img);
+    _blank_white_texture.create(blank_img);
+    _blank_white_texture_rect.create(blank_img, GL_TEXTURE_RECTANGLE_ARB);
 }
 
 // Creates a string of vertices for rendering quads along line segments.

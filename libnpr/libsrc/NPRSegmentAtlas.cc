@@ -245,8 +245,7 @@ void NPRSegmentAtlas::filter(AtlasBufferId which, AtlasFilterType type, const NP
             shader = GQShaderManager::bindProgram("median_filter_atlas"); break;
         case SMOOTH_AND_THRESHOLD_FILTER :
             shader = GQShaderManager::bindProgram("smooth_and_threshold_atlas"); 
-            shader.setUniform1f("overshoot_offset", 
-                1.0 - style->transfer(NPRStyle::LINE_OVERSHOOT).v1);
+            shader.setUniform1f("overshoot_offset", 1.0);
             break;
 
         default:
@@ -512,8 +511,6 @@ void NPRSegmentAtlas::drawSegmentAtlas(AtlasBufferId target,
         case PRIORITY_ID : 
             shader = GQShaderManager::bindProgram("segment_atlas_priority"); 
             shader.bindNamedTexture("priority_buffer", &reference_texture);
-            shader.bindNamedTexture("visibility_atlas", 
-                _atlas_fbo.colorTexture(VISIBILITY_ID));
             break;
         default:
             assert(0);

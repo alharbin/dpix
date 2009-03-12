@@ -1,10 +1,6 @@
 #define NPR_FOCUS_NONE 0
-#define NPR_FOCUS_CAMERA 1
+#define NPR_FOCUS_SCREEN 1
 #define NPR_FOCUS_WORLD 2
-#define NPR_FOCUS_SCREEN 3
-#define NPR_FOCUS_OBJECT 4
-#define NPR_FOCUS_CONFIDENCE 5
-#define NPR_FOCUS_COLOR 6
 
 uniform vec4              focus_transfer;
 uniform vec2			  focus_2d_poa;
@@ -60,5 +56,5 @@ float computeFocus( vec3 camera_pos, vec4 clip_pos )
 
     float focus = computeTransfer(focus_transfer, dist);
 
-    return focus;
+    return focus; 
 }

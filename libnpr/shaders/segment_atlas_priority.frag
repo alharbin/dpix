@@ -1,7 +1,6 @@
 uniform vec4 viewport;
 
 uniform sampler2DRect priority_buffer;
-uniform sampler2DRect visibility_atlas;
 
 varying vec4 sample_clip_pos;
 varying float path_id;
@@ -30,7 +29,6 @@ float getPriorityValue(vec3 id, vec3 position)
 
 void main()
 {
-    float visibility = texture2DRect(visibility_atlas, gl_FragCoord.xy).a;
     vec3 path_color = idToColor(path_id);
 
     // convert from clip to window coordinates
@@ -42,5 +40,5 @@ void main()
 
     float priority = getPriorityValue(path_color, sample_window_pos);
 
-    gl_FragData[0] = vec4(path_color, priority*visibility);
+    gl_FragData[0] = vec4(path_color, priority);
 }

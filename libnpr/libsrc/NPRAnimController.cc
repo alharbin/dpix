@@ -81,19 +81,6 @@ void NPRAnimController::updateTransform()
     
     while (distance > _current_length) {
         // advance to next pair
-        /*if (_current_vert + 1 < _cur_path->size()) {
-            // advance vertex, same set
-            _current_vert++;
-        }
-        else if (_current_set + 1 < _path_set->size()) {
-            // advance set, reset vertex
-            _current_set++;
-            _current_vert = 0;
-        }
-        else {
-            // no more to advance to
-            return;
-        }*/
         _current_vert = (_current_vert+1) % _cur_path->size();
         
         distance -= _current_length;
@@ -108,7 +95,6 @@ void NPRAnimController::updateTransform()
     // within this segment
     const vec &v0 = _cur_path->vert(0);
     const vec &va = _cur_path->vert(_current_vert);
-//    const vec &vb = (*_path_set)[_current_set]->verts[_current_vert + 1];
 
     vec translation = _current_direction * distance + va - v0;
 

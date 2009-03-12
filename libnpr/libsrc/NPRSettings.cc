@@ -106,19 +106,22 @@ bool NPRSettings::load( const QDomElement& element )
         {
             bool value = entry.attribute("value").toInt();
             int key = bool_keys.value(name, -1);
-            _bools[key] = value;
+            if (key >= 0)
+                _bools[key] = value;
         }
         else if (entry.tagName() == "int")
         {
             int value = entry.attribute("value").toInt();
             int key = int_keys.value(name, -1);
-            _ints[key] = value;
+            if (key >= 0)
+                _ints[key] = value;
         }
         else if (entry.tagName() == "float")
         {
             float value = entry.attribute("value").toFloat();
             int key = float_keys.value(name, -1);
-            _floats[key] = value;
+            if (key >= 0)
+                _floats[key] = value;
         }
 
         entry = entry.nextSiblingElement();
@@ -192,7 +195,7 @@ void NPRSettings::loadDefaults()
     _ints[NPR_EXTRACT_NUM_ISOPHOTES] = 10;
     _ints[NPR_ITEM_BUFFER_LAYERS] = 1;
     _ints[NPR_LINE_VISIBILITY_SUPERSAMPLE] = 1;
-    _ints[NPR_LINE_VISIBILITY_METHOD] = (int)(NPR_SPINE_TEST);
+    _ints[NPR_LINE_VISIBILITY_METHOD] = (int)(NPR_SEGMENT_ATLAS);
     _ints[NPR_FOCUS_MODE] = (int)(NPR_FOCUS_NONE);
 
     _floats[NPR_ITEM_BUFFER_LINE_WIDTH] = 1;

@@ -32,10 +32,10 @@ class NPRPathRenderer
 
         void drawQuads(const GQShaderRef& shader, 
                        const NPRSegmentAtlas& atlas,
-                       NPRSegmentAtlas::AtlasBufferId visibility_buffer);
+                       int draw_mode);
 
         void makeQuadRenderingVBO();
-        void makeBlankTexture();
+        void makeBlankTextures();
 
         void setUniformPenStyleParams(const GQShaderRef& shader, 
                                       const NPRStyle& style);
@@ -45,7 +45,8 @@ class NPRPathRenderer
     protected:
         bool         _is_initialized;
 
-        GQTexture2D  _blank_texture;
+        GQTexture2D  _blank_white_texture;
+        GQTexture2D  _blank_white_texture_rect;
         GQVertexBufferSet _quad_vertices_vbo;
 };
 
