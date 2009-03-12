@@ -11,7 +11,6 @@ const QString g_bool_names[NPR_NUM_BOOL_SETTINGS] =
 {
     "enable_lines", /*NPR_ENABLE_LINES*/
     "enable_stylized_lines", /*NPR_ENABLE_STYLIZED_LINES*/
-    "enable_invisible_lines", /*NPR_ENABLE_INVISIBLE_LINES*/
     "enable_polygons", /*NPR_ENABLE_POLYGONS*/
     "enable_transparent_polygons", /*NPR_ENABLE_TRANSPARENT_POLYGONS*/
     "enable_paper_texture", /*NPR_ENABLE_PAPER_TEXTURE*/
@@ -153,7 +152,6 @@ void NPRSettings::loadDefaults()
 
     _bools[NPR_ENABLE_LINES] = true;
     _bools[NPR_ENABLE_STYLIZED_LINES] = true;
-    _bools[NPR_ENABLE_INVISIBLE_LINES] = false;
     _bools[NPR_ENABLE_POLYGONS] = true;
     _bools[NPR_ENABLE_TRANSPARENT_POLYGONS] = true;
     _bools[NPR_ENABLE_PAPER_TEXTURE] = true;

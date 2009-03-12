@@ -71,8 +71,6 @@ public slots:
     void on_actionShow_FPS_toggled( bool checked );
     void on_actionEnable_Stylized_Lines_toggled( bool checked ) 
         { setBoolSetting(NPR_ENABLE_STYLIZED_LINES, checked); };
-    void on_actionDraw_Invisible_Lines_toggled( bool checked ) 
-        { setBoolSetting(NPR_ENABLE_INVISIBLE_LINES, checked); };
     void on_actionEnable_Color_Blur_toggled( bool checked )
         { setBoolSetting(NPR_ENABLE_COLOR_BLUR, checked); }
     void on_actionColor_Lines_By_ID_toggled( bool checked )
@@ -176,6 +174,9 @@ public slots:
     void on_penOpacityBox_valueChanged(double value);
     void on_penElisionWidthBox_valueChanged(double value);
     void on_penLengthScaleBox_valueChanged(double value);
+
+    void on_drawInvisibleCheckBox_toggled( bool value );
+    void on_enableLineElisionCheckBox_toggled( bool value );
 
     void on_cameraInterpSpeedBox_valueChanged( double value );
 

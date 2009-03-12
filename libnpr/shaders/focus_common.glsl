@@ -47,7 +47,7 @@ float computeFocus( vec3 camera_pos, vec4 clip_pos )
     if (focus_mode == NPR_FOCUS_WORLD)
     {
         float dist_to_poa = length(focus_3d_poa - camera_pos);
-        dist = dist_to_poa / model_size;
+        dist = dist_to_poa / (model_size * 2.0);
     }
     else if (focus_mode == NPR_FOCUS_SCREEN)
     {

@@ -260,11 +260,11 @@ void NPRStyle::loadDefaults()
     // Some reasonable default values.
     _background_color = vec(1.0f, 1.0f, 1.0f);
     
-    _transfers[LINE_OPACITY].set(0.0f, 0.5f, 0.0f, 1.0f);
+    _transfers[LINE_OPACITY].set(0.0f, 1.0f, 0.0f, 1.0f);
     _transfers[LINE_TEXTURE].set(0.0f, 1.0f, 0.0f, 1.0f);
-    _transfers[LINE_WIDTH].set(0.0f, 0.5f, 0.0f, 1.0f);
-    _transfers[LINE_OVERSHOOT].set(0.0f, 0.0f, 0.2f, 0.8f);
-    _transfers[LINE_ELISION].set(0.0f, 0.0f, 0.0f, 1.0f);
+    _transfers[LINE_WIDTH].set(0.0f, 1.0f, 0.0f, 1.0f);
+    _transfers[LINE_OVERSHOOT].set(0.0f, 1.0f, 0.2f, 0.8f);
+    _transfers[LINE_ELISION].set(0.0f, 1.0f, 0.0f, 1.0f);
     
     _transfers[COLOR_FADE].set(0.4f, 0.8f, 0.0f, 1.0f);
     _transfers[COLOR_DESAT].set(0.0f, 0.8f, 0.0f, 1.0f);
@@ -278,6 +278,7 @@ void NPRStyle::loadDefaults()
     _pen_styles[0]->setName("Base Style");
 
     _draw_invisible_lines = false;
+    _enable_line_elision = false;
 }
 
 
@@ -398,6 +399,7 @@ bool NPRStyle::load( const QDomElement& root )
         int value = ivalue.attribute("value").toInt();
 
         if (name == "draw_invisible_lines") _draw_invisible_lines = (bool)value;
+        if (name == "enable_line_elision") _enable_line_elision = (bool)value;
 
         ivalue = ivalue.nextSiblingElement("int");
     }
@@ -500,6 +502,7 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
 	QDomElement params = doc.createElement("parameters");
 	root.appendChild(params);
     saveInt((int)_draw_invisible_lines, "draw_invisible_lines", doc, params);
+    saveInt((int)_enable_line_elision, "enable_line_elision", doc, params);
 
     return true;
 }

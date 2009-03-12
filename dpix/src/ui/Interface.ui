@@ -17,10 +17,19 @@
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QGridLayout" >
-    <property name="margin" >
+    <property name="leftMargin" >
      <number>4</number>
     </property>
-    <item row="0" column="0" >
+    <property name="topMargin" >
+     <number>4</number>
+    </property>
+    <property name="rightMargin" >
+     <number>4</number>
+    </property>
+    <property name="bottomMargin" >
+     <number>4</number>
+    </property>
+    <item row="0" column="1" >
      <widget class="GLViewer" native="1" name="viewer" >
       <property name="sizePolicy" >
        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -187,8 +196,6 @@
      <addaction name="separator" />
      <addaction name="actionColor_Lines_By_ID" />
      <addaction name="separator" />
-     <addaction name="actionDraw_Invisible_Lines" />
-     <addaction name="separator" />
      <addaction name="actionDraw_Profiles" />
     </widget>
     <widget class="QMenu" name="menuPolygon_Options" >
@@ -237,7 +244,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Stylized Focus</string>
@@ -262,7 +269,16 @@
       <property name="spacing" >
        <number>6</number>
       </property>
-      <property name="margin" >
+      <property name="leftMargin" >
+       <number>9</number>
+      </property>
+      <property name="topMargin" >
+       <number>9</number>
+      </property>
+      <property name="rightMargin" >
+       <number>9</number>
+      </property>
+      <property name="bottomMargin" >
        <number>9</number>
       </property>
       <item>
@@ -462,7 +478,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Line Visibility</string>
@@ -588,12 +604,12 @@
    </property>
    <property name="maximumSize" >
     <size>
-     <width>524287</width>
-     <height>524287</height>
+     <width>16777215</width>
+     <height>16777215</height>
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Scene Graph</string>
@@ -642,7 +658,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Lighting</string>
@@ -741,7 +757,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Statistics</string>
@@ -775,7 +791,7 @@
     </size>
    </property>
    <property name="allowedAreas" >
-    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+    <set>Qt::LeftDockWidgetArea|Qt::NoDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle" >
     <string>Pen Style</string>
@@ -788,7 +804,7 @@
      <property name="geometry" >
       <rect>
        <x>70</x>
-       <y>30</y>
+       <y>100</y>
        <width>131</width>
        <height>22</height>
       </rect>
@@ -818,7 +834,7 @@
      <property name="geometry" >
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>100</y>
        <width>51</width>
        <height>16</height>
       </rect>
@@ -834,7 +850,7 @@
      <property name="geometry" >
       <rect>
        <x>20</x>
-       <y>60</y>
+       <y>130</y>
        <width>141</width>
        <height>18</height>
       </rect>
@@ -856,13 +872,13 @@
      <property name="geometry" >
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>150</y>
        <width>201</width>
-       <height>161</height>
+       <height>111</height>
       </rect>
      </property>
      <property name="styleSheet" >
-      <string notr="true" />
+      <string/>
      </property>
      <property name="frameShape" >
       <enum>QFrame::StyledPanel</enum>
@@ -915,7 +931,7 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet" >
-       <string notr="true" >border: 1px solid black;background-color: rgb(255,0,0)</string>
+       <string>border: 1px solid black;background-color: rgb(255,0,0)</string>
       </property>
       <property name="frameShape" >
        <enum>QFrame::StyledPanel</enum>
@@ -969,121 +985,10 @@
        <string>...</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_13" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>140</y>
-        <width>61</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text" >
-       <string>Length Scl.</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="penLengthScaleBox" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>120</y>
-        <width>51</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="decimals" >
-       <number>2</number>
-      </property>
-      <property name="minimum" >
-       <double>0.010000000000000</double>
-      </property>
-      <property name="maximum" >
-       <double>100.000000000000000</double>
-      </property>
-      <property name="singleStep" >
-       <double>0.100000000000000</double>
-      </property>
-      <property name="value" >
-       <double>1.000000000000000</double>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_8" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>90</y>
-        <width>31</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text" >
-       <string>Width</string>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="penWidthBox" >
-      <property name="geometry" >
-       <rect>
-        <x>10</x>
-        <y>70</y>
-        <width>51</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="decimals" >
-       <number>1</number>
-      </property>
-      <property name="minimum" >
-       <double>1.000000000000000</double>
-      </property>
-      <property name="singleStep" >
-       <double>0.500000000000000</double>
-      </property>
-      <property name="value" >
-       <double>1.000000000000000</double>
-      </property>
-     </widget>
-     <widget class="QDoubleSpinBox" name="penElisionWidthBox" >
-      <property name="geometry" >
-       <rect>
-        <x>130</x>
-        <y>70</y>
-        <width>51</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="decimals" >
-       <number>2</number>
-      </property>
-      <property name="minimum" >
-       <double>1.000000000000000</double>
-      </property>
-      <property name="maximum" >
-       <double>100.000000000000000</double>
-      </property>
-      <property name="singleStep" >
-       <double>1.000000000000000</double>
-      </property>
-      <property name="value" >
-       <double>1.000000000000000</double>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_9" >
-      <property name="geometry" >
-       <rect>
-        <x>130</x>
-        <y>90</y>
-        <width>31</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text" >
-       <string>Elision</string>
-      </property>
-     </widget>
      <widget class="QDoubleSpinBox" name="penOpacityBox" >
       <property name="geometry" >
        <rect>
-        <x>70</x>
+        <x>10</x>
         <y>70</y>
         <width>51</width>
         <height>22</height>
@@ -1108,7 +1013,7 @@
      <widget class="QLabel" name="label_10" >
       <property name="geometry" >
        <rect>
-        <x>70</x>
+        <x>10</x>
         <y>90</y>
         <width>41</width>
         <height>16</height>
@@ -1116,6 +1021,44 @@
       </property>
       <property name="text" >
        <string>Opacity</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="penElisionWidthBox" >
+      <property name="geometry" >
+       <rect>
+        <x>70</x>
+        <y>70</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="decimals" >
+       <number>2</number>
+      </property>
+      <property name="minimum" >
+       <double>1.000000000000000</double>
+      </property>
+      <property name="maximum" >
+       <double>100.000000000000000</double>
+      </property>
+      <property name="singleStep" >
+       <double>1.000000000000000</double>
+      </property>
+      <property name="value" >
+       <double>1.000000000000000</double>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9" >
+      <property name="geometry" >
+       <rect>
+        <x>70</x>
+        <y>90</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text" >
+       <string>Elision</string>
       </property>
      </widget>
     </widget>
@@ -1130,6 +1073,92 @@
      </property>
      <property name="text" >
       <string>Draw Invisible Lines</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13" >
+     <property name="geometry" >
+      <rect>
+       <x>70</x>
+       <y>80</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text" >
+      <string>Length Scl.</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>31</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text" >
+      <string>Width</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="penLengthScaleBox" >
+     <property name="geometry" >
+      <rect>
+       <x>70</x>
+       <y>60</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="decimals" >
+      <number>2</number>
+     </property>
+     <property name="minimum" >
+      <double>0.010000000000000</double>
+     </property>
+     <property name="maximum" >
+      <double>100.000000000000000</double>
+     </property>
+     <property name="singleStep" >
+      <double>0.100000000000000</double>
+     </property>
+     <property name="value" >
+      <double>1.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="penWidthBox" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="decimals" >
+      <number>1</number>
+     </property>
+     <property name="minimum" >
+      <double>1.000000000000000</double>
+     </property>
+     <property name="singleStep" >
+      <double>0.500000000000000</double>
+     </property>
+     <property name="value" >
+      <double>1.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="enableLineElisionCheckBox" >
+     <property name="geometry" >
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>121</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text" >
+      <string>Enable Line Elision</string>
      </property>
     </widget>
    </widget>

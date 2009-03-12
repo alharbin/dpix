@@ -133,9 +133,11 @@ public:
 
     inline const vec&   backgroundColor() const      { return _background_color; }
     inline bool  drawInvisibleLines() const { return _draw_invisible_lines; }
+    inline bool  enableLineElision() const { return _enable_line_elision; }
 
     void         setBackgroundColor( const vec& color ) { _background_color = color; }
     void         setDrawInvisibleLines( bool set ) { _draw_invisible_lines = set; }
+    void         setEnableLineElision( bool set ) { _enable_line_elision = set; }
 
     bool         isPathStyleDirty() { return _path_style_dirty; }
     void         setPathStyleClean() { _path_style_dirty = false; }
@@ -160,6 +162,7 @@ protected:
 
     vec         _background_color;       
     bool        _draw_invisible_lines;
+    bool        _enable_line_elision;
 
     QString     _paper_file;
     GQTexture*  _paper_texture;

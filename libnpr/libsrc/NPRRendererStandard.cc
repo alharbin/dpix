@@ -31,11 +31,14 @@ void NPRRendererStandard::drawScene( const NPRScene& scene )
     __TIME_CODE_BLOCK("Draw Scene");
 
     NPRSettings& settings = NPRSettings::instance();
+    const NPRStyle* style = scene.globalStyle();
 
     bool skip_stylized_lines = !settings.get(NPR_ENABLE_LINES) || 
                                !settings.get(NPR_ENABLE_STYLIZED_LINES);
     bool skip_lines = !settings.get(NPR_ENABLE_LINES);
     bool skip_polygons = !settings.get(NPR_ENABLE_POLYGONS);
+    bool use_priority_buffer = settings.get(NPR_CHECK_LINE_PRIORITY) &&
+                               style->enableLineElision();
 
     int viz_method = settings.get(NPR_LINE_VISIBILITY_METHOD);
     setLineVisibilityMethod((NPRLineVisibilityMethod)viz_method);
@@ -74,7 +77,7 @@ void NPRRendererStandard::drawScene( const NPRScene& scene )
                     scene.globalStyle());
             }
        
-            if (settings.get(NPR_CHECK_LINE_PRIORITY))
+            if (use_priority_buffer)
             {
                 drawPriorityBuffer(scene);
 

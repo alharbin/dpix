@@ -522,6 +522,7 @@ void MainWindow::updateUiFromStyle()
         }
 
         const NPRPenStyle* penstyle = current_style->penStyle(_ui.penStyleTypeBox->currentText());
+        const NPRPenStyle* basepenstyle = current_style->penStyle(0);
 
         QString color_frame_style = "border: 1px solid black;background-color: rgb(%1,%2,%3)";
         int r = penstyle->color()[0]*255;
@@ -531,10 +532,12 @@ void MainWindow::updateUiFromStyle()
 
         _ui.penTextureEditBox->setText( penstyle->textureFile() );
         _ui.penTextureEditBox->home(false);
-        _ui.penWidthBox->setValue(penstyle->stripWidth());
+        _ui.penWidthBox->setValue(basepenstyle->stripWidth());
+        _ui.penLengthScaleBox->setValue(basepenstyle->lengthScale());
         _ui.penOpacityBox->setValue(penstyle->opacity());
         _ui.penElisionWidthBox->setValue(penstyle->elisionWidth());
-        _ui.penLengthScaleBox->setValue(penstyle->lengthScale());
+        _ui.drawInvisibleCheckBox->setChecked(current_style->drawInvisibleLines());
+        _ui.enableLineElisionCheckBox->setChecked(current_style->enableLineElision());
     }
 }
 
@@ -567,7 +570,6 @@ void MainWindow::updateUiFromSettings()
     NPRSettings& settings = NPRSettings::instance();
     _ui.actionDraw_Lines->setChecked(settings.get(NPR_ENABLE_LINES));
     _ui.actionEnable_Stylized_Lines->setChecked(settings.get(NPR_ENABLE_STYLIZED_LINES));
-    _ui.actionDraw_Invisible_Lines->setChecked(settings.get(NPR_ENABLE_INVISIBLE_LINES));
     _ui.actionDraw_Polygons->setChecked(settings.get(NPR_ENABLE_POLYGONS));
     _ui.actionDraw_Transparent_Faces->setChecked(settings.get(NPR_ENABLE_TRANSPARENT_POLYGONS));
     _ui.actionDraw_Paper_Texture->setChecked(settings.get(NPR_ENABLE_PAPER_TEXTURE));
@@ -1122,9 +1124,11 @@ void MainWindow::on_penTextureBtn_clicked()
 
 void MainWindow::on_penWidthBox_valueChanged(double value)
 {
-    QString name = _ui.penStyleTypeBox->currentText();
+    /*QString name = _ui.penStyleTypeBox->currentText();
     getCurrentStyle()->penStyle(name)->setStripWidth(value);
-    _glViewer->forceFullRedraw();
+    _glViewer->forceFullRedraw();*/
+    getCurrentStyle()->penStyle(0)->setStripWidth(value);
+    _glViewer->updateGL();
 }
 
 void MainWindow::on_penOpacityBox_valueChanged(double value)
@@ -1143,11 +1147,24 @@ void MainWindow::on_penElisionWidthBox_valueChanged(double value)
 
 void MainWindow::on_penLengthScaleBox_valueChanged(double value)
 {
-    QString name = _ui.penStyleTypeBox->currentText();
+    /*QString name = _ui.penStyleTypeBox->currentText();
     getCurrentStyle()->penStyle(name)->setLengthScale(value);
-    _glViewer->forceFullRedraw();
+    _glViewer->forceFullRedraw();*/
+    getCurrentStyle()->penStyle(0)->setLengthScale(value);
+    _glViewer->updateGL();
 }
 
+void MainWindow::on_drawInvisibleCheckBox_toggled( bool value )
+{
+    getCurrentStyle()->setDrawInvisibleLines(value);
+    _glViewer->updateGL();
+}
+
+void MainWindow::on_enableLineElisionCheckBox_toggled( bool value )
+{
+    getCurrentStyle()->setEnableLineElision(value);
+    _glViewer->updateGL();
+}
 
 void MainWindow::on_cameraInterpSpeedBox_valueChanged( double value )
 {

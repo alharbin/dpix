@@ -74,6 +74,7 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
     shader.setUniform1f("check_at_spine", 
         settings.get(NPR_CHECK_LINE_VISIBILITY_AT_SPINE));
     setUniformPenStyleParams(shader, *(scene.globalStyle()));
+    NPRGLDraw::setUniformFocusParams(shader, scene);
 
     NPRGLDraw::setUniformSSParams(shader);
     NPRGLDraw::setUniformViewParams(shader);
@@ -105,6 +106,7 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
 
     GQShaderRef shader = GQShaderManager::bindProgram("stroke_render_atlas");
     setUniformPenStyleParams(shader, *(scene.globalStyle()));
+    NPRGLDraw::setUniformFocusParams(shader, scene);
 
     NPRSegmentAtlas::AtlasBufferId visibility_buffer = 
         NPRSegmentAtlas::VISIBILITY_ID;
