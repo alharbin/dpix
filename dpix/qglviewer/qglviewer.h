@@ -397,7 +397,7 @@ public:
 	// void draw3DText(const qglviewer::Vec& pos, const qglviewer::Vec& normal, const QString& string, GLfloat height=0.1f);
 
 protected:
-	virtual void drawLight(GLenum light, float scale = 1.0f) const;
+	//virtual void drawLight(GLenum light, float scale = 1.0f) const;
 
 private:
 	void displayFPS();

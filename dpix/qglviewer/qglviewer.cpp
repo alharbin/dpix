@@ -773,7 +773,7 @@ See the <a href="../examples/drawLight.html">drawLight example</a> for an illust
 
 \attention You need to enable \c GL_COLOR_MATERIAL before calling this method. \c glColor is set to
 the light diffuse color. */
-void QGLViewer::drawLight(GLenum light, float scale) const
+/*void QGLViewer::drawLight(GLenum light, float scale) const
 {
 	static GLUquadric* quadric = gluNewQuadric();
 
@@ -825,7 +825,7 @@ void QGLViewer::drawLight(GLenum light, float scale) const
 
 		glPopMatrix();
 	}
-}
+}*/
 
 
 /*! Draws \p text at position \p x, \p y (expressed in screen coordinates pixels, origin in the
