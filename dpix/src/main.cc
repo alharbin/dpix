@@ -37,12 +37,13 @@ void printUsage(const char *myname)
     exit(1);
 }
 
-QDir findWorkingDirectory( const QString& app_path )
+QDir findShadersDirectory( const QString& app_path )
 {
     // look for the shaders/programs.xml file to find the working directory
     QStringList candidates;
     candidates << QDir::currentPath()
     << QDir::cleanPath(app_path)
+    << QDir::cleanPath(app_path + "/Contents/MacOS/")
     << QDir::cleanPath(app_path + "/../../libnpr/")
     << QDir::cleanPath(app_path + "/../../../../libnpr/")
     << QDir::cleanPath(app_path + "/../../../../../libnpr/");
@@ -71,15 +72,22 @@ int main( int argc, char** argv )
     QString save_and_quit_file;
 
     QApplication app(argc, argv);
-    QDir working_dir = findWorkingDirectory(app.applicationDirPath());
+    QDir shaders_dir = findShadersDirectory(app.applicationDirPath());
+    QDir working_dir;
+    // As a convenience, set the working directory to libnpr
+    // when running out of the libnpr tree.
+    if (shaders_dir.absolutePath().endsWith("libnpr"))
+        working_dir = shaders_dir;
+    else
+        working_dir = QDir::home();
+
+    shaders_dir.cd("shaders");
+    GQShaderManager::setShaderDirectory(shaders_dir);
 
     QStringList arguments = app.arguments();
 
     NPRSettings::instance().loadDefaults();
     NPRSettings::instance().setWorkingDir(working_dir);
-    working_dir.cd("shaders");
-    GQShaderManager::setShaderDirectory(working_dir);
-    working_dir.cdUp();
 
     for (int i = 1; i < arguments.size(); i++)
     {
