@@ -554,7 +554,6 @@ void NPRSegmentAtlas::drawSegmentAtlas(AtlasBufferId target,
     __MY_START_TIMER("draw sample row lines");
 
     glMatrixMode(GL_PROJECTION);
-    //glDrawArrays(GL_LINES, 0, _total_segments*2);
     glDrawArrays(GL_POINTS, 0, _total_segments);
 
     __MY_STOP_TIMER("draw sample row lines");
@@ -610,10 +609,11 @@ bool NPRSegmentAtlas::makePathVertexFBO( const NPRScene& scene )
     // Set up the FBO to handle that number of paths. Return false if we can't
     // handle it due to texture size restrictions.
     //
-    // Divide by two here to handle the clip_viz code which creates a texture
-    // double the width of the clip buffer. 
-    int clip_buf_width = GQFramebufferObject::maxFramebufferSize() / 2;
-    int clip_buf_height = ceil((float)_total_segments / (float)clip_buf_width);
+    // Set up the buffer to be the smallest square texture that will fit the
+    // data.
+    float sqrt_total_segments = ceil(sqrt(_total_segments));
+    int clip_buf_width = sqrt_total_segments;
+    int clip_buf_height = clip_buf_width;
 
     if (clip_buf_height > clip_buf_width)
     {
@@ -716,6 +716,7 @@ bool NPRSegmentAtlas::makePathVertexFBO( const NPRScene& scene )
     _path_verts_fbo.setTextureFilter(GL_NEAREST, GL_NEAREST);
     _path_verts_fbo.setTextureWrap(GL_CLAMP, GL_CLAMP);
    
+
     _path_data_dirty = false;
 
     return true;

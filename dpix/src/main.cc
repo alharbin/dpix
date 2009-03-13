@@ -44,7 +44,8 @@ QDir findWorkingDirectory( const QString& app_path )
     candidates << QDir::currentPath()
     << QDir::cleanPath(app_path)
     << QDir::cleanPath(app_path + "/../../libnpr/")
-    << QDir::cleanPath(app_path + "/../../../../libnpr/");
+    << QDir::cleanPath(app_path + "/../../../../libnpr/")
+    << QDir::cleanPath(app_path + "/../../../../../libnpr/");
 
     for (int i = 0; i < candidates.size(); i++)
     {

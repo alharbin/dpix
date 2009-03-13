@@ -19,7 +19,9 @@ else {
     macx {
         DEFINES += DARWIN
         UNAME = Darwin
-        CONFIG -= app_bundle
+        CONFIG(debug, debug|release) {
+            CONFIG -= app_bundle
+        }
     }
     else {
         DEFINES += LINUX
