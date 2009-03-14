@@ -611,7 +611,7 @@ bool NPRSegmentAtlas::makePathVertexFBO( const NPRScene& scene )
     //
     // Set up the buffer to be the smallest square texture that will fit the
     // data.
-    float sqrt_total_segments = ceil(sqrt(_total_segments));
+    float sqrt_total_segments = ceil(sqrt((float)_total_segments));
     int clip_buf_width = sqrt_total_segments;
     int clip_buf_height = clip_buf_width;
 
