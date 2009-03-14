@@ -21,13 +21,13 @@
     <program name="stroke_render_spine">
         <shader type="vertex">
             <source filename="version.glsl"/>            
-            <source filename="stroke_render_spine_120.vert"/>        
+            <source filename="stroke_render_spine.vert"/>        
         </shader>
         <shader type="geometry" input_type="lines" 
                 output_type="triangle_strip" vertices_out="4">
             <source filename="version.glsl"/>
             <source filename="spine_test_common.glsl"/>
-            <source filename="stroke_render_spine_120.geom"/>        
+            <source filename="stroke_render_spine.geom"/>        
         </shader>
         <shader type="fragment">
             <source filename="version.glsl"/>
@@ -35,31 +35,10 @@
             <source filename="supersample_common.glsl"/>
             <source filename="focus_common.glsl"/>
             <source filename="stroke_render_common.glsl"/>
-            <source filename="stroke_render_spine_120.frag"/>        
+            <source filename="stroke_render_spine.frag"/>        
         </shader>
     </program>
     
-    <!--
-    <program name="stroke_render_spine">
-        <shader type="vertex">
-            <source filename="version130.glsl"/>
-            <source filename="stroke_render_spine.vert"/>
-        </shader>
-        <shader type="geometry" input_type="lines" 
-                output_type="triangle_strip" vertices_out="4">
-            <source filename="version130.glsl"/>
-            <source filename="spine_test_common.glsl"/>
-            <source filename="stroke_render_spine.geom"/>
-        </shader>
-        <shader type="fragment">
-            <source filename="version130.glsl"/>
-            <source filename="spine_test_common.glsl"/>
-            <source filename="supersample_common.glsl"/>
-            <source filename="stroke_render_spine.frag"/>
-        </shader>
-    </program>
-    -->
-
     <program name="priority_buffer">
         <shader type="vertex">
             <source filename="passthrough.vert"/>

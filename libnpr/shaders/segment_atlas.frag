@@ -1,15 +1,11 @@
 uniform vec4 viewport;
 
-uniform sampler2DRect depth_buffer;
-uniform sampler2DRect supersample_locations;
-uniform SupersampleParams ss_params;
-
 varying vec4 sample_clip_pos;
 varying float path_id;
 
 void main()
 {
-    // convert from clip to window coordinates
+    // Convert from clip to window coordinates.
     vec3 sample_window_pos, sample_window_tangent;
     vec3 sample_post_div = sample_clip_pos.xyz / sample_clip_pos.w;
 
@@ -18,10 +14,8 @@ void main()
 
     sample_window_tangent = normalize(dFdx(sample_window_pos));
 
-    // compute visibility for this sample
-    float visibility = getDepthVisibility( sample_window_pos, sample_window_tangent, 
-                                          depth_buffer, supersample_locations, 
-                                          ss_params );
+    // Get the visibility and id for this sample.
+    float visibility = getDepthVisibility(sample_window_pos, sample_window_tangent);
 
     float strength = visibility;
     vec3 id_color = idToColor(path_id);

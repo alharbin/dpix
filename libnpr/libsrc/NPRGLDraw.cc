@@ -584,7 +584,8 @@ void NPRGLDraw::clearGLState()
     glActiveTexture(GL_TEXTURE0);
 }
 
-void NPRGLDraw::setUniformSSParams(const GQShaderRef& shader)
+void NPRGLDraw::setUniformSSParams(const GQShaderRef& shader,
+                                   const GQTexture2D& depth_buffer)
 {
     if (!_is_initialized)
         init();
@@ -595,8 +596,6 @@ void NPRGLDraw::setUniformSSParams(const GQShaderRef& shader)
     float depth_scale = settings.get(NPR_SEGMENT_ATLAS_DEPTH_SCALE);
     float kernel_scale_x = settings.get(NPR_SEGMENT_ATLAS_KERNEL_SCALE_X);
     float kernel_scale_y = settings.get(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y);
-
-    //int ss_width = sqrtf(supersample_count);
 
     shader.setUniform1f("ss_params.buffer_scale", depth_scale);
     shader.setUniform1f("ss_params.t_scale", 
@@ -609,6 +608,8 @@ void NPRGLDraw::setUniformSSParams(const GQShaderRef& shader)
 
     shader.bindNamedTexture("supersample_locations", 
                             _supersample_texture);
+    shader.bindNamedTexture("depth_buffer", 
+                            &depth_buffer);
 }
 
 void NPRGLDraw::setUniformViewParams(const GQShaderRef& shader)

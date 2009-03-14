@@ -76,12 +76,11 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
     // If NPR_CHECK_LINE_VISIBILITY is false, the depth buffer should be
     // blank. 
     NPRSettings& settings = NPRSettings::instance();
-    shader.bindNamedTexture("depth_buffer", &depth_buffer);
     shader.setUniform1f("check_at_spine", 
         settings.get(NPR_CHECK_LINE_VISIBILITY_AT_SPINE));
     setUniformPenStyleParams(shader, *(scene.globalStyle()));
     NPRGLDraw::setUniformFocusParams(shader, scene);
-    NPRGLDraw::setUniformSSParams(shader);
+    NPRGLDraw::setUniformSSParams(shader, depth_buffer);
     NPRGLDraw::setUniformViewParams(shader);
 
     glDisable(GL_DEPTH_TEST);

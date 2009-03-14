@@ -505,8 +505,7 @@ void NPRSegmentAtlas::drawSegmentAtlas(AtlasBufferId target,
     {
         case VISIBILITY_ID : 
             shader = GQShaderManager::bindProgram("segment_atlas"); 
-            shader.bindNamedTexture("depth_buffer", &reference_texture);
-            NPRGLDraw::setUniformSSParams(shader);
+            NPRGLDraw::setUniformSSParams(shader, reference_texture);
             break;
         case PRIORITY_ID : 
             shader = GQShaderManager::bindProgram("segment_atlas_priority"); 

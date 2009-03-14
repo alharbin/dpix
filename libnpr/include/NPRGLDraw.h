@@ -49,7 +49,8 @@ class NPRGLDraw
         static void clearGLScreen(const vec& color, float depth); 
         static void clearGLDepth(float depth); 
 
-        static void setUniformSSParams(const GQShaderRef& shader);
+        static void setUniformSSParams(const GQShaderRef& shader,
+                                       const GQTexture2D& depth_buffer);
         static void setUniformViewParams(const GQShaderRef& shader);
         static void setUniformPolygonParams(const GQShaderRef& shader, 
                                             const NPRScene& scene);

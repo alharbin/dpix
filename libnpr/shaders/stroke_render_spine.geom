@@ -8,11 +8,11 @@ uniform float overshoot_scale;
 
 uniform int test_profiles;
 
-out vec4 spine_position;
-out vec3 spine_tangent;
-noperspective out vec2 tex_coord;
+varying out vec4 spine_position;
+varying out vec3 spine_tangent;
+varying out vec2 tex_coord;
 
-in vec3 normal[];
+varying in vec3 normal[];
 
 vec2 textureOffsets(float segment_length)
 {

@@ -1,3 +1,6 @@
+uniform sampler2DRect depth_buffer;
+uniform sampler2DRect supersample_locations;
+
 struct SupersampleParams
 {
     float buffer_scale;
@@ -6,11 +9,9 @@ struct SupersampleParams
     float one_over_count;
     int sample_count;
 };
+uniform SupersampleParams ss_params;
 
-float getDepthVisibility( vec3 screen_pos, vec3 screen_tangent,
-                          sampler2DRect depth_buffer, 
-                          sampler2DRect supersample_locations,
-                          SupersampleParams ss_params)
+float getDepthVisibility(vec3 screen_pos, vec3 screen_tangent)
 {
     float visibility = 0.0;
     vec2 bitangent = vec2(-screen_tangent.y, screen_tangent.x);
