@@ -191,15 +191,21 @@ void NPRRendererStandard::drawPolygons(const NPRScene& scene)
 
 void NPRRendererStandard::drawDepthBuffer( const NPRScene& scene )
 {
+    float depth_scale = NPRSettings::instance().get(NPR_SEGMENT_ATLAS_DEPTH_SCALE);
     if (NPRSettings::instance().get(NPR_CHECK_LINE_VISIBILITY))
     {
         __TIME_CODE_BLOCK("Draw depth buffer");
-
-        float depth_scale = NPRSettings::instance().get(NPR_SEGMENT_ATLAS_DEPTH_SCALE);
         NPRGLDraw::drawDepthBufferFBO(scene, _depth_buffer, depth_scale );
     }
     else
     {
+        // Must initialize the depth buffer in case we start out
+        // with visibility testing off.
+        if (_depth_buffer.id() < 0)
+        {
+            NPRGLDraw::drawDepthBufferFBO(scene, _depth_buffer, depth_scale );
+        }
+
         _depth_buffer.bind();
         NPRGLDraw::clearGLScreen(vec(1,1,1), 1);
         _depth_buffer.unbind();

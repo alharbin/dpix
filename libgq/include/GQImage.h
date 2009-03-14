@@ -73,6 +73,7 @@ public:
         resize( from._width, from._height, from._num_chan );
         memcpy( _raster, from._raster, _width*_height*_num_chan );
     }
+    void copyAlpha( const GQFloatImage& from );
 
     void clear();
 

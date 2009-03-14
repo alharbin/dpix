@@ -34,7 +34,7 @@ bool GQTexture2D::genTexture(int width, int height, int internalFormat, int form
     
     glTexImage2D(_target, 0, internalFormat, width, height, 0, format, type, data);
 
-    int wrapMode = _target == GL_TEXTURE_2D ? GL_REPEAT : GL_CLAMP;
+    int wrapMode = _target == GL_TEXTURE_2D ? GL_REPEAT : GL_CLAMP_TO_EDGE;
     int filterMode = _target == GL_TEXTURE_2D ? GL_LINEAR : GL_NEAREST;
     
     glTexParameteri(_target, GL_TEXTURE_WRAP_S, wrapMode);

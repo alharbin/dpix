@@ -285,6 +285,15 @@ bool GQFloatImage::saveFloat(const QString& filename, bool flip)
     return true;
 }
 
+void GQFloatImage::copyAlpha( const GQFloatImage& from )
+{
+    resize( from._width, from._height, 1 );
+    for (int i = 0; i < _width*_height; i++)
+    {
+        _raster[i] = from._raster[(i+1)*from._num_chan - 1];
+    }
+}
+
 static bool we_are_little_endian()
 {
     char buf[4];

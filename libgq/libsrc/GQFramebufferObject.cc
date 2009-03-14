@@ -136,6 +136,7 @@ bool GQFramebufferObject::initFullScreen( int target, int format, uint32 attachm
 
 void GQFramebufferObject::bind() const
 {
+    assert(_fbo >= 0);
     assert(_bound_guid == 0);
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, _fbo);
     glPushAttrib(GL_VIEWPORT_BIT | GL_COLOR_BUFFER_BIT);
@@ -144,6 +145,7 @@ void GQFramebufferObject::bind() const
 
 void GQFramebufferObject::unbind() const
 {
+    assert(_fbo >= 0);
     assert(_bound_guid == _guid);
     glPopAttrib();
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
