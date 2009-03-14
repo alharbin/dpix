@@ -87,7 +87,6 @@ int main( int argc, char** argv )
     QStringList arguments = app.arguments();
 
     NPRSettings::instance().loadDefaults();
-    NPRSettings::instance().setWorkingDir(working_dir);
 
     for (int i = 1; i < arguments.size(); i++)
     {

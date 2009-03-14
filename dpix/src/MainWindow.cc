@@ -99,9 +99,9 @@ void MainWindow::init( const QDir& working_dir, const QString& scenename )
 
     _currentTransferIndex = _ui.transferComboBox->currentIndex();
 
-    _last_scene_dir = working_dir.absolutePath() + "/models";
-    _last_style_dir = working_dir.absolutePath() + "/styles";
-    _last_texture_dir = working_dir.absolutePath() + "/textures";
+    _last_scene_dir = working_dir.absolutePath();
+    _last_style_dir = working_dir.absolutePath();
+    _last_texture_dir = working_dir.absolutePath();
     _last_export_dir = working_dir.absolutePath();
     _last_camera_dir = working_dir.absolutePath();
 
@@ -530,7 +530,7 @@ void MainWindow::updateUiFromStyle()
         int b = penstyle->color()[2]*255;
         _ui.penColorFrame->setStyleSheet( color_frame_style.arg(r).arg(g).arg(b) );
 
-        _ui.penTextureEditBox->setText( penstyle->textureFile() );
+        _ui.penTextureEditBox->setText( _working_dir.relativeFilePath(penstyle->textureFile()) );
         _ui.penTextureEditBox->home(false);
         _ui.penWidthBox->setValue(basepenstyle->stripWidth());
         _ui.penLengthScaleBox->setValue(basepenstyle->lengthScale());
@@ -1191,7 +1191,7 @@ void MainWindow::changePenTexture(const QString& pen_style)
 
     if (!filename.isNull())
     {
-        QString rel_name = _working_dir.relativeFilePath(filename);
+        QString rel_name = _working_dir.absoluteFilePath(filename);
 
         getCurrentStyle()->penStyle(pen_style)->setTexture(rel_name);
         _glViewer->updateGL();

@@ -103,9 +103,6 @@ class NPRSettings
         void set(NPRIntSetting which, int value) { _ints[which] = value; }
         void set(NPRFloatSetting which, float value) { _floats[which] = value; }
 
-        void         setWorkingDir( const QDir& dir ) { _working_dir = dir; }
-        const QDir&  workingDir() { return _working_dir; }
-
         static NPRSettings& instance() { return _instance; }
 
     protected:
@@ -114,8 +111,6 @@ class NPRSettings
         QVector<bool>       _bools;
         QVector<int>        _ints;
         QVector<float>      _floats;
-
-        QDir _working_dir;
 };
 
 #endif

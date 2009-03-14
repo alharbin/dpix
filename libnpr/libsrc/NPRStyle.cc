@@ -165,7 +165,7 @@ void NPRPenStyle::copyFrom( const NPRPenStyle& style )
     setTexture(_texture_file);
 }
 
-void NPRPenStyle::load( const QDomElement& element )
+void NPRPenStyle::load( const QDir& style_dir, const QDomElement& element )
 {
     _name = element.attribute("name");
 
@@ -173,7 +173,8 @@ void NPRPenStyle::load( const QDomElement& element )
 	assert(!c.isNull());
     loadVec(_color, c);
 
-    _texture_file = element.firstChildElement("texture").text();
+    QString rel_name = element.firstChildElement("texture").text();
+    _texture_file = style_dir.absoluteFilePath(rel_name);
     _opacity = element.firstChildElement("opacity").text().toFloat();
     _strip_width = element.firstChildElement("strip_width").text().toFloat();
     _elision_width = element.firstChildElement("elision_width").text().toFloat();
@@ -186,12 +187,13 @@ void NPRPenStyle::load( const QDomElement& element )
     }
 }
 
-void NPRPenStyle::save( QDomDocument& doc, QDomElement& element )
+void NPRPenStyle::save( const QDir& style_dir, QDomDocument& doc, QDomElement& element )
 {
     element.setAttribute("name", _name);
 
     appendTextNode(doc, element, QString("color"), QString("%1 %2 %3").arg(_color[0]).arg(_color[1]).arg(_color[2]));
-    appendTextNode(doc, element, QString("texture"), _texture_file);
+    QString rel_name = style_dir.relativeFilePath(_texture_file);
+    appendTextNode(doc, element, QString("texture"), rel_name);
     appendTextNode(doc, element, QString("opacity"), QString("%1").arg(_opacity));
     appendTextNode(doc, element, QString("strip_width"), QString("%1").arg(_strip_width));
     appendTextNode(doc, element, QString("elision_width"), QString("%1").arg(_elision_width));
@@ -200,25 +202,24 @@ void NPRPenStyle::save( QDomDocument& doc, QDomElement& element )
 
 bool NPRPenStyle::setTexture( const QString& filename )
 {
-    QString absfilename = QDir::cleanPath(NPRSettings::instance().workingDir().absoluteFilePath(filename));
     if (filename.isEmpty())
     {
         return false;
     }
 
-    if (!QFileInfo(absfilename).exists())
+    if (!QFileInfo(filename).exists())
     {
         QMessageBox::critical(NULL, "Open Failed", 
-            QString("Could not find pen texture \"%1\"").arg(absfilename));
+            QString("Could not find pen texture \"%1\"").arg(filename));
         return false;
     }
 
     GQTexture* new_texture = new GQTexture2D();
 
-    if (!new_texture->load(absfilename))
+    if (!new_texture->load(filename))
     {
         QMessageBox::critical(NULL, "Open Failed", 
-            QString("Could not load pen texture \"%1\" (corrupt texture?)").arg(absfilename));
+            QString("Could not load pen texture \"%1\" (corrupt texture?)").arg(filename));
         delete new_texture;
         return false;
     }
@@ -295,6 +296,7 @@ void NPRStyle::loadDefaults()
 bool NPRStyle::load( const QString& filename )
 {
 	QFile file(filename);
+    QDir dir(filename);
 	if (!file.open(QIODevice::ReadOnly))
 	{
 		qWarning("NPRStyle::load - Could not open %s", qPrintable(filename));
@@ -319,10 +321,10 @@ bool NPRStyle::load( const QString& filename )
 
 	QDomElement root = doc.documentElement();
 
-    return load(root);
+    return load(dir, root);
 }
 
-bool NPRStyle::load( const QDomElement& root )
+bool NPRStyle::load( const QDir& style_dir, const QDomElement& root )
 {
     clear();
 
@@ -344,7 +346,7 @@ bool NPRStyle::load( const QDomElement& root )
 	while (!style_element.isNull())
 	{
         NPRPenStyle* penstyle = new NPRPenStyle();
-        penstyle->load( style_element );
+        penstyle->load( style_dir, style_element );
 		style_element = style_element.nextSiblingElement("pen_style");
         _pen_styles.push_back(penstyle);
 	}
@@ -427,16 +429,20 @@ bool NPRStyle::save( const QString& filename )
 	QDomElement root = doc.createElement("npr_style");
 	doc.appendChild(root);
 
-    bool ret = save(doc, root);
-    if (!ret)
-        return false;
-
 	QFile file(filename);
+    QDir dir(filename);
 	if (!file.open(QIODevice::WriteOnly))
 	{
 		qWarning("NPRStyle::save - Could not save %s", qPrintable(filename));
 		return false;
 	}
+
+    bool ret = save(dir, doc, root);
+    if (!ret)
+    {
+        file.close();
+        return false;
+    }
 
 	file.write(doc.toByteArray());
 
@@ -445,7 +451,7 @@ bool NPRStyle::save( const QString& filename )
 	return true;
 }
 
-bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
+bool NPRStyle::save( const QDir& style_dir, QDomDocument& doc, QDomElement& root )
 {
 	QDomElement header = doc.createElement("header");
 	root.appendChild(header);
@@ -463,14 +469,16 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
 	{
 		texfile = doc.createElement("texture");
 		texfile.setAttribute("name", "paper");
-		texfile.setAttribute("file", _paper_file);
+        QString rel_name = style_dir.relativeFilePath(_paper_file);
+		texfile.setAttribute("file", rel_name);
 		textures.appendChild(texfile);
 	}
 	if (!_background_file.isEmpty())
 	{
 		texfile = doc.createElement("texture");
 		texfile.setAttribute("name", "background");
-		texfile.setAttribute("file", _background_file);
+        QString rel_name = style_dir.relativeFilePath(_paper_file);
+		texfile.setAttribute("file", rel_name);
 		textures.appendChild(texfile);
 	}
 
@@ -492,7 +500,7 @@ bool NPRStyle::save( QDomDocument& doc, QDomElement& root )
     for (uint32 i = 0; i < _pen_styles.size(); i++)
     {
         QDomElement penstyle = doc.createElement("pen_style");
-        _pen_styles[i]->save( doc, penstyle );
+        _pen_styles[i]->save( style_dir, doc, penstyle );
         pen_styles.appendChild(penstyle);
     }
 
@@ -523,7 +531,6 @@ bool NPRStyle::loadBackgroundTexture(const QString& filename)
 bool NPRStyle::loadTexture(QString& output_name, GQTexture*& output_ptr, 
                            const QString& field_name, const QString& filename)
 {
-    QString absfilename = QDir::cleanPath(NPRSettings::instance().workingDir().absoluteFilePath(filename));
     if (filename.isEmpty())
     {
         qWarning("NPRStyle::loadTexture - Warning: blank %s texture filename.\n", qPrintable(field_name));
@@ -532,18 +539,18 @@ bool NPRStyle::loadTexture(QString& output_name, GQTexture*& output_ptr,
         return true;
     }
 
-    if (!QFileInfo(absfilename).exists())
+    if (!QFileInfo(filename).exists())
     {
         QMessageBox::critical(NULL, "Open Failed", 
-            QString("Could not find %1 texture \"%2\"").arg(field_name).arg(absfilename));
+            QString("Could not find %1 texture \"%2\"").arg(field_name).arg(filename));
         return false;
     }
 
     GQTexture2D* new_texture = new GQTexture2D();
-    if (!new_texture->load(absfilename))
+    if (!new_texture->load(filename))
     {
         QMessageBox::critical(NULL, "Open Failed", 
-            QString("Could not load %1 texture \"%2\" (corrupt texture?)").arg(field_name).arg(absfilename));
+            QString("Could not load %1 texture \"%2\" (corrupt texture?)").arg(field_name).arg(filename));
         delete new_texture;
         return false;
     }

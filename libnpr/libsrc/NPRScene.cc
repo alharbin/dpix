@@ -202,7 +202,7 @@ bool NPRScene::save( QDomDocument& doc, QDomElement& element, const QDir& path )
     element.appendChild(light);
 
     QDomElement style = doc.createElement("style");
-    _global_style->save(doc, style);
+    _global_style->save(path, doc, style);
     element.appendChild(style);
 
     QDomElement focal_point = doc.createElement("focal_point");
@@ -253,7 +253,7 @@ bool NPRScene::load( const QDomElement& element, const QDir& path )
     if (!style.isNull())
     {
         NPRStyle* new_style = new NPRStyle();
-        bool style_ret = new_style->load(style);
+        bool style_ret = new_style->load(path, style);
         if (!style_ret)
         {
             qWarning("NPRScene::load: could not load style from XML\n");

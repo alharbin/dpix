@@ -204,8 +204,6 @@ void NPRSettings::loadDefaults()
     _floats[NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y] = 1;
 
     _floats[NPR_N_DOT_V_BIAS] = -0.05f;
-
-    _working_dir = QDir(".");
 }
 
 void NPRSettings::copyPersistent( const NPRSettings& settings )

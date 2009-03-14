@@ -16,6 +16,7 @@
 #include "Vec.h"
 #include <QString>
 #include <QDomElement>
+#include <QDir>
 #include <vector>
 using std::vector;
 
@@ -48,8 +49,8 @@ public:
 
     void clear();
     void copyFrom( const NPRPenStyle& style );
-    void load( const QDomElement& element );
-    void save( QDomDocument& doc, QDomElement& element );
+    void load( const QDir& style_dir, const QDomElement& element );
+    void save( const QDir& style_dir, QDomDocument& doc, QDomElement& element );
 
     const QString&      name() const                 { return _name; }
     const vec&          color() const                { return _color; }
@@ -65,7 +66,6 @@ public:
     void setName( const QString& name ) { _name = name; }
     void setColor( const vec& color ) { _color = color; }
     bool setTexture( const QString& filename );
-    bool setTexture( GQTexture* texture ) { _texture = texture; return true; }
 
     void setOpacity( float val ) { _opacity = val; }
     void setStripWidth( float width ) { _strip_width = width; }
@@ -93,9 +93,9 @@ public:
 
     void clear();
     bool load( const QString& filename );
-    bool load( const QDomElement& root );
+    bool load( const QDir& style_dir, const QDomElement& root );
     bool save( const QString& filename );
-    bool save( QDomDocument& doc, QDomElement& root );
+    bool save( const QDir& style_dir, QDomDocument& doc, QDomElement& root );
 
     void loadDefaults();
 
@@ -153,7 +153,7 @@ public:
 
 protected:
     bool loadTexture(QString& output_name, GQTexture*& output_ptr, 
-                           const QString& field_name, const QString& filename);
+                     const QString& field_name, const QString& filename);
 protected:
     NPRTransfer _transfers[NUM_TRANSFER_FUNCTIONS];
     vector<NPRPenStyle*> _pen_styles;
