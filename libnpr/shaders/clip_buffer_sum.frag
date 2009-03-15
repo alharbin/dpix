@@ -1,10 +1,20 @@
-// clip_buffer_sum.frag
-// A fragment program that computes the segment atlas offsets using 
-// an exclusive scan (parallel all-prefix sum) operation.
-//
-// The real-valued segment length is also summed separately
-// from the number of samples to allow texture parameterization
-// based on arclength.
+/*****************************************************************************\
+
+clip_buffer_sum.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A fragment program that computes the segment atlas offsets using 
+an exclusive scan (parallel all-prefix sum) operation.
+
+The real-valued segment length is also summed separately
+from the number of samples to allow texture parameterization
+based on arclength.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 uniform sampler2DRect last_pass_buf;
 uniform float step_size;

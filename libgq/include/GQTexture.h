@@ -1,13 +1,15 @@
-/******************************************************************************\
- *                                                                            *
- *  filename : GQTexture.h                                                   *
- *  author   : Forrester Cole                                                 *
- *                                                                            *
- *  Classes to manage 2D and 3D OpenGL textures. I/O is handled by            *
- *  GQImage.                                                                 *
- *                                                                            *
-\******************************************************************************/
+/*****************************************************************************\
 
+GQTexture.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Class to manage OpenGL textures. I/O is handled by GQimage.
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _GQ_TEXTURE_H_
 #define _GQ_TEXTURE_H_

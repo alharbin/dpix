@@ -1,6 +1,15 @@
-// HELPER FUNCTIONS FOR FRAGMENT SHADERS
+/*****************************************************************************\
 
+common.glsl
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
 
+A bunch of helpers for fragment shaders.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 struct LightingValues
 {

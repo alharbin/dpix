@@ -1,0 +1,124 @@
+<!DOCTYPE dpixscene>
+<dpixscene version="1" >
+ <nprscene version="1" >
+  <model filename="../models/fallingwater.dae" />
+  <light mode="0" >
+   <ambient enabled="1" />
+   <diffuse enabled="1" />
+   <specular enabled="1" />
+  </light>
+  <style>
+   <header>
+    <version>4</version>
+   </header>
+   <textures>
+    <texture name="paper" file="../textures/paper/000.jpg" />
+   </textures>
+   <transfer_functions>
+    <vec4 name="focus_transfer" >0 1 0 0.36</vec4>
+    <vec4 name="line_color" >0 1 0 1</vec4>
+    <vec4 name="line_opacity" >0 1 0 1</vec4>
+    <vec4 name="line_texture" >0 1 0 1</vec4>
+    <vec4 name="line_elision" >0 1 0 1</vec4>
+    <vec4 name="fill_fade" >0.95 1 0 1</vec4>
+    <vec4 name="fill_desat" >0 0.8 0 1</vec4>
+    <vec4 name="paper_params" >0.15 0 0 1</vec4>
+   </transfer_functions>
+   <pen_styles>
+    <pen_style name="Base Style" >
+     <color>0.1 0.1 0.1</color>
+     <texture>../textures/wedge-512x8.png</texture>
+     <opacity>1</opacity>
+     <strip_width>2</strip_width>
+     <elision_width>1</elision_width>
+     <length_scale>0.6</length_scale>
+    </pen_style>
+    <pen_style name="Defocused" >
+     <color>0.1 0.1 0.1</color>
+     <texture>../textures/scratch-512x8.png</texture>
+     <opacity>1</opacity>
+     <strip_width>2</strip_width>
+     <elision_width>12</elision_width>
+     <length_scale>1</length_scale>
+    </pen_style>
+   </pen_styles>
+   <colors>
+    <vec3 name="background" >1 1 1</vec3>
+   </colors>
+   <parameters>
+    <int value="0" name="draw_invisible_lines" />
+    <int value="0" name="enable_line_elision" />
+   </parameters>
+  </style>
+  <focal_point x="-92.1566" y="67.5464" z="348.871" />
+ </nprscene>
+ <nprsettings version="1" >
+  <bool value="1" name="enable_lines" />
+  <bool value="1" name="enable_stylized_lines" />
+  <bool value="1" name="enable_polygons" />
+  <bool value="0" name="enable_transparent_polygons" />
+  <bool value="1" name="enable_paper_texture" />
+  <bool value="1" name="enable_background_texture" />
+  <bool value="1" name="enable_cutaway" />
+  <bool value="1" name="enable_cutaway_lines" />
+  <bool value="0" name="enable_line_artmaps" />
+  <bool value="0" name="enable_color_blur" />
+  <bool value="1" name="enable_vbos" />
+  <bool value="1" name="enable_lighting" />
+  <bool value="1" name="check_line_visibility" />
+  <bool value="1" name="check_line_visibility_at_spine" />
+  <bool value="1" name="check_line_priority" />
+  <bool value="0" name="filter_line_visibility" />
+  <bool value="1" name="filter_line_priority" />
+  <bool value="1" name="extract_contours" />
+  <bool value="0" name="extract_suggestive_contours" />
+  <bool value="0" name="extract_ridges" />
+  <bool value="0" name="extract_valleys" />
+  <bool value="0" name="extact_isophotes" />
+  <bool value="0" name="extact_boundaries" />
+  <bool value="0" name="extract_apparent_ridges" />
+  <bool value="1" name="extract_profiles" />
+  <bool value="1" name="classify_boundaries" />
+  <bool value="0" name="freeze_lines" />
+  <bool value="0" name="color_lines_by_id" />
+  <bool value="0" name="view_item_buffer" />
+  <bool value="0" name="view_priority_buffer" />
+  <bool value="0" name="view_clip_buffer" />
+  <bool value="0" name="view_tri_strips" />
+  <bool value="0" name="view_cutaway_buffer" />
+  <bool value="1" name="compute_pvs" />
+  <int value="10" name="extract_num_isophotes" />
+  <int value="1" name="item_buffer_layers" />
+  <int value="16" name="line_visibility_supersample" />
+  <int value="1" name="line_visibility_method" />
+  <int value="2" name="focus_mode" />
+  <float value="1" name="item_buffer_line_width" />
+  <float value="3" name="segment_atlas_depth_scale" />
+  <float value="1" name="segment_atlas_kernel_scale_x" />
+  <float value="1" name="segment_atlas_kernel_scale_y" />
+  <float value="-0.05" name="n_dot_v_bias" />
+ </nprsettings>
+ <viewerstate version="2.3.1" >
+  <State stereo="false" cameraMode="revolve" >
+   <foregroundColor red="180" blue="180" green="180" />
+   <backgroundColor red="51" blue="51" green="51" />
+  </State>
+  <Display axisIsDrawn="false" gridIsDrawn="false" FPSIsDisplayed="false" cameraIsEdited="false" />
+  <Geometry fullScreen="false" width="808" posX="180" height="648" posY="210" />
+  <Camera>
+   <Parameters fieldOfView="0.523599" sceneRadius="1104.7" Type="PERSPECTIVE" zNearCoefficient="0.01" orthoCoef="0.187043" zClippingCoefficient="1.73205" >
+    <SceneCenter x="397.919" y="-273.888" z="214.378" />
+   </Parameters>
+   <Stereo distToScreen="0.5" focusDistance="4122.78" physScreenWidth="0.4" IODist="0.062" />
+   <ManipulatedCameraFrame>
+    <position x="-701.344" y="-1633.57" z="769.012" />
+    <orientation q0="0.567822" q1="-0.13867" q2="-0.192582" q3="0.788201" />
+    <ManipulatedParameters transSens="1" rotSens="1" wheelSens="-1" spinSens="0.3" />
+    <ManipulatedCameraParameters flySpeed="11.047" >
+     <flyUpVector x="0" y="1" z="0" />
+    </ManipulatedCameraParameters>
+   </ManipulatedCameraFrame>
+  </Camera>
+  <light preset="3" depth="1" />
+ </viewerstate>
+</dpixscene>

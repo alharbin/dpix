@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+pos_and_normal.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Draws position and normal buffers.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 varying vec3 vert_pos_world;
 varying vec3 vert_pos_camera;
 varying vec4 vert_pos_clip;

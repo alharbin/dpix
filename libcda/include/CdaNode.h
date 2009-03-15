@@ -1,4 +1,15 @@
-// CdaNode.h
+/*****************************************************************************\
+
+CdaNode.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A node in the COLLADA scenegraph hierarchy.
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _CDA_NODE_H_
 #define _CDA_NODE_H_

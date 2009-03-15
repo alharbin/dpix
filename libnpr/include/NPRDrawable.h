@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+NPRDrawable.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A single instance of a drawable piece of geometry.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef _NPR_DRAWABLE_H_
 #define _NPR_DRAWABLE_H_
 

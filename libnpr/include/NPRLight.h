@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+NPRLight.h
+Authors: Forrester Cole (fcole@cs.princeton.edu)
+         Michael Burns (mburns@cs.princeton.edu)       
+Copyright (c) 2009 Forrester Cole
+
+A simple class to hold lighting information.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef NPRLIGHT_H_
 #define NPRLIGHT_H_
 

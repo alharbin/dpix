@@ -1,11 +1,16 @@
-/******************************************************************************\
-*                                                                            *
-*  filename : GLViewer.h                                                     *
-*  authors  : Forrester Cole                                                 *
-*                                                                            *
-*  OpenGL widget for drawing. Handles camera movement and mouse actions.     *
-*                                                                            *
-\******************************************************************************/
+/*****************************************************************************\
+
+GLViewer.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+OpenGL widget for drawing. Handles camera movement and mouse actions.
+Inherits the QGLViewer class by Gilles Debunne.
+
+dpix is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef GLVIEWER_H_
 #define GLVIEWER_H_

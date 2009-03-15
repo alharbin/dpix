@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+NPRFixedPathSet.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A set of paths that is fixed on the model (not view-dependent)
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef _NPR_FIXED_PATH_SET_H_
 #define _NPR_FIXED_PATH_SET_H_
 

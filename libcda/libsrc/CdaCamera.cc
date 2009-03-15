@@ -1,4 +1,13 @@
-// CdaCamera.cc
+/*****************************************************************************\
+
+CdaCamera.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #include "CdaCamera.h"
 

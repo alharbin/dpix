@@ -1,9 +1,15 @@
-
 /*****************************************************************************\
- *                                                                           *
- *  filename: GQStats.h                                                     *
- *  authors : Forrester Cole												*
- *                                                                           *
+
+GQStats.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Keeps track of performance timers and counters. Inherits QAbstractItemModel
+so the statistics can be viewed in a Qt TreeView.
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
 \*****************************************************************************/
 
 #ifndef _GQ_STATS_H_

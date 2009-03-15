@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+priority_buffer.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Fragment program for the priority buffer rendering.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 uniform sampler2DRect visibility_atlas;
 uniform vec4  transfer_width;
 

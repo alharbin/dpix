@@ -1,3 +1,14 @@
+/*****************************************************************************\
+
+GQStats.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include "GQStats.h"
 #include "timestamp.h"
 #include <assert.h>

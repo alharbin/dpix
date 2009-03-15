@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+polygon_render.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Renders the polygons of the scene with stylized focus.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 uniform vec4              transfer_desat;
 uniform vec4              transfer_fade;
 uniform vec4              background_color;

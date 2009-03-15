@@ -1,0 +1,58 @@
+<!DOCTYPE npr_style>
+<npr_style>
+ <header>
+  <version>4</version>
+ </header>
+ <textures/>
+ <transfer_functions>
+  <vec4 name="focus_transfer" >0 1 0 0.56</vec4>
+  <vec4 name="line_color" >0 1 0 1</vec4>
+  <vec4 name="line_opacity" >0 1 0 0.65</vec4>
+  <vec4 name="line_texture" >0 1 0 1</vec4>
+  <vec4 name="line_elision" >0 1 0 1</vec4>
+  <vec4 name="fill_fade" >0.87 0.23 0 1</vec4>
+  <vec4 name="fill_desat" >0.83 0 0 1</vec4>
+  <vec4 name="paper_params" >0.15 0 0 1</vec4>
+ </transfer_functions>
+ <pen_styles>
+  <pen_style name="Base Style" >
+   <color>0.1 0.1 0.1</color>
+   <texture>../../textures/candle-512x32.png</texture>
+   <opacity>1</opacity>
+   <strip_width>3.5</strip_width>
+   <elision_width>2</elision_width>
+   <length_scale>0.8</length_scale>
+  </pen_style>
+  <pen_style name="Invisible" >
+   <color>0.1 0.1 0.1</color>
+   <texture>../../textures/candle-512x32.png</texture>
+   <opacity>0.5</opacity>
+   <strip_width>3.5</strip_width>
+   <elision_width>3</elision_width>
+   <length_scale>0.8</length_scale>
+  </pen_style>
+  <pen_style name="Defocused Invis." >
+   <color>0.1 0.1 0.1</color>
+   <texture>../../textures/candle-512x32.png</texture>
+   <opacity>1.38778e-16</opacity>
+   <strip_width>3.5</strip_width>
+   <elision_width>3</elision_width>
+   <length_scale>0.8</length_scale>
+  </pen_style>
+  <pen_style name="Defocused" >
+   <color>0.1 0.1 0.1</color>
+   <texture>../../textures/candle-512x32.png</texture>
+   <opacity>1</opacity>
+   <strip_width>3.5</strip_width>
+   <elision_width>13</elision_width>
+   <length_scale>0.8</length_scale>
+  </pen_style>
+ </pen_styles>
+ <colors>
+  <vec3 name="background" >1 1 1</vec3>
+ </colors>
+ <parameters>
+  <int value="1" name="draw_invisible_lines" />
+  <int value="1" name="enable_line_elision" />
+ </parameters>
+</npr_style>

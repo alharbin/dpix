@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+NPRGLDraw.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Static utility functions for OpenGL drawing.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef NPR_GL_DRAW_H_
 #define NPR_GL_DRAW_H_
 

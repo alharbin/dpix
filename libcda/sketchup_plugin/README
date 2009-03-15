@@ -1,0 +1,28 @@
+SketchUp -> COLLADA Exporter
+Michael Burns (mburns@cs.princeton.edu)
+
+To install:
+
+Copy all the files into the SketchUp Plugins directory. e.g.
+
+C:\Program Files\Google\Google SketchUp 6\Plugins
+
+on windows.
+
+To use:
+
+Load a model.
+Choose Plugins->Collada->Export all to .dae
+
+
+Troubleshooting:
+
+If you get the message:
+
+	Error Loading File collada.rb
+	No such file to load -- rexml/Document
+
+when starting sketchup, you need to installl Ruby on 
+your machine:
+
+http://rubyforge.org/projects/rubyinstaller/

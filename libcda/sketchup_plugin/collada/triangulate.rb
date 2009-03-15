@@ -1,3 +1,10 @@
+# Author: Michael Burns (mburns@cs.princeton.edu)
+# Copyright (c) 2009 Michael Burns
+#
+# This program is distributed under the terms of the
+# GNU General Public License. See the COPYING file
+# for details.
+
 module Collada
     def Collada.ccw(a, b, c)
         a[0] * (b[1] - c[1]) - b[0] * (a[1] - c[1]) + c[0] * (a[1] - b[1])

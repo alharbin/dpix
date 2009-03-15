@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+NPRPathRenderer.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Stroke rendering functions for the various rendering methods supported.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef NPR_PATH_RENDERER_H_
 #define NPR_PATH_RENDERER_H_
 

@@ -1,3 +1,14 @@
+/*****************************************************************************\
+
+GLViewer.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+dpix is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include "GLViewer.h"
 #include "MainWindow.h"
 #include "NPRUtility.h"

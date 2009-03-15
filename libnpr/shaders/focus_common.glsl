@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+focus_common.glsl
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Common routines for stylized focus.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #define NPR_FOCUS_NONE 0
 #define NPR_FOCUS_SCREEN 1
 #define NPR_FOCUS_WORLD 2

@@ -1,11 +1,15 @@
-/******************************************************************************\
- *                                                                            *
- *  filename : Session.h                                                      *
- *  authors  : Forrester Cole                                                 *
- *                                                                            *
- *  Class for recording and playing back an editing session.                  *
- *                                                                            *
-\******************************************************************************/
+/*****************************************************************************\
+
+Scene.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Class for recording and playing back an editing session.
+
+dpix is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef SESSION_H_
 #define SESSION_H_

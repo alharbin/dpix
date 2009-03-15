@@ -1,3 +1,13 @@
+/*****************************************************************************\
+
+NPRPathSet.cc
+Copyright (c) 2009 Forrester Cole
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include "NPRPathSet.h"
 #include <algorithm>
 #include <assert.h>

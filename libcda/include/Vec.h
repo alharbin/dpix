@@ -37,6 +37,12 @@ Supports the following operations:
 
 Also defines the utility functions sqr, cube, sgn, swap,
 fract, clamp, mix, step, smoothstep, and trinorm
+
+This code is part of trimesh2, which is distributed under the GPL and
+may be found here:
+
+www.cs.princeton.edu/gfx/proj/trimesh2
+
 */
 
 

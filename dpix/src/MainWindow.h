@@ -1,12 +1,16 @@
-/******************************************************************************\
- *                                                                            *
- *  filename : MainWindow.h                                                   *
- *  authors  : Forrester Cole                                                 *
- *                                                                            *
- *  Main window for viewfltk. Holds a FluidInterface widget. Handles user     *
- *  interface actions.                                                        *
- *                                                                            *
-\******************************************************************************/
+/*****************************************************************************\
+
+MainWindow.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+The main application window. Handles all the Qt event notifications and
+state management.
+
+dpix is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H

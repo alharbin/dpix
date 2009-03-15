@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+supersample_common.glsl
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Common functions for dealing with visibility supersampling.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
+
 uniform sampler2DRect depth_buffer;
 uniform sampler2DRect supersample_locations;
 

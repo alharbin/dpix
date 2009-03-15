@@ -1,3 +1,14 @@
+/*****************************************************************************\
+
+CdaModelScene.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include <assert.h>
 #include "CdaModelScene.h"
 #include "CdaNode.h"
@@ -18,7 +29,8 @@ void CdaModelScene::clear()
 {
     if (_dummy_model_root)
     {
-        // have to detach the dummy before deleting it
+        // Must detach the dummy before deleting it, otherwise it will interfere
+        // with the CdaScene::clear call below.
         for (int i = 0; i < (int)_dummy_model_root->numChildren(); i++) {
             _dummy_model_root->child(i)->setParent(NULL);
         }

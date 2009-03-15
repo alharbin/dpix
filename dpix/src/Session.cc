@@ -1,3 +1,14 @@
+/*****************************************************************************\
+
+Session.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+dpix is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include "Session.h"
 #include <QFile>
 #include <QDomDocument>
@@ -21,9 +32,7 @@ Console* Session::_console = 0;
 
 SessionFrame::~SessionFrame()
 {
-    //printf("here");
 }
-
 
 void SessionFrame::load( const QDomElement& element )
 {

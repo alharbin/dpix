@@ -1,13 +1,16 @@
+/*****************************************************************************\
 
-/******************************************************************************\
- *                                                                            *
- *  filename : NPRRenderer.h                                                  *
- *  authors  : Forrester Cole												  *
- *																			  *
- *  NPR rendering engine designed for NPR line drawing. Based on the original *
- *  libnpr by R. Keith Morley and Adam Finkelstein.							  *
- *                                                                            *
-\******************************************************************************/
+NPRRenderer.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+An abstract interface for the npr renderer.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 
 #ifndef _NPR_RENDERER_H_
 #define _NPR_RENDERER_H_

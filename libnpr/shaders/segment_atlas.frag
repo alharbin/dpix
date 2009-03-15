@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+segment_atlas.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Standard fragment program that writes visibility into the segment atlas.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 uniform vec4 viewport;
 
 varying vec4 sample_clip_pos;

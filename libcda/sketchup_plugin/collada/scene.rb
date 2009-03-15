@@ -1,3 +1,10 @@
+# Author: Michael Burns (mburns@cs.princeton.edu)
+# Copyright (c) 2009 Michael Burns
+#
+# This program is distributed under the terms of the
+# GNU General Public License. See the COPYING file
+# for details.
+
 module Collada
     def Collada.p_to_s(p)
         p = p.collect { |n| if n.abs < 1e-10 then 0.0 else n end }

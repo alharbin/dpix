@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+segment_atlas_priority.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Rendering priority values into the segment atlas.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
+
 uniform vec4 viewport;
 
 uniform sampler2DRect priority_buffer;

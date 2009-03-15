@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+stroke_render_atlas.geom
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Stroke rendering using the segment atlas.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #extension GL_EXT_geometry_shader4 : enable
 
 uniform sampler2DRect path_start_end_ptrs;

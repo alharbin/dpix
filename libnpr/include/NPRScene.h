@@ -1,4 +1,16 @@
+/*****************************************************************************\
 
+NPRScene.h
+Authors: Forrester Cole (fcole@cs.princeton.edu)
+         Michael Burns (mburns@cs.princeton.edu)       
+Copyright (c) 2009 Forrester Cole
+
+The main scenegraph class for libnpr.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _NPR_SCENE_H_
 #define _NPR_SCENE_H_

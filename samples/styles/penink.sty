@@ -1,0 +1,44 @@
+<!DOCTYPE npr_style>
+<npr_style>
+ <header>
+  <version>4</version>
+ </header>
+ <textures>
+  <texture name="paper" file="../../textures/paper/000.jpg" />
+ </textures>
+ <transfer_functions>
+  <vec4 name="focus_transfer" >0 1 0 0.36</vec4>
+  <vec4 name="line_color" >0 1 0 1</vec4>
+  <vec4 name="line_opacity" >0 1 0 1</vec4>
+  <vec4 name="line_texture" >0 1 0 1</vec4>
+  <vec4 name="line_elision" >0 1 0 1</vec4>
+  <vec4 name="fill_fade" >0.95 1 0 1</vec4>
+  <vec4 name="fill_desat" >0 0.8 0 1</vec4>
+  <vec4 name="paper_params" >0.15 0 0 1</vec4>
+ </transfer_functions>
+ <pen_styles>
+  <pen_style name="Base Style" >
+   <color>0.1 0.1 0.1</color>
+   <texture>../../textures/wedge-512x8.png</texture>
+   <opacity>1</opacity>
+   <strip_width>2</strip_width>
+   <elision_width>1</elision_width>
+   <length_scale>0.6</length_scale>
+  </pen_style>
+  <pen_style name="Defocused" >
+   <color>0.1 0.1 0.1</color>
+   <texture>../../textures/scratch-512x8.png</texture>
+   <opacity>1</opacity>
+   <strip_width>2</strip_width>
+   <elision_width>12</elision_width>
+   <length_scale>1</length_scale>
+  </pen_style>
+ </pen_styles>
+ <colors>
+  <vec3 name="background" >1 1 1</vec3>
+ </colors>
+ <parameters>
+  <int value="0" name="draw_invisible_lines" />
+  <int value="0" name="enable_line_elision" />
+ </parameters>
+</npr_style>

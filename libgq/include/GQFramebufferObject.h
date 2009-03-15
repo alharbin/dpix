@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+GQFramebufferObject.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A class for managing OpenGL framebuffer objects.
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef GQ_FRAMEBUFFER_OBJECT_H_
 #define GQ_FRAMEBUFFER_OBJECT_H_
 

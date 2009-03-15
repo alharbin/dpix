@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+GQShaderManager.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A class to load, compile, and manage GLSL shader programs. Programs themselves
+are specified in an external file (programs.xml).
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef GQ_SHADER_MANAGER_H_
 #define GQ_SHADER_MANAGER_H_
 

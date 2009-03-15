@@ -1,3 +1,13 @@
+/*****************************************************************************\
+
+NPRStyle.cc
+Copyright (c) 2009 Forrester Cole
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include <NPRStyle.h>
 #include <NPRSettings.h>
 #include <stdio.h>
@@ -25,7 +35,7 @@ const char* TRANSFER_NAMES[NPRStyle::NUM_TRANSFER_FUNCTIONS] =
 };
 
 //
-// Helper function
+// Helper functions
 //
 
 void loadVec( vec& v, const QDomElement& element )
@@ -366,9 +376,9 @@ bool NPRStyle::load( const QDir& style_dir, const QDomElement& root )
 		if (type == "pen")
             _pen_styles[0]->setTexture(texfile.attribute("file"));
 		else if (type == "paper")
-            loadPaperTexture(texfile.attribute("file"));
+            loadPaperTexture(style_dir.absoluteFilePath(texfile.attribute("file")));
 		else if (type == "background")
-            loadBackgroundTexture(texfile.attribute("file"));
+            loadBackgroundTexture(style_dir.absoluteFilePath(texfile.attribute("file")));
 		else
 			assert(0);
 

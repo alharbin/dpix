@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+CdaGeometry.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A simple program to write out some statistics of a COLLADA scene file.
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include <QCoreApplication>
 #include <QString>
 #include <QStringList>

@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+NPRSettings.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Global settings. Provides an interface for the application to control
+rarely changed parameters of the library.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef NPRSETTINGS_H_
 #define NPRSETTINGS_H_
 

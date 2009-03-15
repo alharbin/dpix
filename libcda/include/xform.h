@@ -24,6 +24,11 @@ Supports the following operations:
 	norm_xf(xf1)		// Normal xform: inverse transpose, no trans
 	invert(xf1);		// Inverts xform in place
 	orthogonalize(xf1);	// Makes matrix orthogonal
+
+This code is part of trimesh2, which is distributed under the GPL and
+may be found here:
+
+www.cs.princeton.edu/gfx/proj/trimesh2
 */
 
 #include "lineqn.h"

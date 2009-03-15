@@ -1,6 +1,16 @@
-// CdaModelScene.h
-// A descendant of CdaScene that implements QAbstractItemModel so that the 
-// scenegraph can be easily viewed and edited in a Qt TreeView
+/*****************************************************************************\
+
+CdaModelScene.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A descendant of CdaScene that implements QAbstractItemModel, which allows
+the scenegraph to be easily viewed and edited in a Qt TreeView widget.
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _CDA_MODEL_SCENE_H_
 #define _CDA_MODEL_SCENE_H_

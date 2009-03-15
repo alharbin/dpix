@@ -8,6 +8,12 @@ lineqn.h
 Solution of systems of linear equations and eigenvalue decomposition.
 Some are patterned after the code in Numerical Recipes, but with a bit of
 the fancy C++ template thing happening.
+
+This code is part of trimesh2, which is distributed under the GPL and
+may be found here:
+
+www.cs.princeton.edu/gfx/proj/trimesh2
+
 */
 
 #include <cmath>

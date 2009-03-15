@@ -1,4 +1,15 @@
-// Helper function for clip buffer and offset buffer shaders.
+/*****************************************************************************\
+
+segment_atlas_common.glsl
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Helper functions for the various segment atlas shader programs.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 // Amount of padding around a segment in the segment atlas.
 // The amount of padding rolls off to zero for short segments,

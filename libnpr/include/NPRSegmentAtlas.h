@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+NPRSegmentAtlas.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Segment atlas creation and storage. These routines correspond to "algorithm 2"
+in the TVCG paper.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #ifndef NPR_SEGMENT_ATLAS_H_
 #define NPR_SEGMENT_ATLAS_H_
 

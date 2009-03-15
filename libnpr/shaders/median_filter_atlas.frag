@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+median_filter_atlas.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A median filter for the segment atlas.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 uniform sampler2DRect source_buffer;
 
 const int MAX_SAMPLES = 9;

@@ -1,3 +1,21 @@
+/*****************************************************************************\
+
+clip_buffer.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Clipping routines for segments, adapted from some old code. 
+The original code didn't care about keeping the correct Z, so
+it did all the clipping in the post-projection cube with w=1.
+For ease we do the same here, then multiply the final coordinates
+by w so that they are interpolated correctly later on. 
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
+
 uniform vec4 viewport;
 uniform mat4 modelview;
 uniform mat4 projection;
@@ -12,12 +30,7 @@ uniform vec3 view_dir;
 uniform float sample_step;
 uniform float buffer_width;
 
-// Clipping routines adapted from NPRPathResample.cc
-// Clipping is done in clip space (NPRPathResample is in window space)
-// The original code didn't care about keeping the correct Z, so
-// it did all the clipping in the post-projection cube with w=1.
-// For ease we do the same here, then multiply the final coordinates
-// by w so that they are interpolated correctly later on. 
+
 
 struct segment
 {

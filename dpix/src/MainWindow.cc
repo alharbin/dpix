@@ -1,3 +1,14 @@
+/*****************************************************************************\
+
+MainWindow.cc
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+dpix is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include <QtGui>
 #include <QFileDialog>
 #include <QRegExp>
@@ -152,7 +163,7 @@ bool MainWindow::openScene( const QString& filename )
     // Try to do all the file loading before we change the mainwindow state at all.
 
     QString absfilename = QDir::fromNativeSeparators(_working_dir.absoluteFilePath(filename));
-    _scenename = absfilename;
+    _scenename = QDir::fromNativeSeparators(absfilename);
     QFileInfo fileinfo(absfilename);
     
     if (!fileinfo.exists())
@@ -248,8 +259,6 @@ void MainWindow::addCurrentSceneToRecentList()
 {
     if (!_scenename.isEmpty() && !_recent_scenes.contains(_scenename))
     {
-        QFileInfo fileinfo(_scenename);
-
         _recent_scenes.push_front(_scenename);
         if (_recent_scenes.size() > MAX_RECENT_SCENES)
         {
@@ -375,7 +384,7 @@ void MainWindow::on_actionSave_Scene_As_triggered()
 
         if (saveScene( filename ))
         {
-            _scenename = filename;
+            _scenename = QDir::fromNativeSeparators(filename);
             makeWindowTitle();
         }
     }
@@ -828,9 +837,7 @@ void MainWindow::on_actionPaper_Texture_triggered()
 
     if (!filename.isNull())
     {
-        QString rel_name = _working_dir.relativeFilePath(filename);
-
-        getCurrentStyle()->loadPaperTexture(rel_name);
+        getCurrentStyle()->loadPaperTexture(filename);
         updateUiFromStyle();
         _glViewer->updateGL();
     }
@@ -843,9 +850,7 @@ void MainWindow::on_actionBackground_Texture_triggered()
 
     if (!filename.isNull())
     {
-        QString rel_name = _working_dir.relativeFilePath(filename);
-
-        getCurrentStyle()->loadBackgroundTexture(rel_name);
+        getCurrentStyle()->loadBackgroundTexture(filename);
         updateUiFromStyle();
         _glViewer->updateGL();
     }

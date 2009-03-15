@@ -1,9 +1,15 @@
-
 /*****************************************************************************\
- *                                                                           *
- *  filename : GQInclude.h                                                 *
- *  authors  : Forrester Cole                                                *
- *                                                                           *
+
+GQInclude.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Common include headers for libgq and dependent libraries. The main purpose
+is to make sure the OpenGL headers get included properly.
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
 \*****************************************************************************/
 
 #ifndef _GQ_INCLUDE_H_

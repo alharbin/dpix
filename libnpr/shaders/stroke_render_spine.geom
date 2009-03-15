@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+stroke_render_spine.geom
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Geometry shader for spine-test visibility stroke rendering. 
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #extension GL_EXT_geometry_shader4 : enable
 
 uniform vec4 viewport;

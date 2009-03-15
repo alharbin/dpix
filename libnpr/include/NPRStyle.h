@@ -1,11 +1,15 @@
-
 /*****************************************************************************\
-*                                                                           *
-*  filename: NPRStyle.h                                                     *
-*  authors : r. keith                                                       *
-*                                                                           *
-*  class to hold all _style attributes for drawing a class of paths.         *
-*                                                                           *
+
+NPRSettings.h
+Authors: Forrester Cole (fcole@cs.princeton.edu)
+         R. Keith Morley 
+Copyright (c) 2009 Forrester Cole
+
+Style storage. Contains pen, paper, background, etc.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
 \*****************************************************************************/
 
 #ifndef _NPR_STYLE_H_

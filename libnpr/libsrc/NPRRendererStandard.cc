@@ -1,3 +1,13 @@
+/*****************************************************************************\
+
+NPRRendererStandard.cc
+Copyright (c) 2009 Forrester Cole
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 #include "NPRFixedPathSet.h"
 #include "NPRDrawable.h"
 #include "NPRRendererStandard.h"

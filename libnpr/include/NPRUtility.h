@@ -1,10 +1,15 @@
 /*****************************************************************************\
- *                                                                           *
- *  filename : NPRUtility.h                                                  *
- *  authors  : R. Keith Morley                                               *
- *                                                                           *
- *  Common utility functions used by multiple modules within NPRlib          *
- *                                                                           *
+
+NPRSettings.h
+Authors: Forrester Cole (fcole@cs.princeton.edu)
+         R. Keith Morley 
+Copyright (c) 2009 Forrester Cole
+
+Various useful utility functions.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
 \*****************************************************************************/
 
 #ifndef _NPR_UTIILITY_H_

@@ -1,3 +1,17 @@
+<!--
+
+programs.xml
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+This is the main metafile for all shader programs. GQShaderManager
+parses this file.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+-->
+
 <glsl_programs>
     <program name="stroke_render_atlas">
         <shader type="vertex">

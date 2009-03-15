@@ -1,4 +1,15 @@
-// CdaEffect.h
+/*****************************************************************************\
+
+CdaEffect.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A wrapper class for a COLLADA effect node.
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _CDA_EFFECT_H_
 #define _CDA_EFFECT_H_

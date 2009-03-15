@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+stroke_render_common.glsl
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Common functions for stroke rendering (e.g., computing pen color)
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 uniform sampler2D vis_focus_texture;
 uniform sampler2D vis_defocus_texture;
 uniform sampler2D invis_focus_texture;

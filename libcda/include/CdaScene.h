@@ -1,4 +1,17 @@
-// CdaScene.h
+/*****************************************************************************\
+
+CdaScene.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+The main COLLADA scenegraph class. Loads the COLLADA file from disk and 
+stores the libraries and instances.
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 
 #ifndef _CDA_SCENE_H_
 #define _CDA_SCENE_H_

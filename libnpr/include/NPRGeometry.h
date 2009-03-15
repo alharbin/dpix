@@ -1,5 +1,19 @@
-#ifndef LN_GEOMETRY_H_
-#define LN_GEOMETRY_H_
+/*****************************************************************************\
+
+NPRGeometry.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A piece of geometry that corresponds to a single COLLADA geometry node.
+May store many different primitive types together.
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
+#ifndef NPR_GEOMETRY_H_
+#define NPR_GEOMETRY_H_
 
 #include <QVector>
 #include <QHash>

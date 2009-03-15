@@ -1,3 +1,17 @@
+/*****************************************************************************\
+
+GQVertexBufferSet.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+An abstraction to manage OpenGL vertex arrays and vertex buffer objects. 
+A buffer set is stored on the CPU side by default, but may be copied to
+the GPU using copyDataToVBOs().
+
+libgq is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _GQ_VERTEX_BUFFER_SET_H
 #define _GQ_VERTEX_BUFFER_SET_H

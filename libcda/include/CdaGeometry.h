@@ -1,5 +1,16 @@
-// CdaGeometry.h
-// Currently this class only supports the mesh datatype
+/*****************************************************************************\
+
+CdaGeometry.h
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+A COLLADA geometry node. Currently this class only supports the "mesh"
+datatype.
+
+libcda is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
 
 #ifndef _CDA_GEOMETRY_H_
 #define _CDA_GEOMETRY_H_

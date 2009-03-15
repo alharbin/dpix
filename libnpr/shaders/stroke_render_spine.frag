@@ -1,3 +1,16 @@
+/*****************************************************************************\
+
+stroke_render_spine.frag
+Author: Forrester Cole (fcole@cs.princeton.edu)
+Copyright (c) 2009 Forrester Cole
+
+Fragment shader for spine-test visibility stroke rendering. 
+
+libnpr is distributed under the terms of the GNU General Public License.
+See the COPYING file for details.
+
+\*****************************************************************************/
+
 uniform mat4  inverse_projection;
 uniform vec4 viewport;
 
