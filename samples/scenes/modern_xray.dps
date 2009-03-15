@@ -29,7 +29,7 @@
      <opacity>1</opacity>
      <strip_width>3.5</strip_width>
      <elision_width>2</elision_width>
-     <length_scale>0.8</length_scale>
+     <length_scale>0.4</length_scale>
     </pen_style>
     <pen_style name="Invisible" >
      <color>0.1 0.1 0.1</color>
@@ -120,7 +120,7 @@
   <Display axisIsDrawn="false" gridIsDrawn="false" FPSIsDisplayed="false" cameraIsEdited="false" />
   <Geometry fullScreen="false" width="808" posX="86" height="648" posY="113" />
   <Camera>
-   <Parameters fieldOfView="0.523599" sceneRadius="544.142" Type="PERSPECTIVE" zNearCoefficient="0.01" orthoCoef="3.69357e-05" zClippingCoefficient="1.73205" >
+   <Parameters fieldOfView="0.523599" sceneRadius="544.142" Type="PERSPECTIVE" zNearCoefficient="0.01" orthoCoef="2.49961e-06" zClippingCoefficient="1.73205" >
     <SceneCenter x="579.678" y="376.216" z="-36" />
    </Parameters>
    <Stereo distToScreen="0.5" focusDistance="2030.77" physScreenWidth="0.4" IODist="0.062" />
