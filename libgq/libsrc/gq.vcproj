@@ -1,176 +1,293 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
 	Name="gq"
-	ProjectGUID="{D41D8CD9-8F00-3204-A980-0998ECF8427E}">
+	ProjectGUID="{D41D8CD9-8F00-3204-A980-0998ECF8427E}"
+	Keyword="Qt4VSv1.0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="4"
 			IntermediateDirectory="debug\"
-			UseOfMfc="0">
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				WarningLevel="0"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include,..\include,..\..\libcda\include,c:\qt\4.3.1\include\ActiveQt,debug,.,c:\qt\4.3.1\mkspecs\win32-msvc2005"
-				AdditionalOptions="-Zm200 -EHsc"
-				AssemblerListingLocation="debug\"
-				BufferSecurityCheck="true"
-				DebugInformationFormat="4"
-				ExceptionHandling="true"
+				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
+				Optimization="4"
+				AdditionalIncludeDirectories="&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include&quot;,&quot;..\include&quot;,&quot;..\..\libcda\include&quot;,&quot;c:\qt\4.4.3\include\ActiveQt&quot;,&quot;debug&quot;,&quot;.&quot;,c:\qt\4.4.3\mkspecs\win32-msvc2005"
+				PreprocessorDefinitions="UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
 				GeneratePreprocessedFile="0"
-				MinimalRebuild="true"
-				ObjectFile="debug\"
-				Optimization ="0"
-				PreprocessorDefinitions="UNICODE,QT_LARGEFILE_SUPPORT,WIN32,_CRT_SECURE_NO_DEPRECATE,_CRT_NONSTDC_NO_DEPRECATE,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
-				ProgramDataBaseFileName=".\"
+				ExceptionHandling="1"
 				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
+				AssemblerListingLocation="debug\"
+				ObjectFile="debug\"
+				ProgramDataBaseFileName=".\"
+				WarningLevel="3"
 				SuppressStartupBanner="true"
-				WarningLevel="3"/>
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,_DEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile="..\lib.debug\gq.lib"
-				SuppressStartupBanner="true"/>
+				SuppressStartupBanner="true"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				DefaultCharType="0"
-				EnableErrorChecks="1"
-				WarningLevel="0"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="4"
 			IntermediateDirectory="release\"
-			UseOfMfc="0">
+			ConfigurationType="4"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				WarningLevel="0"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include,..\include,..\..\libcda\include,c:\qt\4.3.1\include\ActiveQt,release,.,c:\qt\4.3.1\mkspecs\win32-msvc2005"
-				AdditionalOptions="-Zm200 -EHsc"
-				AssemblerListingLocation="release\"
-				BufferSecurityCheck="true"
-				DebugInformationFormat="0"
-				ExceptionHandling="true"
+				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
+				Optimization="2"
+				AdditionalIncludeDirectories="&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include&quot;,&quot;..\include&quot;,&quot;..\..\libcda\include&quot;,&quot;c:\qt\4.4.3\include\ActiveQt&quot;,&quot;release&quot;,&quot;.&quot;,c:\qt\4.4.3\mkspecs\win32-msvc2005"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,NDEBUG"
 				GeneratePreprocessedFile="0"
-				ObjectFile="release\"
-				Optimization ="2"
-				PreprocessorDefinitions="NDEBUG,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,_CRT_SECURE_NO_DEPRECATE,_CRT_NONSTDC_NO_DEPRECATE,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
-				ProgramDataBaseFileName=".\"
+				ExceptionHandling="1"
 				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
+				AssemblerListingLocation="release\"
+				ObjectFile="release\"
+				ProgramDataBaseFileName=".\"
+				WarningLevel="3"
 				SuppressStartupBanner="true"
-				WarningLevel="3"/>
+				DebugInformationFormat="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLibrarianTool"
 				OutputFile="..\lib.release\gq.lib"
-				SuppressStartupBanner="true"/>
+				SuppressStartupBanner="true"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				DefaultCharType="0"
-				EnableErrorChecks="1"
-				WarningLevel="0"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx">
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath="GLee.c"/>
+				RelativePath="GLee.c"
+				>
+			</File>
 			<File
-				RelativePath="GQFramebufferObject.cc"/>
+				RelativePath="GQFramebufferObject.cc"
+				>
+			</File>
 			<File
-				RelativePath="GQImage.cc"/>
+				RelativePath="GQImage.cc"
+				>
+			</File>
 			<File
-				RelativePath="GQShaderManager.cc"/>
+				RelativePath="GQShaderManager.cc"
+				>
+			</File>
 			<File
-				RelativePath="GQStats.cc"/>
+				RelativePath="GQStats.cc"
+				>
+			</File>
 			<File
-				RelativePath="GQTexture.cc"/>
+				RelativePath="GQTexture.cc"
+				>
+			</File>
 			<File
-				RelativePath="GQVertexBufferSet.cc"/>
+				RelativePath="GQVertexBufferSet.cc"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd">
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath="..\include\GQFramebufferObject.h"/>
+				RelativePath="..\include\GQFramebufferObject.h"
+				>
+			</File>
 			<File
-				RelativePath="..\include\GQImage.h"/>
+				RelativePath="..\include\GQImage.h"
+				>
+			</File>
 			<File
-				RelativePath="..\include\GQInclude.h"/>
+				RelativePath="..\include\GQInclude.h"
+				>
+			</File>
 			<File
-				RelativePath="..\include\GQShaderManager.h"/>
+				RelativePath="..\include\GQShaderManager.h"
+				>
+			</File>
 			<File
-				RelativePath="..\include\GQStats.h">
+				RelativePath="..\include\GQStats.h"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;debug&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; ..\include\GQStats.h -o debug\moc_GQStats.cpp"
 						Description="MOC ..\include\GQStats.h"
-						Outputs="debug\moc_GQStats.cpp"/>
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 ..\include\GQStats.h -o debug\moc_GQStats.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="..\include\GQStats.h;C:\qt\4.4.3\bin\moc.exe"
+						Outputs="debug\moc_GQStats.cpp"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -DNDEBUG -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;release&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; ..\include\GQStats.h -o release\moc_GQStats.cpp"
 						Description="MOC ..\include\GQStats.h"
-						Outputs="release\moc_GQStats.cpp"/>
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 ..\include\GQStats.h -o release\moc_GQStats.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="..\include\GQStats.h;C:\qt\4.4.3\bin\moc.exe"
+						Outputs="release\moc_GQStats.cpp"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\include\GQTexture.h"/>
+				RelativePath="..\include\GQTexture.h"
+				>
+			</File>
 			<File
-				RelativePath="..\include\GQVertexBufferSet.h"/>
+				RelativePath="..\include\GQVertexBufferSet.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
-			Filter="cpp;c;cxx;moc;h;qrc;def;odl;idl;res">
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
+			>
 			<File
-				RelativePath="debug\moc_GQStats.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"/>
-			</File>
-			<File
-				RelativePath="release\moc_GQStats.cpp">
+				RelativePath="release\moc_GQStats.cpp"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"/>
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="debug\moc_GQStats.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

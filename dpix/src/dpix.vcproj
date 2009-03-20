@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="dpix"
 	ProjectGUID="{7782F3BC-23B3-470F-B5B8-A9FF2068F1A7}"
+	Keyword="Qt4VSv1.0"
 	>
 	<Platforms>
 		<Platform
@@ -41,28 +42,29 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm200 -EHsc"
-				Optimization="0"
-				AdditionalIncludeDirectories="c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include,..\..\libnpr\include,..\..\libgq\include,..\..\libcda\include,..\qglviewer,c:\qt\4.3.1\include\ActiveQt,debug,.,c:\qt\4.3.1\mkspecs\win32-msvc2005"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,_CRT_SECURE_NO_DEPRECATE,_CRT_NONSTDC_NO_DEPRECATE,QGLVIEWER_STATIC,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
+				Optimization="4"
+				AdditionalIncludeDirectories="&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include&quot;,&quot;..\..\libnpr\include&quot;,&quot;..\..\libgq\include&quot;,&quot;..\..\libcda\include&quot;,&quot;..\qglviewer&quot;,&quot;c:\qt\4.4.3\include\ActiveQt&quot;,&quot;debug&quot;,&quot;.&quot;,c:\qt\4.4.3\mkspecs\win32-msvc2005"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QGLVIEWER_STATIC,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
 				GeneratePreprocessedFile="0"
-				MinimalRebuild="true"
+				ExceptionHandling="1"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="true"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
 				AssemblerListingLocation="debug\"
 				ObjectFile="debug\"
 				ProgramDataBaseFileName=".\"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QGLVIEWER_STATIC,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,_DEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -70,13 +72,15 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="opengl32.lib glu32.lib gdi32.lib user32.lib c:\qt\4.3.1\lib\qtmaind.lib npr.lib gq.lib cda.lib qglviewer.lib c:\qt\4.3.1\lib\QtXmld4.lib c:\qt\4.3.1\lib\QtOpenGLd4.lib c:\qt\4.3.1\lib\QtGuid4.lib c:\qt\4.3.1\lib\QtCored4.lib"
+				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; &quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
+				AdditionalDependencies="opengl32.lib glu32.lib gdi32.lib user32.lib c:\qt\4.4.3\lib\qtmaind.lib ../../libnpr/lib.debug\npr.lib ../../libgq/lib.debug\gq.lib ../../libcda/lib.debug\cda.lib ../lib.debug\qglviewer.lib c:\qt\4.4.3\lib\QtXmld4.lib c:\qt\4.4.3\lib\QtOpenGLd4.lib c:\qt\4.4.3\lib\QtGuid4.lib c:\qt\4.4.3\lib\QtCored4.lib"
 				OutputFile="..\bin.debug\dpix.exe"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\qt\4.3.1\lib,../../libnpr/lib.debug,../../libgq/lib.debug,../../libcda/lib.debug,../lib.debug"
+				AdditionalLibraryDirectories="c:\qt\4.4.3\lib,../../libnpr/lib.debug,../../libgq/lib.debug,../../libcda/lib.debug,../lib.debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=""
 				SubSystem="2"
+				LinkTimeCodeGeneration="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -131,13 +135,15 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm200 -EHsc"
+				AdditionalOptions="-Zm200 -w34100 -w34189 -Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="2"
-				AdditionalIncludeDirectories="c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtCore,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtGui,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtOpenGL,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include\QtXml,c:\qt\4.3.1\include,..\..\libnpr\include,..\..\libgq\include,..\..\libcda\include,..\qglviewer,c:\qt\4.3.1\include\ActiveQt,release,.,c:\qt\4.3.1\mkspecs\win32-msvc2005"
-				PreprocessorDefinitions="NDEBUG,_WINDOWS,UNICODE,QT_LARGEFILE_SUPPORT,WIN32,_CRT_SECURE_NO_DEPRECATE,_CRT_NONSTDC_NO_DEPRECATE,QGLVIEWER_STATIC,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
+				AdditionalIncludeDirectories="&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtCore&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtGui&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtOpenGL&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include\QtXml&quot;,&quot;c:\qt\4.4.3\include&quot;,&quot;..\..\libnpr\include&quot;,&quot;..\..\libgq\include&quot;,&quot;..\..\libcda\include&quot;,&quot;..\qglviewer&quot;,&quot;c:\qt\4.4.3\include\ActiveQt&quot;,&quot;release&quot;,&quot;.&quot;,c:\qt\4.4.3\mkspecs\win32-msvc2005"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QGLVIEWER_STATIC,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT,NDEBUG"
 				GeneratePreprocessedFile="0"
+				ExceptionHandling="1"
 				RuntimeLibrary="2"
-				BufferSecurityCheck="true"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
 				AssemblerListingLocation="release\"
 				ObjectFile="release\"
@@ -151,7 +157,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,QGLVIEWER_STATIC,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_THREAD_SUPPORT"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -159,13 +165,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="opengl32.lib glu32.lib gdi32.lib user32.lib c:\qt\4.3.1\lib\qtmain.lib npr.lib gq.lib cda.lib qglviewer.lib c:\qt\4.3.1\lib\QtXml4.lib c:\qt\4.3.1\lib\QtOpenGL4.lib c:\qt\4.3.1\lib\QtGui4.lib c:\qt\4.3.1\lib\QtCore4.lib"
+				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; &quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
+				AdditionalDependencies="opengl32.lib glu32.lib gdi32.lib user32.lib c:\qt\4.4.3\lib\qtmain.lib ../../libnpr/lib.release\npr.lib ../../libgq/lib.release\gq.lib ../../libcda/lib.release\cda.lib ../lib.release\qglviewer.lib c:\qt\4.4.3\lib\QtXml4.lib c:\qt\4.4.3\lib\QtOpenGL4.lib c:\qt\4.4.3\lib\QtGui4.lib c:\qt\4.4.3\lib\QtCore4.lib"
 				OutputFile="..\bin.release\dpix.exe"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\qt\4.3.1\lib,../../libnpr/lib.release,../../libgq/lib.release,../../libcda/lib.release,../lib.release"
+				AdditionalLibraryDirectories="c:\qt\4.4.3\lib,../../libnpr/lib.release,../../libgq/lib.release,../../libcda/lib.release,../lib.release"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile=""
 				SubSystem="2"
+				LinkTimeCodeGeneration="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -199,6 +208,7 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
 				RelativePath="Console.cc"
@@ -228,6 +238,7 @@
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
 				RelativePath="Console.h"
@@ -238,8 +249,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC Console.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;debug&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; Console.h -o debug\moc_Console.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 Console.h -o debug\moc_Console.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;Console.h"
 						Outputs="debug\moc_Console.cpp"
 					/>
 				</FileConfiguration>
@@ -249,8 +260,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC Console.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;release&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; Console.h -o release\moc_Console.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 Console.h -o release\moc_Console.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;Console.h"
 						Outputs="release\moc_Console.cpp"
 					/>
 				</FileConfiguration>
@@ -264,8 +275,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC GLViewer.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;debug&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; GLViewer.h -o debug\moc_GLViewer.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 GLViewer.h -o debug\moc_GLViewer.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;GLViewer.h"
 						Outputs="debug\moc_GLViewer.cpp"
 					/>
 				</FileConfiguration>
@@ -275,8 +286,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC GLViewer.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;release&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; GLViewer.h -o release\moc_GLViewer.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 GLViewer.h -o release\moc_GLViewer.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;GLViewer.h"
 						Outputs="release\moc_GLViewer.cpp"
 					/>
 				</FileConfiguration>
@@ -290,8 +301,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC MainWindow.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;debug&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; MainWindow.h -o debug\moc_MainWindow.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 MainWindow.h -o debug\moc_MainWindow.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;MainWindow.h"
 						Outputs="debug\moc_MainWindow.cpp"
 					/>
 				</FileConfiguration>
@@ -301,8 +312,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC MainWindow.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;release&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; MainWindow.h -o release\moc_MainWindow.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 MainWindow.h -o release\moc_MainWindow.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;MainWindow.h"
 						Outputs="release\moc_MainWindow.cpp"
 					/>
 				</FileConfiguration>
@@ -320,8 +331,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC Session.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;debug&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; Session.h -o debug\moc_Session.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;debug&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 Session.h -o debug\moc_Session.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;Session.h"
 						Outputs="debug\moc_Session.cpp"
 					/>
 				</FileConfiguration>
@@ -331,16 +342,25 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC Session.h"
-						CommandLine="c:\qt\4.3.1\bin\moc.exe -DNDEBUG -D_WINDOWS -DUNICODE -DQT_LARGEFILE_SUPPORT -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT  -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtCore&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtGui&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtOpenGL&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include\QtXml&quot; -I &quot;c:\qt\4.3.1\include&quot; -I &quot;..\..\libnpr\include&quot; -I &quot;..\..\libgq\include&quot; -I &quot;..\..\libcda\include&quot; -I &quot;..\qglviewer&quot; -I &quot;c:\qt\4.3.1\include\ActiveQt&quot; -I &quot;release&quot; -I &quot;.&quot; -I&quot;c:\qt\4.3.1\mkspecs\win32-msvc2005&quot; Session.h -o release\moc_Session.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="${QMAKE_FUNC_mocCmd}"
+						CommandLine="C:\qt\4.4.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQGLVIEWER_STATIC -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtCore&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtGui&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtOpenGL&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include\QtXml&quot; -I&quot;c:\qt\4.4.3\include&quot; -I&quot;..\..\libnpr\include&quot; -I&quot;..\..\libgq\include&quot; -I&quot;..\..\libcda\include&quot; -I&quot;..\qglviewer&quot; -I&quot;c:\qt\4.4.3\include\ActiveQt&quot; -I&quot;release&quot; -I&quot;.&quot; -Ic:\qt\4.4.3\mkspecs\win32-msvc2005 -D_MSC_VER=1400 -DWIN32 Session.h -o release\moc_Session.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\moc.exe;Session.h"
 						Outputs="release\moc_Session.cpp"
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="ui_Interface.h"
+				>
+			</File>
+			<File
+				RelativePath="ui_Session.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
-			Filter="cpp;c;cxx;moc;h;qrc;def;odl;idl;res"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
 				RelativePath="release\moc_Console.cpp"
@@ -391,10 +411,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="release\moc_MainWindow.cpp"
+				RelativePath="debug\moc_MainWindow.cpp"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -403,10 +423,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="debug\moc_MainWindow.cpp"
+				RelativePath="release\moc_MainWindow.cpp"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -438,10 +458,20 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="ui_Interface.h"
+				>
+			</File>
+			<File
+				RelativePath="ui_Session.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Form Files"
 			Filter="ui"
+			UniqueIdentifier="{99349809-55BA-4b9d-BF79-8FDBB0286EB3}"
+			ParseFiles="false"
 			>
 			<File
 				RelativePath="ui\Interface.ui"
@@ -452,8 +482,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC ui\Interface.ui"
-						CommandLine="c:\qt\4.3.1\bin\uic.exe ui\Interface.ui -o ui_Interface.h&#x0D;&#x0A;"
-						AdditionalDependencies="c:\qt\4.3.1\bin\uic.exe;GLViewer.h"
+						CommandLine="C:\qt\4.4.3\bin\uic.exe ui\Interface.ui -o ui_Interface.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\uic.exe;GLViewer.h;ui\Interface.ui"
 						Outputs="ui_Interface.h"
 					/>
 				</FileConfiguration>
@@ -463,8 +493,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC ui\Interface.ui"
-						CommandLine="c:\qt\4.3.1\bin\uic.exe ui\Interface.ui -o ui_Interface.h&#x0D;&#x0A;"
-						AdditionalDependencies="c:\qt\4.3.1\bin\uic.exe;GLViewer.h"
+						CommandLine="C:\qt\4.4.3\bin\uic.exe ui\Interface.ui -o ui_Interface.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\uic.exe;GLViewer.h;ui\Interface.ui"
 						Outputs="ui_Interface.h"
 					/>
 				</FileConfiguration>
@@ -478,8 +508,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC ui\Session.ui"
-						CommandLine="c:\qt\4.3.1\bin\uic.exe ui\Session.ui -o ui_Session.h&#x0D;&#x0A;"
-						AdditionalDependencies="c:\qt\4.3.1\bin\uic.exe"
+						CommandLine="C:\qt\4.4.3\bin\uic.exe ui\Session.ui -o ui_Session.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\uic.exe;ui\Session.ui"
 						Outputs="ui_Session.h"
 					/>
 				</FileConfiguration>
@@ -489,8 +519,8 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="UIC ui\Session.ui"
-						CommandLine="c:\qt\4.3.1\bin\uic.exe ui\Session.ui -o ui_Session.h&#x0D;&#x0A;"
-						AdditionalDependencies="c:\qt\4.3.1\bin\uic.exe"
+						CommandLine="C:\qt\4.4.3\bin\uic.exe ui\Session.ui -o ui_Session.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\qt\4.4.3\bin\uic.exe;ui\Session.ui"
 						Outputs="ui_Session.h"
 					/>
 				</FileConfiguration>
