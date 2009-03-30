@@ -405,15 +405,13 @@ void CdaScene::traverseAndGetVerts(const CdaScene *scene, const CdaNode* root, v
                 traverseAndGetVerts(scene, inst_node, verts, current_xf * root->matrix() );
         }
     }
-    else
+
+    if (root->geometry())
     {
-        if (root->geometry())
-        {
-            const int num_geom_verts = root->geometry()->data(CDA_VERTEX).length();
-            const CdaVec3 *geom_verts = root->geometry()->data(CDA_VERTEX).asVec3();
-            for (int i = 0; i < num_geom_verts; i++)
-                verts.push_back( current_xf * geom_verts[i] );
-        }
+        const int num_geom_verts = root->geometry()->data(CDA_VERTEX).length();
+        const CdaVec3 *geom_verts = root->geometry()->data(CDA_VERTEX).asVec3();
+        for (int i = 0; i < num_geom_verts; i++)
+            verts.push_back( current_xf * geom_verts[i] );
     }
 }
 

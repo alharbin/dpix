@@ -1318,13 +1318,13 @@ void MainWindow::updateLineVisibilitySettingsFromUi()
         {
             setIntSetting(NPR_LINE_VISIBILITY_SUPERSAMPLE, 9);
             setFloatSetting(NPR_SEGMENT_ATLAS_DEPTH_SCALE, 2.0);
-            setFloatSetting(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y, 1.0);
+            setFloatSetting(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y, 0.5);
         }
         else if (_ui.highQualityButton->isChecked()) 
         {
             setIntSetting(NPR_LINE_VISIBILITY_SUPERSAMPLE, 16);
             setFloatSetting(NPR_SEGMENT_ATLAS_DEPTH_SCALE, 3.0);
-            setFloatSetting(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y, 1.0);
+            setFloatSetting(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y, 0.3);
         }
     }
 }
