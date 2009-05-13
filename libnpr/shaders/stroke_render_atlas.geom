@@ -156,12 +156,12 @@ void main()
     q_sample += vec2(overshoot.y / sample_spacing, 0.0);
 
     // Two vertices at the p end of the segment.
-    vec2 vertex_offset = getVertexOffset(prev_tangent, tangent);
+    vec2 vertex_offset = getVertexOffset(prev_tangent, norm_tangent);
     spine_position = clip_p;
     emitVertexPair(p, vertex_offset, p_sample, tex_offsets.x); 
 
     // Two vertices at the q end of the segment.
-    vertex_offset = getVertexOffset(tangent, next_tangent);
+    vertex_offset = getVertexOffset(norm_tangent, next_tangent);
     spine_position = clip_q;
     emitVertexPair(q, vertex_offset, q_sample, tex_offsets.y); 
 
