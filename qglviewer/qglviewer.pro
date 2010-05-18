@@ -1,3 +1,6 @@
+DEFINES += NO_VECTORIAL_RENDER
+DEFINES += QGLVIEWER_STATIC
+
 CONFIG += debug_and_release
 
 CONFIG(release, debug|release) {
@@ -26,14 +29,12 @@ else {
 CONFIG += staticlib
 QT += opengl xml
 
-TARGET = gq
+TARGET = qglviewer
 
-DEPENDPATH += include
-INCLUDEPATH += include
-INCLUDEPATH += ../libcda/include
+DEPENDPATH += .
+INCLUDEPATH += .
 
 #Input
-HEADERS += include/GQ*.h
-SOURCES += libsrc/GQ*.cc
-SOURCES += libsrc/GLee.c
-
+HEADERS += *.h
+SOURCES += *.cpp
+FORMS += *.ui

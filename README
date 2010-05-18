@@ -58,22 +58,23 @@ well, but have not been tested.
 You must have Qt 4.3 or higher installed prior to building dpix.
 
 Windows:
-Visual Studio 2005 solution and project files are provided. You can
-also regenerate the project files by typing "qmake -r" in the root
-directory.
+A Visual Studio 2005 solution file is provided. You can generate the project
+files by typing "qmake -r" in the root directory.
 
 Mac (Leopard):
-The usual procedure of "qmake -r" and "make" should work.
-You may need to use "qmake -r -spec macx-g++" to create Makefiles,
-rather than Xcode projects. Building with Xcode should be possible, but has
-not been tested.
+The usual procedure of "qmake -r" and "make" should work.  You may need to use
+"qmake -r -spec macx-g++" to create Makefiles, rather than Xcode projects.
+Building with Xcode should be possible, but has not been tested.
 
-Once dpix is built, a binary should appear in "dpix/bin.debug" or
-"dpix/bin.release". Run this binary, and try opening one of the sample scenes
-in "samples/scenes" to make sure everything is working properly.
+To compile in release mode, run:
+qmake -r "CONFIG += release"
 
-If you encounter problems, email fcole@cs.princeton.edu with a complete
-problem report and I will try to help out.
+Once dpix is built, a binary should appear in "dpix/debug" or "dpix/release".
+Run this binary, and try opening one of the sample scenes in "samples/scenes"
+to make sure everything is working properly.
+
+If you encounter problems, email fcole@cs.princeton.edu with a complete problem
+report and I will try to help out.
 
 ACKNOWLEDGEMENTS
 

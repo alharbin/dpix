@@ -1,8 +1,7 @@
-include(npr_header.pri)
-
 TEMPLATE = subdirs
 CONFIG += ordered
 
+SUBDIRS += qglviewer
 SUBDIRS += libcda
 SUBDIRS += libgq
 SUBDIRS += libnpr

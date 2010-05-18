@@ -408,7 +408,9 @@ void NPRScene::traverseAndFindInstances(const CdaNode* root,
 
 bool compareDrawables(const NPRDrawable* lhs, const NPRDrawable* rhs)
 {
-    return (int)(lhs->geometry()) < (int)(rhs->geometry());
+    // Evil pointer comparison... but the point is to order by 
+    // geometry instance.
+    return lhs->geometry() < rhs->geometry();
 }
 
 void NPRScene::sortDrawables()
