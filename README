@@ -58,8 +58,10 @@ well, but have not been tested.
 You must have Qt 4.3 or higher installed prior to building dpix.
 
 Windows:
-A Visual Studio 2005 solution file is provided. You can generate the project
-files by typing "qmake -r" in the root directory.
+A Visual Studio 2008 solution file is provided. You can generate the project
+files by typing "qmake -r" in the root directory. Distributing project files
+caused portability issues since the project files depend on the particular 
+lcoation of Qt.
 
 Mac (Leopard):
 The usual procedure of "qmake -r" and "make" should work.  You may need to use

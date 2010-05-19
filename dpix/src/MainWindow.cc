@@ -1324,7 +1324,7 @@ void MainWindow::updateLineVisibilitySettingsFromUi()
         {
             setIntSetting(NPR_LINE_VISIBILITY_SUPERSAMPLE, 16);
             setFloatSetting(NPR_SEGMENT_ATLAS_DEPTH_SCALE, 3.0);
-            setFloatSetting(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y, 0.3);
+            setFloatSetting(NPR_SEGMENT_ATLAS_KERNEL_SCALE_Y, 0.3f);
         }
     }
 }
