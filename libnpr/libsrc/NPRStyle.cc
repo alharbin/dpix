@@ -224,7 +224,7 @@ bool NPRPenStyle::setTexture( const QString& filename )
         return false;
     }
 
-    GQTexture* new_texture = new GQTexture2D();
+    GQTexture* new_texture = new GQTexture3D();
 
     if (!new_texture->load(filename))
     {

@@ -58,7 +58,7 @@ class NPRPathRenderer
     protected:
         bool         _is_initialized;
 
-        GQTexture2D  _blank_white_texture;
+        GQTexture3D  _blank_white_texture;
         GQTexture2D  _blank_white_texture_rect;
         GQVertexBufferSet _quad_vertices_vbo;
 };

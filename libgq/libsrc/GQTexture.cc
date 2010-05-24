@@ -199,7 +199,12 @@ bool GQTexture3D::load( const QString& filename )
     {
         return load3dt(filename);
     }
-
+    else 
+    {
+        GQImage image;
+        if (image.load(filename))
+            return create(image);
+    }
     return false;
 }
 
@@ -289,6 +294,23 @@ bool GQTexture3D::load3dt( const QString& filename )
                   GL_UNSIGNED_BYTE, data.constData());
 }
 
+bool GQTexture3D::create(const GQImage& image)
+{
+    GLint format;
+    if (image.chan() == 1) 
+        format = GL_LUMINANCE;
+    else if (image.chan() == 2)
+        format = GL_LUMINANCE_ALPHA;
+    else if (image.chan() == 3) 
+        format = GL_RGB;
+    else if (image.chan() == 4)
+        format = GL_RGBA;
+    else
+        assert(0);
+ 
+    return create(image.width(), image.height(), 1,
+                 format, format, GL_UNSIGNED_BYTE, image.raster());
+}
 
 bool GQTexture3D::create(int width, int height, int depth, 
                          int internal_format, int format, 

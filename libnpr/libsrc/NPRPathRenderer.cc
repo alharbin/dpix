@@ -125,7 +125,7 @@ void NPRPathRenderer::drawStrokes(const NPRScene& scene,
 
     int draw_mode = DRAW_STROKES_NO_PRIORITY;
     bool use_priority_buffer = scene.globalStyle()->enableLineElision() &&
-                               NPRSettings::instance().get(NPR_CHECK_LINE_PRIORITY);
+                           NPRSettings::instance().get(NPR_CHECK_LINE_PRIORITY);
     if (use_priority_buffer)
     {
         draw_mode = DRAW_STROKES_WITH_PRIORITY;

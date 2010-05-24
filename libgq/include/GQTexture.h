@@ -78,6 +78,7 @@ class GQTexture3D : public GQTexture
 {
     public:
         bool load( const QString& filename );
+        bool create(const GQImage& image);
         bool create(int width, int height, int depth, int internal_format, 
                     int format, int type, const void *data);
         bool bind() const;
