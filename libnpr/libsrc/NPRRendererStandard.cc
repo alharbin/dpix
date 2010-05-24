@@ -53,12 +53,12 @@ void NPRRendererStandard::drawScene( const NPRScene& scene )
     int viz_method = settings.get(NPR_LINE_VISIBILITY_METHOD);
     setLineVisibilityMethod((NPRLineVisibilityMethod)viz_method);
 
-    if (GQShaderManager::status() == SHADERS_NOT_LOADED)
+    if (GQShaderManager::status() == GQ_SHADERS_NOT_LOADED)
     {
         GQShaderManager::initialize();
     }
 
-    if (!GQShaderManager::status() == SHADERS_OK)
+    if (!GQShaderManager::status() == GQ_SHADERS_OK)
     {
         NPRGLDraw::clearGLState();
         return;
@@ -226,8 +226,7 @@ void NPRRendererStandard::drawPriorityBuffer( const NPRScene& scene )
 {
     __TIME_CODE_BLOCK("Draw priority buffer");
 
-    _priority_buffer.initFullScreen(GL_TEXTURE_RECTANGLE_ARB, GL_RGBA, 
-                                    GQ_ATTACH_NONE, 1);
+    _priority_buffer.initFullScreen(1, GQ_ATTACH_NONE);
     _priority_buffer.setTextureFilter(GL_NEAREST, GL_NEAREST);
     _priority_buffer.bind();
     

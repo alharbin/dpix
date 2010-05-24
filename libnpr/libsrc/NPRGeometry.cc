@@ -42,7 +42,7 @@ void NPRGeometry::clear()
             delete _primitives[i].takeFirst();
     }
 
-    for (int i = 0; i < GQ_NUM_SEMANTICS; i++)
+    for (int i = 0; i < GQ_NUM_VERTEX_BUFFER_TYPES; i++)
         _semantic_list[i] = 0;
 
     _source_hash.clear();
@@ -76,16 +76,16 @@ void NPRGeometry::addData( const QString& name, int width )
     newsource->resize(width*current_length);
     _sources.push_back(newsource);
     _source_hash[name] = newsource;
-    for (int i = 0; i < GQ_NUM_SEMANTICS; i++)
+    for (int i = 0; i < GQ_NUM_VERTEX_BUFFER_TYPES; i++)
     {
-        if (name == GQSemanticNames[i])
+        if (name == GQVertexBufferNames[i])
         {
             _semantic_list[i] = newsource;
             break;
         }
     }
 
-    _vertex_buffer_set.add(name, GL_STATIC_DRAW, newsource->width(), newsource);
+    _vertex_buffer_set.add(name, newsource->width(), *newsource);
 }
 
 void NPRGeometry::addData( const QString& name, NPRDataSource* source )
@@ -98,25 +98,25 @@ void NPRGeometry::addData( const QString& name, NPRDataSource* source )
 
     _sources.push_back(source);
     _source_hash[name] = source;
-    for (int i = 0; i < GQ_NUM_SEMANTICS; i++)
+    for (int i = 0; i < GQ_NUM_VERTEX_BUFFER_TYPES; i++)
     {
-        if (name == GQSemanticNames[i])
+        if (name == GQVertexBufferNames[i])
         {
             _semantic_list[i] = source;
             break;
         }
     }
-    _vertex_buffer_set.add(name, GL_STATIC_DRAW, source->width(), source);
+    _vertex_buffer_set.add(name, source->width(), *source);
 }
 
-void NPRGeometry::addData( GQVertexBufferSemantic semantic, int width )
+void NPRGeometry::addData( GQVertexBufferType semantic, int width )
 {
-    addData( GQSemanticNames[semantic], width );
+    addData( GQVertexBufferNames[semantic], width );
 }
 
-void NPRGeometry::addData( GQVertexBufferSemantic semantic, NPRDataSource* source )
+void NPRGeometry::addData( GQVertexBufferType semantic, NPRDataSource* source )
 {
-    addData( GQSemanticNames[semantic], source );
+    addData( GQVertexBufferNames[semantic], source );
 }
 
 void NPRGeometry::bind() const 
@@ -136,7 +136,7 @@ void NPRGeometry::unbind() const
 
 void NPRGeometry::copyToVBO()
 {
-    _vertex_buffer_set.copyDataToVBOs();
+    _vertex_buffer_set.copyToVBOs();
 }
 
 void NPRGeometry::deleteVBO()

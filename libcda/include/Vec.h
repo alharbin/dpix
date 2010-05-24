@@ -9,7 +9,7 @@ Class for a constant-length vector
 
 Supports the following operations:
 	vec v1;			// Initialized to (0,0,0)
-	vec v2(1,2,3);		// Initializes the 3 components
+	vec v2(1,2,3);		// Initialized to (1,2,3)
 	vec v3(v2);		// Copy constructor
 	float farray[3];
 	vec v4 = vec(farray);	// Explicit: "v4 = farray" won't work
@@ -20,6 +20,9 @@ Supports the following operations:
 	v3 = 3.5f * v1;		// Also vec * scalar, vec / scalar
 				// NOTE: scalar has to be the same type:
 				// it won't work to do double * vec<float>
+	v1 = min(v2,v3);	// Componentwise min/max
+	v1 = sin(v2);		// Componentwise - all the usual functions...
+	swap(v1,v2);		// In-place swap
 
 	v3 = v1 DOT v2;		// Actually operator^
 	v3 = v1 CROSS v2;	// Actually operator%
@@ -31,18 +34,13 @@ Supports the following operations:
 	f = dist(p1, p2);	// Distance (also dist2 == squared distance)
 	normalize(v1);		// Normalize (i.e., make it unit length)
 				// normalize(vec(0,0,0)) => vec(1,0,0)
+	v1 = trinorm(p1,p2,p3); // Normal of triangle
 
 	cout << v1 << endl;	// iostream output in the form (1,2,3)
 	cin >> v2;		// iostream input using the same syntax
 
-Also defines the utility functions sqr, cube, sgn, swap,
-fract, clamp, mix, step, smoothstep, and trinorm
-
-This code is part of trimesh2, which is distributed under the GPL and
-may be found here:
-
-www.cs.princeton.edu/gfx/proj/trimesh2
-
+Also defines the utility functions sqr, cube, sgn, fract, clamp, mix,
+step, smoothstep, faceforward, reflect, and refract
 */
 
 
@@ -82,12 +80,16 @@ template <> struct VEC_STATIC_ASSERTION_FAILURE<true>
 
 template <int D, class T = float>
 class Vec {
-private:
+protected:
 	T v[D];
 
 public:
 	// Constructor for no arguments.  Everything initialized to 0.
 	Vec() { for (int i = 0; i < D; i++) v[i] = T(0); }
+
+	// Uninitialized constructor - meant mostly for internal use
+#define VEC_UNINITIALIZED ((void *) 0)
+	Vec(void *) {}
 
 	// Constructors for 2-4 arguments
 	Vec(T x, T y)
@@ -98,7 +100,7 @@ public:
 		{ VEC_STATIC_CHECK(D == 4); v[0] = x; v[1] = y; v[2] = z; v[3] = w; }
 
 	// Constructor from anything that can be accessed using []
-	// This one's pretty aggressive, so marked explicit
+	// Pretty aggressive, so marked as explicit.
 	template <class S> explicit Vec(const S &x)
 		{ for (int i = 0; i < D; i++) v[i] = T(x[i]); }
 
@@ -118,17 +120,63 @@ public:
 
 	// Member operators
 	Vec<D,T> &operator += (const Vec<D,T> &x)
-		{ for (int i = 0; i < D; i++) v[i] += x[i];  return *this; }
+	{
+		for (int i = 0; i < D; i++)
+#pragma omp atomic
+			v[i] += x[i];
+		return *this;
+	}
 	Vec<D,T> &operator -= (const Vec<D,T> &x)
-		{ for (int i = 0; i < D; i++) v[i] -= x[i];  return *this; }
+	{
+		for (int i = 0; i < D; i++)
+#pragma omp atomic
+			v[i] -= x[i];
+		return *this;
+	}
 	Vec<D,T> &operator *= (const Vec<D,T> &x)
-		{ for (int i = 0; i < D; i++) v[i] *= x[i];  return *this; }
+	{
+		for (int i = 0; i < D; i++)
+#pragma omp atomic
+			v[i] *= x[i];
+		return *this;
+	}
 	Vec<D,T> &operator *= (const T &x)
-		{ for (int i = 0; i < D; i++) v[i] *= x;     return *this; }
+	{
+		for (int i = 0; i < D; i++)
+#pragma omp atomic
+			v[i] *= x;
+		return *this;
+	}
 	Vec<D,T> &operator /= (const Vec<D,T> &x)
-		{ for (int i = 0; i < D; i++) v[i] /= x[i];  return *this; }
+	{
+		for (int i = 0; i < D; i++)
+#pragma omp atomic
+			v[i] /= x[i];
+		return *this;
+	}
 	Vec<D,T> &operator /= (const T &x)
-		{ for (int i = 0; i < D; i++) v[i] /= x;     return *this; }
+	{
+		for (int i = 0; i < D; i++)
+#pragma omp atomic
+			v[i] /= x;
+		return *this;
+	}
+
+	// Set each component to min/max of this and the other vector
+	Vec<D,T> &min(const Vec<D,T> &x)
+	{
+#pragma omp critical
+		for (int i = 0; i < D; i++)
+			if (x[i] < v[i]) v[i] = x[i];
+		return *this;
+	}
+	Vec<D,T> &max(const Vec<D,T> &x)
+	{
+#pragma omp critical
+		for (int i = 0; i < D; i++)
+			if (x[i] > v[i]) v[i] = x[i];
+		return *this;
+	}
 
 	// Outside of class: + - * / % ^ << >>
 
@@ -148,7 +196,7 @@ public:
 		  return total; }
 	T min() const
 		{ T m = v[0];
-		  for (int i = 0; i < D; i++)
+		  for (int i = 1; i < D; i++)
 			if (v[i] < m)  m = v[i];
 		  return m; }
 	T max() const
@@ -165,6 +213,14 @@ public:
 		{ for (int i = 0; i < D; i++)
 			if (v[i]) return false;
 		  return true; }
+	Vec<D,T> apply(T func(T)) const
+		{ Vec<D,T> result(VEC_UNINITIALIZED);
+		  for (int i = 0; i < D; i++) result[i] = func(v[i]);
+		  return result; }
+	Vec<D,T> apply(T func(const T&)) const
+		{ Vec<D,T> result(VEC_UNINITIALIZED);
+		  for (int i = 0; i < D; i++) result[i] = func(v[i]);
+		  return result; }
 };
 
 typedef Vec<3,float> vec;
@@ -181,27 +237,40 @@ typedef Vec<4,int> ivec4;
 template <int D, class T>
 static inline const Vec<D,T> operator + (const Vec<D,T> &v1, const Vec<D,T> &v2)
 {
-	return Vec<D,T>(v1) += v2;
+	Vec<D,T> result(VEC_UNINITIALIZED);
+	for (int i = 0; i < D; i++)
+		result[i] = v1[i] + v2[i];
+	return result;
 }
 
 template <int D, class T>
 static inline const Vec<D,T> operator - (const Vec<D,T> &v1, const Vec<D,T> &v2)
 {
-	return Vec<D,T>(v1) -= v2;
+	Vec<D,T> result(VEC_UNINITIALIZED);
+	for (int i = 0; i < D; i++)
+		result[i] = v1[i] - v2[i];
+	return result;
 }
 
 template <int D, class T>
 static inline const Vec<D,T> operator * (const Vec<D,T> &v1, const Vec<D,T> &v2)
 {
-	return Vec<D,T>(v1) *= v2;
+	Vec<D,T> result(VEC_UNINITIALIZED);
+	for (int i = 0; i < D; i++)
+		result[i] = v1[i] * v2[i];
+	return result;
 }
 
 template <int D, class T>
 static inline const Vec<D,T> operator / (const Vec<D,T> &v1, const Vec<D,T> &v2)
 {
-	return Vec<D,T>(v1) /= v2;
+	Vec<D,T> result(VEC_UNINITIALIZED);
+	for (int i = 0; i < D; i++)
+		result[i] = v1[i] / v2[i];
+	return result;
 }
 
+// Dot product in any dimension
 template <int D, class T>
 static inline const T operator ^ (const Vec<D,T> &v1, const Vec<D,T> &v2)
 {
@@ -212,6 +281,7 @@ static inline const T operator ^ (const Vec<D,T> &v1, const Vec<D,T> &v2)
 }
 #define DOT ^
 
+// Cross product - only in 3 dimensions
 template <class T>
 static inline const Vec<3,T> operator % (const Vec<3,T> &v1, const Vec<3,T> &v2)
 {
@@ -253,9 +323,9 @@ static inline const Vec<D,T> &operator + (const Vec<D,T> &v)
 template <int D, class T>
 static inline const Vec<D,T> operator - (const Vec<D,T> &v)
 {
-	Vec<D,T> result(v);
+	Vec<D,T> result(VEC_UNINITIALIZED);
 	for (int i = 0; i < D; i++)
-		result[i] = -result[i];
+		result[i] = -v[i];
 	return result;
 }
 
@@ -270,31 +340,37 @@ static inline bool operator ! (const Vec<D,T> &v)
 template <int D, class T>
 static inline const Vec<D,T> operator * (const T &x, const Vec<D,T> &v)
 {
-	Vec<D,T> result(v);
+	Vec<D,T> result(VEC_UNINITIALIZED);
 	for (int i = 0; i < D; i++)
-		result[i] = x * result[i];
+		result[i] = x * v[i];
 	return result;
 }
 
 template <int D, class T>
 static inline const Vec<D,T> operator * (const Vec<D,T> &v, const T &x)
 {
-	return Vec<D,T>(v) *= x;
+	Vec<D,T> result(VEC_UNINITIALIZED);
+	for (int i = 0; i < D; i++)
+		result[i] = v[i] * x;
+	return result;
 }
 
 template <int D, class T>
 static inline const Vec<D,T> operator / (const T &x, const Vec<D,T> &v)
 {
-	Vec<D,T> result(v);
+	Vec<D,T> result(VEC_UNINITIALIZED);
 	for (int i = 0; i < D; i++)
-		result[i] = x / result[i];
+		result[i] = x / v[i];
 	return result;
 }
 
 template <int D, class T>
 static inline const Vec<D,T> operator / (const Vec<D,T> &v, const T &x)
 {
-	return Vec<D,T>(v) /= x;
+	Vec<D,T> result(VEC_UNINITIALIZED);
+	for (int i = 0; i < D; i++)
+		result[i] = v[i] / x;
+	return result;
 }
 
 
@@ -334,69 +410,14 @@ static inline std::istream &operator >> (std::istream &is, Vec<D,T> &v)
 }
 
 
-// Utility functions for square and cube, to go along with sqrt and cbrt
-template <class T>
-static inline T sqr(const T &x)
-{
-	return x*x;
-}
-
-template <class T>
-static inline T cube(const T &x)
-{
-	return x*x*x;
-}
-
-
-// Utility functions based on GLSL
-template <class T>
-static inline T fract(const T &x)
-{
-	return x - floor(x);
-}
-
-template <class T>
-static inline T clamp(const T &x, const T &a, const T &b)
-{
-	return x > a ? x < b ? x : b : a;  // returns a on NaN
-}
-
-template <class T, class S>
-static inline T mix(const T &x, const T &y, const S &a)
-{
-	return (S(1)-a) * x + a * y;
-}
-
-template <class T>
-static inline T step(const T &x, const T &a)
-{
-	return x < a ? T(0) : T(1);
-}
-
-template <class T>
-static inline T smoothstep(const T &x, const T &a, const T &b)
-{
-	if (b <= a) return step(x,a);
-	T t = (x - a) / (b - a);
-	return t <= T(0) ? T(0) : t >= T(1) ? T(1) : t * t * (T(3) - T(2) * t);
-}
-
-// Area-weighted triangle face normal
-template <class T>
-static inline T trinorm(const T &v0, const T &v1, const T &v2)
-{
-	return (typename T::value_type) 0.5 * ((v1 - v0) CROSS (v2 - v0));
-}
-
-// Sign of a scalar
-template <class T>
-static inline T sgn(const T &x)
-{
-	return (x < T(0)) ? T(-1) : T(1);
-}
-
-
 // Functions on Vecs
+template <int D, class T>
+static inline void swap(const Vec<D,T> &v1, const Vec<D,T> &v2)
+{
+	for (int i = 0; i < D; i++)
+		swap(v1[i], v2[i]);
+}
+
 template <int D, class T>
 static inline const T len2(const Vec<D,T> &v)
 {
@@ -445,21 +466,178 @@ static inline Vec<D,T> normalize(Vec<D,T> &v)
 	return v;
 }
 
-template <int D, class T>
-static inline void swap(const Vec<D,T> &v1, const Vec<D,T> &v2)
+
+// Area-weighted triangle face normal
+template <class T>
+static inline T trinorm(const T &v0, const T &v1, const T &v2)
 {
-	for (int i = 0; i < D; i++)
-		swap(v1[i], v2[i]);
+	return (typename T::value_type) 0.5 * ((v1 - v0) CROSS (v2 - v0));
+}
+
+
+// Utility functions for square and cube, to go along with sqrt and cbrt
+template <class T>
+static inline T sqr(const T &x)
+{
+	return x*x;
+}
+
+template <class T>
+static inline T cube(const T &x)
+{
+	return x*x*x;
+}
+
+
+// Sign of a scalar
+template <class T>
+static inline T sgn(const T &x)
+{
+	return (x < T(0)) ? T(-1) : T(1);
+}
+
+
+// Utility functions based on GLSL
+template <class T>
+static inline T fract(const T &x)
+{
+	return x - floor(x);
+}
+
+template <class T>
+static inline T clamp(const T &x, const T &a, const T &b)
+{
+	return x > a ? x < b ? x : b : a;  // returns a on NaN
+}
+
+template <class T, class S>
+static inline T mix(const T &x, const T &y, const S &a)
+{
+	return (S(1)-a) * x + a * y;
+}
+
+template <class T>
+static inline T step(const T &x, const T &a)
+{
+	return x < a ? T(0) : T(1);
+}
+
+template <class T>
+static inline T smoothstep(const T &x, const T &a, const T &b)
+{
+	if (b <= a) return step(x,a);
+	T t = (x - a) / (b - a);
+	return t <= T(0) ? T(0) : t >= T(1) ? T(1) : t * t * (T(3) - T(2) * t);
 }
 
 template <int D, class T>
-static inline Vec<D,T> fabs(const Vec<D,T> &v)
+static inline T faceforward(const Vec<D,T> &N, const Vec<D,T> &I,
+			    const Vec<D,T> &Nref)
 {
-	Vec<D,T> result(v);
-	for (int i = 0; i < D; i++)
-		if (result[i] < T(0))
-			result[i] = -result[i];
-	return result;
+	return ((Nref DOT I) < T(0)) ? N : -N;
+}
+
+template <int D, class T>
+static inline T reflect(const Vec<D,T> &I, const Vec<D,T> &N)
+{
+	return I - (T(2) * (N DOT I)) * N;
+}
+
+template <int D, class T>
+static inline T refract(const Vec<D,T> &I, const Vec<D,T> &N,
+			const T &eta)
+{
+	T NdotI = N DOT I;
+	T k = T(1) - sqr(eta) * (T(1) - sqr(NdotI));
+	return (k < T(0)) ? T(0) : eta * I - (eta * NdotI * sqrt(k)) * N;
+}
+
+
+// Generic macros for declaring 1-, 2-, and 3- argument
+// componentwise functions on vecs
+#define VEC_DECLARE_ONEARG(name) \
+ template <int D, class T> \
+ static inline Vec<D,T> name(const Vec<D,T> &v) \
+ { \
+	Vec<D,T> result(VEC_UNINITIALIZED); \
+	for (int i = 0; i < D; i++) \
+		result[i] = name(v[i]); \
+	return result; \
+ }
+
+#define VEC_DECLARE_TWOARG(name) \
+ template <int D, class T> \
+ static inline Vec<D,T> name(const Vec<D,T> &v, const T &w) \
+ { \
+	Vec<D,T> result(VEC_UNINITIALIZED); \
+	for (int i = 0; i < D; i++) \
+		result[i] = name(v[i], w); \
+	return result; \
+ } \
+ template <int D, class T> \
+ static inline Vec<D,T> name(const Vec<D,T> &v, const Vec<D,T> &w) \
+ { \
+	Vec<D,T> result(VEC_UNINITIALIZED); \
+	for (int i = 0; i < D; i++) \
+		result[i] = name(v[i], w[i]); \
+	return result; \
+ }
+#define VEC_DECLARE_THREEARG(name) \
+ template <int D, class T> \
+ static inline Vec<D,T> name(const Vec<D,T> &v, const T &w, const T &x) \
+ { \
+	Vec<D,T> result(VEC_UNINITIALIZED); \
+	for (int i = 0; i < D; i++) \
+		result[i] = name(v[i], w, x); \
+	return result; \
+ } \
+ template <int D, class T> \
+ static inline Vec<D,T> name(const Vec<D,T> &v, const Vec<D,T> &w, const Vec<D,T> &x) \
+ { \
+	Vec<D,T> result(VEC_UNINITIALIZED); \
+	for (int i = 0; i < D; i++) \
+		result[i] = name(v[i], w[i], x[i]); \
+	return result; \
+ }
+
+VEC_DECLARE_ONEARG(fabs)
+VEC_DECLARE_ONEARG(floor)
+VEC_DECLARE_ONEARG(ceil)
+VEC_DECLARE_ONEARG(round)
+VEC_DECLARE_ONEARG(trunc)
+VEC_DECLARE_ONEARG(sin)
+VEC_DECLARE_ONEARG(asin)
+VEC_DECLARE_ONEARG(cos)
+VEC_DECLARE_ONEARG(acos)
+VEC_DECLARE_ONEARG(tan)
+VEC_DECLARE_ONEARG(atan)
+VEC_DECLARE_ONEARG(exp)
+VEC_DECLARE_ONEARG(log)
+VEC_DECLARE_ONEARG(sqrt)
+VEC_DECLARE_ONEARG(sqr)
+VEC_DECLARE_ONEARG(cbrt)
+VEC_DECLARE_ONEARG(cube)
+VEC_DECLARE_ONEARG(sgn)
+VEC_DECLARE_TWOARG(min)
+VEC_DECLARE_TWOARG(max)
+VEC_DECLARE_TWOARG(atan2)
+VEC_DECLARE_TWOARG(pow)
+VEC_DECLARE_TWOARG(fmod)
+VEC_DECLARE_TWOARG(step)
+VEC_DECLARE_THREEARG(smoothstep)
+VEC_DECLARE_THREEARG(clamp)
+
+#undef VEC_DECLARE_ONEARG
+#undef VEC_DECLARE_TWOARG
+#undef VEC_DECLARE_THREEARG
+
+
+// Both valarrays and GLSL use abs() on a vector to mean fabs().
+// Let's be compatible...
+template <int D, class T>
+static inline Vec<D,T> abs(const Vec<D,T> &v)
+{
+	return fabs(v);
 }
 
 #endif

@@ -138,17 +138,12 @@ int NPRSegmentAtlas::maxSegments()
         return 0;
 }
 
-const int RGBA_FLOAT_FORMAT = GL_RGBA_FLOAT32_ATI;
-const int RGBA_FLOAT_FORMAT_HALF = GL_RGBA16F_ARB;
-const int ALPHA_FLOAT = GL_ALPHA32F_ARB;
-const int TEXTURE_FORMAT = GL_TEXTURE_RECTANGLE_ARB;
-
-static bool initFBOHelper(QString name, GQFramebufferObject* fbo, int num_buffers, 
-                   int width, int height, int format = RGBA_FLOAT_FORMAT)
+static bool initFBOHelper(QString name, GQFramebufferObject* fbo, 
+                          int num_buffers, int width, int height, 
+                          int format = GQ_FORMAT_RGBA_FLOAT)
 {
-    bool success = fbo->init(TEXTURE_FORMAT, format, 
-                             GQ_ATTACH_NONE, num_buffers,
-                             width, height);
+    bool success = fbo->init(width, height, num_buffers, GQ_ATTACH_NONE,
+                             GQ_COORDS_PIXEL, format); 
     if (!success)
     {
         qCritical("NPRSegmentAtlas::initFBOHelper: failed to initialize %s fbo.\n", 
@@ -178,7 +173,7 @@ bool NPRSegmentAtlas::init( const NPRScene& scene )
     initFBOHelper("clip_length_sum_fbo", &_sum_fbo, 2, 
                   _path_verts_fbo.width(), _path_verts_fbo.height());
     initFBOHelper("segment_atlas", &_atlas_fbo, NUM_ATLAS_BUFFERS, 
-                  width, height, GL_RGBA);
+                  width, height, GQ_FORMAT_RGBA_BYTE);
 
     _is_initialized = true;
     return true;
@@ -275,7 +270,7 @@ void NPRSegmentAtlas::filter(AtlasBufferId which, AtlasFilterType type, const NP
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
 
-    NPRGLDraw::drawFullScreenQuad( _filtered_atlas_fbo.target() );
+    NPRGLDraw::drawFullScreenQuad( _filtered_atlas_fbo.glTarget() );
 
     _filtered_atlas_fbo.unbind();
 
@@ -335,7 +330,7 @@ void NPRSegmentAtlas::drawClipBuffer( const NPRScene& scene )
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
 
-    NPRGLDraw::drawFullScreenQuad( _clip_fbo.target() );
+    NPRGLDraw::drawFullScreenQuad( _clip_fbo.glTarget() );
 
     _clip_fbo.unbind();
 
@@ -365,11 +360,12 @@ void NPRSegmentAtlas::visualizeClippedLines()
         // Set up the VBO and FBO for the clipping debug visualization.
         initFBOHelper("clip_viz_fbo", &_clip_viz_fbo, 1, 
             _clip_fbo.width()*2, _clip_fbo.height(),
-            RGBA_FLOAT_FORMAT_HALF);
+            GQ_FORMAT_RGBA_HALF);
 
         int max_segments = _clip_fbo.width()*_clip_fbo.height();
-        _clip_viz_vbo.add( GQ_VERTEX, GL_STREAM_COPY, 4, GL_FLOAT, max_segments*4*2 );
-        _clip_viz_vbo.copyDataToVBOs();
+        _clip_viz_vbo.setUsageMode(GQ_STREAM_COPY);
+        _clip_viz_vbo.add( GQ_VERTEX, 4, GL_FLOAT, max_segments*4*2 );
+        _clip_viz_vbo.copyToVBOs();
     }
 
     NPRGLDraw::clearGLState();
@@ -388,7 +384,7 @@ void NPRSegmentAtlas::visualizeClippedLines()
     glDisable(GL_DEPTH_TEST);
     NPRGLDraw::drawFullScreenQuad(GL_TEXTURE_RECTANGLE_ARB);
 
-    _clip_viz_vbo.copyFromFBO(_clip_viz_fbo, 0, GQ_VERTEX);
+    _clip_viz_vbo.copyFromFBO(GQ_VERTEX, _clip_viz_fbo, 0);
     NPRGLDraw::handleGLError();
 
     _clip_viz_fbo.unbind();
@@ -470,7 +466,7 @@ void NPRSegmentAtlas::sumSegmentLengths()
     if (DUMP_IMAGES)
     {
         GQFloatImage img;
-        _sum_fbo.readColorTexturef(_sum_result_buffer_id, GL_RGBA, img);
+        _sum_fbo.readColorTexturef(_sum_result_buffer_id, img);
         img.scaleValues(0.1f);
         img.save("sumfbo.bmp");
     }
@@ -585,7 +581,7 @@ void NPRSegmentAtlas::drawSegmentAtlas(AtlasBufferId target,
     if (DUMP_IMAGES)
     {
         GQFloatImage img;
-        _atlas_fbo.readColorTexturef(0, GL_RGBA, img);
+        _atlas_fbo.readColorTexturef(0, img);
         img.scaleValues(0.1f);
         img.save("samplefbo.bmp");
     }
@@ -632,10 +628,7 @@ bool NPRSegmentAtlas::makePathVertexFBO( const NPRScene& scene )
     }
     int max_segments = clip_buf_width*clip_buf_height;
 
-    int target = TEXTURE_FORMAT;
-    int format = RGBA_FLOAT_FORMAT;
-    _path_verts_fbo.init( target, format, GQ_ATTACH_NONE, NUM_PATH_BUFFERS, 
-                          clip_buf_width, clip_buf_height );
+    _path_verts_fbo.init(clip_buf_width, clip_buf_height, NUM_PATH_BUFFERS);
 
     NPRGLDraw::handleGLError(__FILE__, __LINE__);
 
@@ -754,8 +747,8 @@ void NPRSegmentAtlas::makeSegmentAtlasVBO()
     }
 
     _atlas_source_vbo.clear();
-    _atlas_source_vbo.add( GQ_VERTEX, GL_STATIC_DRAW, 2, &vertices);
-    _atlas_source_vbo.copyDataToVBOs();
+    _atlas_source_vbo.add( GQ_VERTEX, 2, vertices);
+    _atlas_source_vbo.copyToVBOs();
 
     NPRGLDraw::handleGLError();
 }

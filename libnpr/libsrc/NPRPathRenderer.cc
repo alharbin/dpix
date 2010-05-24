@@ -376,8 +376,8 @@ void NPRPathRenderer::makeQuadRenderingVBO()
         vertices.push_back(0);
     }
     _quad_vertices_vbo.clear();
-    _quad_vertices_vbo.add(GQ_VERTEX, GL_STATIC_DRAW, 2, &vertices);
-    _quad_vertices_vbo.copyDataToVBOs();
+    _quad_vertices_vbo.add(GQ_VERTEX, 2, vertices);
+    _quad_vertices_vbo.copyToVBOs();
 
     NPRGLDraw::handleGLError();
 }

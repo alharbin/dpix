@@ -1,13 +1,3 @@
-/*****************************************************************************\
-
-GQImage.cc
-Author: Forrester Cole (fcole@cs.princeton.edu)
-Copyright (c) 2009 Forrester Cole
-
-libgq is distributed under the terms of the GNU General Public License.
-See the COPYING file for details.
-
-\*****************************************************************************/
 
 #include <GQImage.h>
 #include <GQInclude.h>
@@ -83,6 +73,11 @@ bool GQImage::resize(int w, int h, int c)
     return true; 
 }
 
+void GQImage::setPixelChannel( int x, int y, int c, unsigned char value )
+{
+	_raster[_num_chan * (x + y*_width) + c] = value;
+}
+
 bool GQImage::save( const QString& filename, bool flip)
 {
 	QImage qi( _width, _height, QImage::Format_ARGB32 );
@@ -150,7 +145,7 @@ bool GQImage::load(const QString& filename)
 				_raster[3*i+1] = qGreen(pix);
 				_raster[3*i+2] = qBlue(pix);
 			}
-		}
+		}		
 		return true;
 	}
 	return false;
@@ -219,9 +214,21 @@ void GQFloatImage::scaleValues( float factor )
 	}
 }
 
+void GQFloatImage::setPixel( int x, int y, const float* pixel )
+{
+	for (int i = 0; i < _num_chan; i++)
+		_raster[_num_chan * (x + y*_width) + i] = pixel[i];
+}
+
+void GQFloatImage::setPixelChannel( int x, int y, int c, float value )
+{
+	_raster[_num_chan * (x + y*_width) + c] = value;
+}
+
+
 bool GQFloatImage::save(const QString& filename, bool flip /* = true */ )
 {
-    if (filename.endsWith("pfm"))
+    if (filename.endsWith("pfm") || filename.endsWith("pbm"))
         return savePFM(filename, flip);
     else if (filename.endsWith("float"))
         return saveFloat(filename, flip);
@@ -295,15 +302,6 @@ bool GQFloatImage::saveFloat(const QString& filename, bool flip)
     return true;
 }
 
-void GQFloatImage::copyAlpha( const GQFloatImage& from )
-{
-    resize( from._width, from._height, 1 );
-    for (int i = 0; i < _width*_height; i++)
-    {
-        _raster[i] = from._raster[(i+1)*from._num_chan - 1];
-    }
-}
-
 static bool we_are_little_endian()
 {
     char buf[4];
@@ -313,8 +311,6 @@ static bool we_are_little_endian()
 
 bool GQFloatImage::savePFM(const QString& filename, bool flip)
 {
-    Q_UNUSED(flip);
-
     QFile file(filename);
     file.open(QIODevice::WriteOnly);
 
@@ -325,25 +321,131 @@ bool GQFloatImage::savePFM(const QString& filename, bool flip)
     header.sprintf("%s\n%d %d\n%.1f\n", qPrintable(version), width(), height(), 
                    we_are_little_endian() ? -1.0f : 1.0f).toAscii();
     file.write(header.toAscii(), header.toAscii().size());
-    if (chan() == 1 || chan() == 3)
-    {
-        file.write((const char*)raster(), 
-            chan()*width()*height()*sizeof(float));
-    }
-    else if (chan() == 4)
-    {
-        for (int i = 0; i < width()*height(); i++)
-            file.write((const char*)(&raster()[i*4]), 3*sizeof(float));
-    }
+
+	int write_chan = std::min(chan(), 3);
+	for (int y = 0; y < height(); y++)
+	{
+		int yy = y;
+		if (flip)
+			yy = height() - y - 1;
+
+		for (int x = 0; x < width(); x++)
+		{
+			file.write((const char*)(&raster()[chan()*(x + yy*width())]),
+					   write_chan*sizeof(float));
+		}
+	}
 
     file.close();
     return true;
 }
 
+bool GQFloatImage::loadPFM(const QString& filename)
+{
+	QFile inputFile( filename );
+
+	// try to open the file in read only mode
+	if( !( inputFile.open( QIODevice::ReadOnly ) ) )
+	{		
+		return false;
+	}
+
+	QTextStream inputTextStream( &inputFile );
+	inputTextStream.setCodec( "ISO-8859-1" );
+
+	// read header
+	QString qsType;
+	QString qsWidth;
+	QString qsHeight;
+	QString qsScale;	
+
+	int width;
+	int height;
+	int channels;
+	float scale;
+
+	inputTextStream >> qsType;
+	if (qsType == "PF")
+	{
+		channels = 3;
+	}
+	else if (qsType == "Pf")
+	{
+		channels = 1;
+	}
+	else
+	{
+		inputFile.close();
+		return false;
+	}
+
+	inputTextStream >> qsWidth >> qsHeight >> qsScale;
+
+	width = qsWidth.toInt();
+	height = qsHeight.toInt();
+	scale = qsScale.toFloat();
+
+	if( width < 0 || height < 0 || scale >= 0 )
+	{
+		inputFile.close();
+		return false;
+	}
+
+	// close the text stream
+	inputTextStream.setDevice( NULL );
+	inputFile.close();
+
+	// now reopen it again in binary mode
+	if( !( inputFile.open( QIODevice::ReadOnly ) ) )
+	{
+		return false;
+	}
+
+	int headerLength = qsType.length() + qsWidth.length() + 
+                       qsHeight.length() + qsScale.length() + 4;	
+
+	QDataStream inputDataStream( &inputFile );
+	inputDataStream.skipRawData( headerLength );
+
+	resize(width, height, channels);
+	float buffer[3];
+
+	for( int y = 0; y < height; ++y )
+	{
+		for( int x = 0; x < width; ++x )
+		{
+			int yy = height - y - 1;
+
+			inputDataStream.readRawData( 
+                    reinterpret_cast< char* >( &( buffer[ 0 ] ) ), 
+                    channels * sizeof( float ) );
+			for (int c = 0; c < channels; c++)
+				setPixelChannel(x, yy, c, buffer[c]);
+		}
+	}
+
+	inputFile.close();
+	return true;
+}
 
 bool GQFloatImage::load(const QString& filename)
 {
-    Q_UNUSED(filename);
+    GQImage img;
+	if (filename.endsWith(".pfm") || filename.endsWith(".pbm"))
+	{
+		return loadPFM(filename);
+	}
+	else
+	{
+	    bool ret = img.load(filename);
+	    if (ret) {
+	        resize(img.width(), img.height(), img.chan());
+	        for (int i = 0; i < img.width()*img.height()*img.chan(); i++)
+	            raster()[i] = (float)(img.raster()[i]) / 255.0f;
+
+	        return true;
+	    }
+	}
     
     return false;
 }

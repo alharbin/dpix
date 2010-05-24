@@ -135,20 +135,20 @@ inline void waitForGLAndStopTimer( const QString& name)
 
 // When this object is created, it starts a timer.
 // When it passes out of scope, it stops the timer.
-class LnScopeTimer
+class GQScopeTimer
 {
 public:
-    LnScopeTimer( const QString& name ) { _name = name; GQStats::instance().startTimer(name); }
-    ~LnScopeTimer() { GQStats::instance().stopTimer(_name); }
+    GQScopeTimer( const QString& name ) { _name = name; GQStats::instance().startTimer(name); }
+    ~GQScopeTimer() { GQStats::instance().stopTimer(_name); }
 protected:
     QString _name;
 };
 
-class LnScopeTimerWaitGL
+class GQScopeTimerWaitGL
 {
 public:
-    LnScopeTimerWaitGL( const QString& name ) { _name = name; waitForGLAndStartTimer(name); }
-    ~LnScopeTimerWaitGL() { waitForGLAndStopTimer(_name); }
+    GQScopeTimerWaitGL( const QString& name ) { _name = name; waitForGLAndStartTimer(name); }
+    ~GQScopeTimerWaitGL() { waitForGLAndStopTimer(_name); }
 protected:
     QString _name;
 };
@@ -160,8 +160,8 @@ protected:
 #define __STOP_TIMER_AFTER_GL_FINISH(X) waitForGLAndStopTimer(X);
 #define __SET_COUNTER(X,Y) GQStats::instance().setCounter((X),(Y));
 #define __ADD_TO_COUNTER(X,Y) GQStats::instance().addToCounter((X),(Y));
-#define __TIME_CODE_BLOCK(X) LnScopeTimer __scope_timer(X);
-#define __TIME_CODE_BLOCK_AFTER_GL_FINISH(X) LnScopeTimerWaitGL __scope_timer(X);
+#define __TIME_CODE_BLOCK(X) GQScopeTimer __scope_timer(X);
+#define __TIME_CODE_BLOCK_AFTER_GL_FINISH(X) GQScopeTimerWaitGL __scope_timer(X);
 #else
 #define __START_TIMER(X) ;
 #define __STOP_TIMER(X) ;

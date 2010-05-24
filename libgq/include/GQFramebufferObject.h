@@ -21,6 +21,16 @@ See the COPYING file for details.
 const uint32 GQ_ATTACH_NONE = 0x0;
 const uint32 GQ_ATTACH_DEPTH = 0x1;
 
+const uint32 GQ_COORDS_PIXEL = 0x0;
+const uint32 GQ_COORDS_NORMALIZED = 0x1;
+
+const uint32 GQ_FORMAT_RGBA_FLOAT = 0x0;
+const uint32 GQ_FORMAT_RGBA_BYTE = 0x1;
+const uint32 GQ_FORMAT_RGBA_HALF = 0x2;
+
+const uint32 GQ_KEEP_BUFFER = 0x0;
+const uint32 GQ_CLEAR_BUFFER = 0x1;
+
 class GQFramebufferObject
 {
 public:
@@ -28,17 +38,26 @@ public:
     ~GQFramebufferObject();
 
     void clear();
-    bool init( int target, int format, uint32 attachments, 
-        int num_color_attachments, int width, int height );
-    bool initFullScreen( int target, int format, uint32 attachments, 
-        int num_color_attachments );
 
-    void bind() const;
+    bool init(int width, int height, int num_color_attachments = 1,
+              uint32 extra_attachments = GQ_ATTACH_NONE, 
+              uint32 coordinates = GQ_COORDS_PIXEL,
+              uint32 format = GQ_FORMAT_RGBA_FLOAT);
+            
+    bool initFullScreen(int num_color_attachments = 1,
+              uint32 extra_attachments = GQ_ATTACH_NONE, 
+              uint32 coordinates = GQ_COORDS_PIXEL,
+              uint32 format = GQ_FORMAT_RGBA_FLOAT);
+            
+    bool initGL( int target, int format, uint32 attachments, 
+        int num_color_attachments, int width, int height );
+
+    void bind(uint32 clear_behavior = GQ_KEEP_BUFFER) const;
     void unbind() const;
     bool isBound() const { return _bound_guid == _guid; }
 
-    void drawBuffer( int which );
-    void drawToAllBuffers();
+    void drawBuffer( int which ) const;
+    void drawToAllBuffers() const;
 
     int  id() const { return _fbo; }
     int  depthBufferId() const { return _depth_attachment; }
@@ -49,8 +68,10 @@ public:
 
     int  width() const { return _width; }
     int  height() const { return _height; }
-    int  target() const { return _target; }
+    int  coordinates() const { return _coordinates; }
     int  format() const { return _format; }
+    int  glTarget() const { return _gl_target; }
+    int  glFormat() const { return _gl_format; }
 
     void setTexParameteri(unsigned int param, int value);
     void setTexParameteriv(unsigned int param, int* value);
@@ -60,12 +81,12 @@ public:
     void setTextureFilter(int filter_min, int filter_mag);
     void setTextureWrap(int wrap_s, int wrap_t);
 
-    void readColorTexturei( int which, int format, GQImage& image ) const;
-    void readColorTexturef( int which, int format, GQFloatImage& image ) const;
+    void readColorTexturei( int which, GQImage& image, int num_channels = 4 ) const;
+    void readColorTexturef( int which, GQFloatImage& image, int num_channels = 4 ) const;
     void readSubColorTexturei( int which, int x, int y, int width, int height, 
-                              int format, GQImage& image ) const;
+                              GQImage& image, int num_channels = 4 ) const;
     void readSubColorTexturef( int which, int x, int y, int width, int height, 
-                              int format, GQFloatImage& image ) const;
+                              GQFloatImage& image, int num_channels = 4) const;
     void readDepthBuffer( GQFloatImage& image ) const;
     void readSubDepthBuffer( int x, int y, int width, int height, 
                              GQFloatImage& image ) const;
@@ -81,8 +102,10 @@ public:
 
 protected:
     int _fbo;
-    int _target;
+    int _coordinates;
     int _format;
+    int _gl_target;
+    int _gl_format;
     int _guid;
     static int _bound_guid;
     static int _last_used_guid;

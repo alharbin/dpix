@@ -1,22 +1,17 @@
-/*****************************************************************************\
 
-GQImage.h
-Authors: Forrester Cole (fcole@cs.princeton.edu)
-         R. Keith Morley
-         Adam Finkelstein
-Copyright (c) 2009 Forrester Cole
-
-Image loading and saving routines. 
-
-libgq is distributed under the terms of the GNU General Public License.
-See the COPYING file for details.
-
-\*****************************************************************************/
+/******************************************************************************\
+ *                                                                            *
+ *  filename : GQImage.h                                                      *
+ *  author   : R. Keith Morley                                                *
+ *           : Adam Finkelstein                                               *
+ *           : Forrester Cole                                                 *
+ *                                                                            *
+ *  Simple 8bit image. Uses QImage for I/O.                                   *
+ *                                                                            *
+\******************************************************************************/
 
 #ifndef _GQ_IMAGE_H_
 #define _GQ_IMAGE_H_
-
-#include <stdlib.h> // for NULL
 
 #include <QString>
 
@@ -32,7 +27,10 @@ public:
     int chan()const   { return _num_chan; }
     unsigned char* raster() { return _raster; } 
     const unsigned char* raster() const { return _raster; } 
-	unsigned char pixel( int x, int y, int c ) const { return _raster[_num_chan * (x + y*_width) + c]; }
+	unsigned char pixel( int x, int y, int c ) const 
+        { return _raster[_num_chan * (x + y*_width) + c]; }
+	
+	void setPixelChannel( int x, int y, int c, unsigned char value );
    
     bool resize(int w, int h, int c);
     void copy( const GQImage& from )
@@ -53,8 +51,8 @@ private:
     unsigned char* _raster;
 };
 
-// This really should be a templated version of above, but QImage doesn't work for
-// floating point image I/O.
+// This really should be a templated version of above, but QImage 
+// doesn't work for floating point image I/O.
 class GQFloatImage
 {
 public:
@@ -67,8 +65,12 @@ public:
     int chan()const   { return _num_chan; }
     float* raster() { return _raster; } 
     const float* raster() const { return _raster; } 
-	float  pixel( int x, int y, int c ) const { return _raster[_num_chan * (x + y*_width) + c]; }
+	float  pixel( int x, int y, int c ) const 
+        { return _raster[_num_chan * (x + y*_width) + c]; }
    
+	void setPixel( int x, int y, const float* pixel );
+	void setPixelChannel( int x, int y, int c, float value );
+
     bool resize(int w, int h, int c);
     void scaleValues( float factor );
     void copy( const GQFloatImage& from )
@@ -76,7 +78,6 @@ public:
         resize( from._width, from._height, from._num_chan );
         memcpy( _raster, from._raster, _width*_height*_num_chan );
     }
-    void copyAlpha( const GQFloatImage& from );
 
     void clear();
 
@@ -88,11 +89,13 @@ protected:
     bool savePFM(const QString& filename, bool flip);
     bool saveQImage(const QString& filename, bool flip);
 
+	bool loadPFM(const QString& filename);
+
 private:
     int _width;
     int _height;
     int _num_chan;
-    float*       _raster;
+    float* _raster;
 };
 
 

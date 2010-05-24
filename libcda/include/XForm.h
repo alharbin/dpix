@@ -5,41 +5,36 @@ Szymon Rusinkiewicz
 Princeton University
 
 XForm.h
-Affine transforms (represented internally as column-major 4x4 matrices)
+Transformations (represented internally as column-major 4x4 matrices)
 
 Supports the following operations:
-	xform xf1, xf2;		// Initialized to the identity
-	XForm<float> xf3;	// xform is XForm<double>
-	xf1=xform::trans(u,v,w);// An xform that translates.
-	xf1=xform::rot(ang,ax); // An xform that rotates.
-	xf1=xform::scale(s);	// An xform that scales.
-	glMultMatrixd(xf1);	// Conversion to column-major array
-	xf1.read("file.xf");	// Read xform from file
-	xf1.write("file.xf");	// Write xform to file
-	xf1 * xf2		// Matrix-matrix multiplication
-	xf1 * inv(xf2)		// Inverse
-	xf1 * vec(1,2,3)	// Matrix-vector multiplication
-	rot_only(xf1)		// An xform that does the rotation of xf1
-	trans_only(xf1)		// An xform that does the translation of xf1
-	norm_xf(xf1)		// Normal xform: inverse transpose, no trans
-	invert(xf1);		// Inverts xform in place
-	orthogonalize(xf1);	// Makes matrix orthogonal
-
-This code is part of trimesh2, which is distributed under the GPL and
-may be found here:
-
-www.cs.princeton.edu/gfx/proj/trimesh2
+	xform xf, xf2;			// Initialized to the identity
+	XForm<float> xf3;		// Just "xform" is XForm<double>
+	xf=xform::trans(u,v,w);		// An xform that translates
+	xf=xform::rot(ang,ax);		// An xform that rotates
+	xf=xform::scale(s);		// An xform that scales
+	xf=xform::ortho(l,r,b,t,n,f);   // Like GLortho
+	xf=xform::frustum(l,r,b,t,n,f);	// Like GLfrustum
+	glMultMatrixd(xf);		// Conversion to column-major array
+	bool ok = xf.read("file.xf");	// Read xform from file
+	xf.write("file.xf");		// Write xform to file
+	xf=xf * xf2;			// Matrix-matrix multiplication
+	xf=inv(xf2);			// Inverse
+	vec v = xf * vec(1,2,3);	// Matrix-vector multiplication
+	xf2=rot_only(xf);		// Just the upper 3x3 of xf
+	xf2=trans_only(xf);		// Just the translation of xf
+	xf2=norm_xf(xf);		// Inverse transpose, no translation
+	invert(xf);			// Inverts xform in place
+	orthogonalize(xf);		// Makes matrix orthogonal
+	xf(1,2)=3.0;			// Access by row/column
+	xf[4]=5.0;			// Access in column-major order
+	xfname("file.ply")		// Returns string("file.xf")
 */
 
 #include "lineqn.h"
-#include <cmath>
-#include <algorithm>
 #include <iostream>
 #include <fstream>
-using std::min;
-using std::max;
-using std::swap;
-using std::sqrt;
+#include <string>
 
 template <class T>
 class XForm {
@@ -68,12 +63,18 @@ public:
 		{ return m[i]; }
 	T &operator [] (int i)
 		{ return m[i]; }
-	operator const T *() const
+	operator const T * () const
 		{ return m; }
-	operator const T *()
+	operator const T * ()
 		{ return m; }
-	operator T *()
+	operator T * ()
 		{ return m; }
+
+	// Access by row/column
+	const T operator () (int r, int c) const
+		{ return m[r + c * 4]; }
+	T &operator () (int r, int c)
+		{ return m[r + c * 4]; }
 
 	// Static members - really just fancy constructors
 	static XForm<T> identity()
@@ -116,11 +117,42 @@ public:
 	}
 	template <class S> static XForm<T> scale(const T &s, const S &dir)
 		{ return XForm<T>::scale(s, dir[0], dir[1], dir[2]); }
+	static XForm<T> ortho(const T &l, const T &r, const T &b, const T &t,
+		const T &n, const T &f)
+	{
+		T rrl = T(1) / (r-l);
+		T rtb = T(1) / (t-b);
+		T rfn = T(1) / (f-n);
+		return XForm<T>(T(2)*rrl, 0, 0, 0,
+			        0, T(2)*rtb, 0, 0,
+				0, 0, T(-2)*rfn, 0,
+				-(r+l)*rrl, -(t+b)*rtb, -(f+n)*rfn, 1);
+	}
+	static XForm<T> frustum(const T &l, const T &r, const T &b, const T &t,
+		const T &n, const T &f)
+	{
+		T rrl = T(1) / (r-l);
+		T rtb = T(1) / (t-b);
+		T rfn = T(1) / (f-n);
+		return XForm<T>(T(2)*n*rrl, 0, 0, 0,
+			        0, T(2)*n*rtb, 0, 0,
+				(r+l)*rrl, (t+b)*rtb, -(f+n)*rfn, -1,
+				0, 0, T(-2)*f*n*rfn, 0);
+	}
+	// Returns y*x^T, thinking of y and x as column 3-vectors
+	template <class S> static XForm<T> outer(const S &y, const S &x)
+	{
+		XForm<T> result;
+		for (int i = 0; i < 3; i++)
+			for (int j = 0; j < 3; j++)
+				result[4*i+j] = x[i]*y[j];
+		return result;
+	}
 
 	// Read an XForm from a file.
-	bool read(const char *filename)
+	bool read(const std::string &filename)
 	{
-		std::ifstream f(filename);
+		std::ifstream f(filename.c_str());
 		XForm<T> M;
 		f >> M;
 		f.close();
@@ -132,9 +164,9 @@ public:
 	}
 
 	// Write an XForm to a file
-	bool write(const char *filename) const
+	bool write(const std::string &filename) const
 	{
-		std::ofstream f(filename);
+		std::ofstream f(filename.c_str());
 		f << *this;
 		f.close();
 		return f.good();
@@ -142,9 +174,40 @@ public:
 };
 
 typedef XForm<double> xform;
+typedef XForm<float> fxform;
 
 
-// Matrix multiplication
+// Binary operations
+template <class T>
+static inline XForm<T> operator + (const XForm<T> &xf1, const XForm<T> &xf2)
+{
+	return XForm<T>(
+		xf1[ 0] + xf2[ 0], xf1[ 1] + xf2[ 1],
+		xf1[ 2] + xf2[ 2], xf1[ 3] + xf2[ 3],
+		xf1[ 4] + xf2[ 4], xf1[ 5] + xf2[ 5],
+		xf1[ 6] + xf2[ 6], xf1[ 7] + xf2[ 7],
+		xf1[ 8] + xf2[ 8], xf1[ 9] + xf2[ 9],
+		xf1[10] + xf2[10], xf1[11] + xf2[11],
+		xf1[12] + xf2[12], xf1[13] + xf2[13],
+		xf1[14] + xf2[14], xf1[15] + xf2[15]
+	);
+}
+
+template <class T>
+static inline XForm<T> operator - (const XForm<T> &xf1, const XForm<T> &xf2)
+{
+	return XForm<T>(
+		xf1[ 0] - xf2[ 0], xf1[ 1] - xf2[ 1],
+		xf1[ 2] - xf2[ 2], xf1[ 3] - xf2[ 3],
+		xf1[ 4] - xf2[ 4], xf1[ 5] - xf2[ 5],
+		xf1[ 6] - xf2[ 6], xf1[ 7] - xf2[ 7],
+		xf1[ 8] - xf2[ 8], xf1[ 9] - xf2[ 9],
+		xf1[10] - xf2[10], xf1[11] - xf2[11],
+		xf1[12] - xf2[12], xf1[13] - xf2[13],
+		xf1[14] - xf2[14], xf1[15] - xf2[15]
+	);
+}
+
 template <class T>
 static inline XForm<T> operator * (const XForm<T> &xf1, const XForm<T> &xf2)
 {
@@ -199,7 +262,9 @@ static inline XForm<T> inv(const XForm<T> &xf)
 		      { xf[2], xf[6], xf[10], xf[14] },
 		      { xf[3], xf[7], xf[11], xf[15] } };
 	int ind[4];
-	ludcmp<T,4>(A, ind);
+	bool ok = ludcmp<T,4>(A, ind);
+	if (!ok)
+		return XForm<T>();
 	T B[4][4] = { { 1, 0, 0, 0 },
 		      { 0, 1, 0, 0 },
 		      { 0, 0, 1, 0 },
@@ -241,9 +306,9 @@ static inline XForm<T> norm_xf(const XForm<T> &xf)
 {
 	XForm<T> M = inv(xf);
 	M[12] = M[13] = M[14] = T(0);
-	swap(M[1], M[4]);
-	swap(M[2], M[8]);
-	swap(M[6], M[9]);
+	std::swap(M[1], M[4]);
+	std::swap(M[2], M[8]);
+	std::swap(M[6], M[9]);
 	return M;
 }
 
@@ -305,6 +370,17 @@ static inline std::istream &operator >> (std::istream &is, XForm<T> &m)
 		m = xform::identity();
 
 	return is;
+}
+
+// Generate a .xf filename from an input (scan) filename
+static inline std::string xfname(const std::string &filename)
+{
+	std::string x = filename;
+	std::string::size_type dot = x.rfind(".", x.length());
+	if (dot != std::string::npos)
+		x.erase(dot);
+	x += std::string(".xf");
+	return x;
 }
 
 #endif

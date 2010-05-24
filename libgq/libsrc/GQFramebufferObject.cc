@@ -21,6 +21,7 @@ int GQFramebufferObject::_last_used_guid = 1;
 GQFramebufferObject::GQFramebufferObject()
 {
     _fbo = -1;
+    clear();
 }
 
 GQFramebufferObject::~GQFramebufferObject()
@@ -46,20 +47,62 @@ void GQFramebufferObject::clear()
         glDeleteFramebuffersEXT(1, (GLuint*)(&_fbo));
 
         _fbo = -1;
-        _attachments = GQ_ATTACH_NONE;
     }
+    _gl_target = 0;
+    _gl_format = 0;
+    _format = -1;
+    _coordinates = -1;
+    _attachments = GQ_ATTACH_NONE;
+    _num_color_attachments = 0;
+    _color_attachments = NULL;
     _width = -1;
     _height = -1;
     _guid = _last_used_guid++;
     if (_guid == 0) _guid = _last_used_guid++;
 }
 
-bool GQFramebufferObject::init( int target, int format, uint32 attachments, 
-                                   int num_color_attachments, int width, int height )
+bool GQFramebufferObject::init(int width, int height, 
+                               int num_color_attachments,
+                               uint32 extra_attachments, 
+                               uint32 coordinates, uint32 format)
+{
+    int gl_format = GL_RGBA32F_ARB;
+    if (format == GQ_FORMAT_RGBA_BYTE)
+        gl_format = GL_RGBA;
+    else if (format == GQ_FORMAT_RGBA_HALF)
+        gl_format = GL_RGBA16F_ARB;
+
+    int gl_target = GL_TEXTURE_RECTANGLE_ARB;
+    if (coordinates == GQ_COORDS_NORMALIZED)
+        gl_target = GL_TEXTURE_2D;
+
+    _format = format;
+    _coordinates = coordinates;
+
+    return initGL(gl_target, gl_format, extra_attachments, 
+            num_color_attachments, width, height);
+}
+    
+bool GQFramebufferObject::initFullScreen(int num_color_attachments,
+                               uint32 extra_attachments, 
+                               uint32 coordinates, uint32 format)
+{
+    GLint viewport[4];
+    glGetIntegerv (GL_VIEWPORT, viewport);
+
+    return init(viewport[2], viewport[3], num_color_attachments,
+                extra_attachments, coordinates, format);
+}
+
+
+bool GQFramebufferObject::initGL(int target, int format, 
+                               uint32 attachments, 
+                               int num_color_attachments, 
+                               int width, int height)
 {
     if (_fbo < 0 ||
-        _target != target ||
-        _format != format ||
+        _gl_target != target ||
+        _gl_format != format ||
         _attachments != attachments ||
         _num_color_attachments != num_color_attachments ||
         _width != width ||
@@ -84,8 +127,8 @@ bool GQFramebufferObject::init( int target, int format, uint32 attachments,
 
         clear();
 
-        _target = target;
-        _format = format;
+        _gl_target = target;
+        _gl_format = format;
         _width = width;
         _height = height;
         _attachments = attachments;
@@ -100,19 +143,25 @@ bool GQFramebufferObject::init( int target, int format, uint32 attachments,
         for (int i = 0; i < _num_color_attachments; i++)
         {
             _color_attachments[i] = new GQTexture2D;
-            _color_attachments[i]->create(_width, _height, _format, GL_RGBA, GL_UNSIGNED_BYTE, NULL, _target);
+            _color_attachments[i]->create(_width, _height, _gl_format, 
+                    GL_RGBA, GL_UNSIGNED_BYTE, NULL, _gl_target);
 
-            glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT + i, _target, _color_attachments[i]->id(), 0);
+            glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, 
+                    GL_COLOR_ATTACHMENT0_EXT + i, _gl_target, 
+                    _color_attachments[i]->id(), 0);
         }
-        glBindTexture( _target, 0 );
+        glBindTexture( _gl_target, 0 );
 		
         if ( _attachments & GQ_ATTACH_DEPTH)
         {
             // attach a depth buffer
             glGenRenderbuffersEXT(1, (GLuint*)(&_depth_attachment));
             glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, _depth_attachment);
-            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, _width, _height);
-            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, _depth_attachment);
+            glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, 
+                    _width, _height);
+            glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, 
+                    GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, 
+                    _depth_attachment);
         }
         else
         {
@@ -125,8 +174,9 @@ bool GQFramebufferObject::init( int target, int format, uint32 attachments,
         {
             QString die_msg;
             die_msg.sprintf("Could not set up framebuffer object. Tried %dx%d, %d attachments, %d format, %d depth attachment",
-                _width, _height, _num_color_attachments, _format, _attachments & GQ_ATTACH_DEPTH);
-            qCritical(qPrintable(die_msg));
+                _width, _height, _num_color_attachments, 
+                _gl_format, _attachments & GQ_ATTACH_DEPTH);
+            qCritical("%s", qPrintable(die_msg));
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
             clear();
             return false;
@@ -137,20 +187,19 @@ bool GQFramebufferObject::init( int target, int format, uint32 attachments,
     return true;
 }
 
-bool GQFramebufferObject::initFullScreen( int target, int format, uint32 attachments, int num_color_attachments )
-{
-    GLint viewport[4];
-    glGetIntegerv (GL_VIEWPORT, viewport);
-
-    return init( target, format, attachments, num_color_attachments, viewport[2], viewport[3] );
-}
-
-void GQFramebufferObject::bind() const
+void GQFramebufferObject::bind(uint32 clear_behavior) const
 {
     assert(_fbo >= 0);
     assert(_bound_guid == 0);
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, _fbo);
     glPushAttrib(GL_VIEWPORT_BIT | GL_COLOR_BUFFER_BIT);
+	
+	if (clear_behavior == GQ_CLEAR_BUFFER)
+	{
+		drawToAllBuffers();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+	
     _bound_guid = _guid;
 }
 
@@ -163,13 +212,13 @@ void GQFramebufferObject::unbind() const
     _bound_guid = 0;
 }
 
-void GQFramebufferObject::drawBuffer( int which )
+void GQFramebufferObject::drawBuffer( int which ) const
 {
     assert( which >= 0 && which < _num_color_attachments );
     glDrawBuffer( GL_COLOR_ATTACHMENT0_EXT + which );
 }
 
-void GQFramebufferObject::drawToAllBuffers()
+void GQFramebufferObject::drawToAllBuffers() const
 {
     GLenum render_targets[] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT,
                                 GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT,
@@ -199,7 +248,7 @@ void GQFramebufferObject::setTexParameteri(unsigned int param, int value)
 {
     for (int i = 0; i < _num_color_attachments; i++) {
         _color_attachments[i]->bind();
-        glTexParameteri(_target, param, value);
+        glTexParameteri(_gl_target, param, value);
         _color_attachments[i]->unbind();
     }
 }
@@ -208,7 +257,7 @@ void GQFramebufferObject::setTexParameteriv(unsigned int param, int* value)
 {
     for (int i = 0; i < _num_color_attachments; i++) {
         _color_attachments[i]->bind();
-        glTexParameteriv(_target, param, (GLint*)value);
+        glTexParameteriv(_gl_target, param, (GLint*)value);
         _color_attachments[i]->unbind();
     }
 }
@@ -217,7 +266,7 @@ void GQFramebufferObject::setTexParameterf(unsigned int param, float value)
 {
     for (int i = 0; i < _num_color_attachments; i++) {
         _color_attachments[i]->bind();
-        glTexParameterf(_target, param, value);
+        glTexParameterf(_gl_target, param, value);
         _color_attachments[i]->unbind();
     }
 }
@@ -226,7 +275,7 @@ void GQFramebufferObject::setTexParameterfv(unsigned int param, float* value)
     for (int i = 0; i < _num_color_attachments; i++) 
     {
         _color_attachments[i]->bind();
-        glTexParameterfv(_target, param, value);
+        glTexParameterfv(_gl_target, param, value);
         _color_attachments[i]->unbind();
     }
 }
@@ -253,32 +302,32 @@ void GQFramebufferObject::setTextureWrap(int wrap_s, int wrap_t)
     }
 }
 
-void GQFramebufferObject::readColorTexturei( int which, int format, GQImage& image ) const 
+void GQFramebufferObject::readColorTexturei( int which, GQImage& image, int num_channels ) const 
 {
     assert( which >= 0 && which < _num_color_attachments );
-    assert(format == GL_RGB || format == GL_RGBA);
-    int chan = 4;
-    if (format == GL_RGB)
-        chan = 3;
-    image.resize( _width, _height, chan );
+    assert(num_channels == 3 || num_channels == 4);
+    int format = GL_RGBA;
+    if (num_channels == 3)
+        format = GL_RGB;
+    image.resize( width(), height(), num_channels );
 
     _color_attachments[which]->bind();
-    glGetTexImage( _target, 0, format, GL_UNSIGNED_BYTE, 
+    glGetTexImage( _gl_target, 0, format, GL_UNSIGNED_BYTE, 
                    image.raster());
     _color_attachments[which]->unbind();
 }
 
-void GQFramebufferObject::readColorTexturef( int which, int format, GQFloatImage& image ) const 
+void GQFramebufferObject::readColorTexturef( int which, GQFloatImage& image, int num_channels ) const 
 {
     assert( which >= 0 && which < _num_color_attachments );
-    assert(format == GL_RGB || format == GL_RGBA);
-    int chan = 4;
-    if (format == GL_RGB)
-        chan = 3;
-    image.resize( _width, _height, chan );
+    assert(num_channels == 3 || num_channels == 4);
+    int format = GL_RGBA;
+    if (num_channels == 3)
+        format = GL_RGB;
+    image.resize( width(), height(), num_channels );
 
     _color_attachments[which]->bind();
-    glGetTexImage( _target, 0, format, GL_FLOAT, 
+    glGetTexImage( _gl_target, 0, format, GL_FLOAT, 
                    image.raster());
     _color_attachments[which]->unbind();
 }	
@@ -290,7 +339,7 @@ void GQFramebufferObject::loadColorTexturei( int which, const GQImage& image )
     int format = GL_RGBA;
     if (image.chan() == 3)
         format = GL_RGB;
-    glTexSubImage2D( _target, 0, 0,0,_width,_height, format, GL_UNSIGNED_BYTE, 
+    glTexSubImage2D( _gl_target, 0, 0,0,_width,_height, format, GL_UNSIGNED_BYTE, 
                    image.raster());
     _color_attachments[which]->unbind();
 }
@@ -303,23 +352,23 @@ void GQFramebufferObject::loadColorTexturef( int which, const GQFloatImage& imag
     int format = GL_RGBA;
     if (image.chan() == 3)
         format = GL_RGB;
-    glTexSubImage2D( _target, 0, 0,0,_width,_height, format, GL_FLOAT, 
+    glTexSubImage2D( _gl_target, 0, 0,0,_width,_height, format, GL_FLOAT, 
                    image.raster());
     _color_attachments[which]->unbind();
 }
 
 void GQFramebufferObject::readSubColorTexturei( int which, int x, int y, int width, int height,
-                                                  int format, GQImage& image ) const 
+                                                GQImage& image, int num_channels ) const 
 {
     // N.B.: on several cards (8800GTS, 7800GT) this call returns bogus results
     // if the FBO width > 4k
     assert( which >= 0 && which < _num_color_attachments );
-    assert(format == GL_RGB || format == GL_RGBA);
+    assert(num_channels == 3 || num_channels == 4);
     assert(_bound_guid == _guid);
-    int chan = 4;
-    if (format == GL_RGB)
-        chan = 3;
-    image.resize( width, height, chan );
+    int format = GL_RGBA;
+    if (num_channels == 3)
+        format = GL_RGB;
+    image.resize( width, height, num_channels );
 
     GLint last_buffer;
     glGetIntegerv( GL_READ_BUFFER, &last_buffer );
@@ -332,15 +381,15 @@ void GQFramebufferObject::readSubColorTexturei( int which, int x, int y, int wid
 }
 
 void GQFramebufferObject::readSubColorTexturef( int which, int x, int y, int width, int height,
-                                                  int format, GQFloatImage& image ) const 
+                                                GQFloatImage& image, int num_channels ) const 
 {
     assert( which >= 0 && which < _num_color_attachments );
-    assert(format == GL_RGB || format == GL_RGBA);
+    assert(num_channels == 3 || num_channels == 4);
     assert(_bound_guid == _guid);
-    int chan = 4;
-    if (format == GL_RGB)
-        chan = 3;
-    image.resize( width, height, chan );
+    int format = GL_RGBA;
+    if (num_channels == 3)
+        format = GL_RGB;
+    image.resize( width, height, num_channels );
 
     GLint last_buffer;
     glGetIntegerv( GL_READ_BUFFER, &last_buffer );
@@ -367,13 +416,13 @@ void GQFramebufferObject::saveColorTextureToFile( int which, const QString& file
     if (filename.endsWith("float") || filename.endsWith("pfm"))
     {
         GQFloatImage img;
-        readColorTexturef( which, GL_RGBA, img );
+        readColorTexturef( which, img );
         img.save(filename);
     }
     else 
     {
         GQImage img;
-        readColorTexturei( which, GL_RGBA, img );
+        readColorTexturei( which, img );
         img.save(filename);
     }
 }
@@ -406,8 +455,8 @@ bool GQSingleFBO::init( int target, int format, uint32 attachments,
                                    int num_color_attachments, int width, int height )
 {
     if (_fbo < 0 ||
-        _target != target ||
-        _format != format ||
+        _gl_target != target ||
+        _gl_format != format ||
         _attachments != attachments ||
         _num_color_attachments != num_color_attachments ||
         _width != width ||
@@ -424,8 +473,8 @@ bool GQSingleFBO::init( int target, int format, uint32 attachments,
 
         clear();
 
-        _target = target;
-        _format = format;
+        _gl_target = target;
+        _gl_format = format;
         _width = width;
         _height = height;
         _attachments = attachments;
@@ -440,13 +489,13 @@ bool GQSingleFBO::init( int target, int format, uint32 attachments,
         for (int i = 0; i < _num_color_attachments; i++)
         {
             _color_attachments[i] = new GQTexture2D;
-            _color_attachments[i]->create(_width, _height, _format, GL_RGBA, GL_UNSIGNED_BYTE, NULL, _target);
+            _color_attachments[i]->create(_width, _height, _gl_format, GL_RGBA, GL_UNSIGNED_BYTE, NULL, _gl_target);
         }
 
-        glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, _target, _color_attachments[0]->id(), 0);
+        glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, _gl_target, _color_attachments[0]->id(), 0);
         _current_color_attachment = 0;
 
-        glBindTexture( _target, 0 );
+        glBindTexture( _gl_target, 0 );
 		
         if ( _attachments & GQ_ATTACH_DEPTH)
         {
@@ -485,7 +534,7 @@ void GQSingleFBO::drawBuffer( int which )
     assert(_bound_guid == _guid);
 
     _current_color_attachment = which;
-    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, _target, _color_attachments[which]->id(), 0);
+    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, _gl_target, _color_attachments[which]->id(), 0);
     glDrawBuffer( GL_COLOR_ATTACHMENT0_EXT);
 }
 

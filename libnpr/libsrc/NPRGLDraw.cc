@@ -238,7 +238,7 @@ void NPRGLDraw::applyMaterialToGL( const CdaMaterial* material )
 
 void NPRGLDraw::setPerModelPolygonUniforms( const GQShaderRef* shader, const NPRScene& scene, int which )
 {
-    if (shader && shader->getName() == "polygon_render")
+    if (shader && shader->name() == "polygon_render")
     {
         const NPRStyle* style = scene.drawableStyle(which);
 
@@ -266,7 +266,7 @@ void NPRGLDraw::drawPaperQuad( const NPRStyle* style )
         return;
         
     paper_texture->bind();
-    paper_texture->enable();
+    glEnable(paper_texture->target());
     
     // get viewport dimensions to calculate texture coordinates
     float viewport[4];
@@ -295,18 +295,18 @@ void NPRGLDraw::drawPaperQuad( const NPRStyle* style )
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     
-    paper_texture->disable();
+    glDisable(paper_texture->target());
     
 }
 
 void NPRGLDraw::visualizeFBO(const GQFramebufferObject& fbo, int which)
 {
     fbo.colorTexture(which)->bind();
-    fbo.colorTexture(which)->enable();
+    glEnable(fbo.glTarget());
 
-    drawFullScreenQuad(fbo.target());
+    drawFullScreenQuad(fbo.glTarget());
 
-    fbo.colorTexture(which)->disable();
+    glDisable(fbo.glTarget());
 }
 
 
@@ -320,7 +320,7 @@ void NPRGLDraw::drawBackgroundTex( const NPRStyle* style )
         return;
 
     background_tex->bind();
-    background_tex->enable();
+    glEnable(background_tex->target());
 
     // get viewport dimensions to calculate texture coordinates
     float viewport[4];
@@ -343,7 +343,7 @@ void NPRGLDraw::drawBackgroundTex( const NPRStyle* style )
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     
-    background_tex->disable();
+    glDisable(background_tex->target());
 }
 
 void NPRGLDraw::drawFullScreenQuad( int texture_mode )
@@ -419,7 +419,7 @@ void NPRGLDraw::drawFullScreenQuadFBO( const GQFramebufferObject& fbo )
     glPushMatrix();
     glLoadIdentity();
 
-    if (fbo.target() == GL_TEXTURE_2D)
+    if (fbo.glTarget() == GL_TEXTURE_2D)
     {
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
@@ -486,8 +486,9 @@ void NPRGLDraw::drawPosAndNormalBufferFBO( const NPRScene& scene,
     glGetIntegerv (GL_VIEWPORT, main_viewport);
     // The shader writes world position, world normal, camera depth, 
     // camera position, camera normal buffers.
-	fbo.init( GL_TEXTURE_RECTANGLE_ARB, GL_RGBA32F_ARB, GQ_ATTACH_DEPTH, 5,
-                              main_viewport[2]*supersample_factor, main_viewport[3]*supersample_factor);
+	fbo.init(main_viewport[2]*supersample_factor, 
+             main_viewport[3]*supersample_factor, 
+             5, GQ_ATTACH_DEPTH);
 
     fbo.bind();
     fbo.drawToAllBuffers();
@@ -507,13 +508,9 @@ int NPRGLDraw::drawDepthBufferFBO(const NPRScene& scene,
 {
     GLint main_viewport[4];
     glGetIntegerv (GL_VIEWPORT, main_viewport);
-    int format = GL_RGBA32F_ARB;
-	// While the ALPHA32F texture appears to work on windows, it doesn't on mac, and
-	// it is apparently not officially allowed by the FBO extension spec.
-    //int format = GL_ALPHA32F_ARB;
-	bool success = fbo.init(GL_TEXTURE_RECTANGLE_ARB, format, GQ_ATTACH_DEPTH, 1,
-                             main_viewport[2]*supersample_factor, 
-                             main_viewport[3]*supersample_factor);
+	bool success = fbo.init(main_viewport[2]*supersample_factor, 
+                            main_viewport[3]*supersample_factor,
+                            1, GQ_ATTACH_DEPTH);
     if (!success)
         return NPR_FAILURE;
 

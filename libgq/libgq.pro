@@ -13,6 +13,7 @@ win32 {
 }
 else {
 	TEMPLATE = lib
+    DEFINES += HAVE_VA_COPY
 
 	macx {
 		DEFINES += DARWIN
@@ -29,11 +30,25 @@ QT += opengl xml
 TARGET = gq
 
 DEPENDPATH += include
-INCLUDEPATH += include
-INCLUDEPATH += ../libcda/include
+INCLUDEPATH += include ../libcda/include
 
 #Input
 HEADERS += include/GQ*.h
 SOURCES += libsrc/GQ*.cc
 SOURCES += libsrc/GLee.c
 
+# Trimesh2
+INCLUDEPATH += ../trimesh2/include
+
+# Zlib
+INCLUDEPATH += zlib
+SOURCES += zlib/*.c
+win32 {
+	SOURCES += zlib/win32/*.c
+}
+
+# Matio
+INCLUDEPATH += matio
+SOURCES += matio/*.c
+# Matio calls zlib functions with the z_ prefix, so turn that on here.
+#DEFINES += Z_PREFIX

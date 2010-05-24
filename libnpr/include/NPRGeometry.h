@@ -82,13 +82,18 @@ class NPRGeometry
         NPRGeometry( const CdaGeometry* cda_geometry );
 
         void clear(); // clears the geometry to an uninitialized state
-        void reset(); // removes the data, but leaves the semantic structure intact
+        void reset(); // removes data, but leaves the semantic structure intact
 
-        NPRDataSource*                data( GQVertexBufferSemantic semantic )          { return _semantic_list[semantic]; }
-        const NPRDataSource*          data( GQVertexBufferSemantic semantic ) const    { return _semantic_list[semantic]; }
-        NPRDataSource*                data( const QString& name )                { return _source_hash.value(name); }
-        const NPRDataSource*          data( const QString& name ) const          { return _source_hash.value(name); }
-        const NPRPrimPointerList& primList( NPRPrimitiveType type ) const     { return _primitives[type]; }
+        NPRDataSource* data( GQVertexBufferType semantic )          
+            { return _semantic_list[semantic]; }
+        const NPRDataSource* data( GQVertexBufferType semantic ) const    
+            { return _semantic_list[semantic]; }
+        NPRDataSource* data( const QString& name )                
+            { return _source_hash.value(name); }
+        const NPRDataSource* data( const QString& name ) const          
+            { return _source_hash.value(name); }
+        const NPRPrimPointerList& primList( NPRPrimitiveType type ) const     
+            { return _primitives[type]; }
 
         int  numVertices() const { return _semantic_list[GQ_VERTEX]->length(); }
 
@@ -100,10 +105,12 @@ class NPRGeometry
 
         void copyToVBO(); 
         void deleteVBO(); 
-        const GQVertexBufferSet* vertexBufferSet() const { return &_vertex_buffer_set; }
+        const GQVertexBufferSet* vertexBufferSet() const 
+            { return &_vertex_buffer_set; }
 
-        void addData( GQVertexBufferSemantic semantic, int width ); // adds a source of appropriate length filled with zeros
-        void addData( GQVertexBufferSemantic semantic, NPRDataSource* source );
+        // Adds a source of appropriate length filled with zeros.
+        void addData( GQVertexBufferType semantic, int width ); 
+        void addData( GQVertexBufferType semantic, NPRDataSource* source );
         void addData( const QString& name, int width );
         void addData( const QString& name, NPRDataSource* source );
 
@@ -118,8 +125,8 @@ class NPRGeometry
 
     protected:
         // pointer list to allow storing descendants of NPRPrimitive (e.g. LnPath)
-        NPRPrimPointerList   _primitives[NPR_NUM_PRIMITIVES]; 
-        NPRDataSource*           _semantic_list[GQ_NUM_SEMANTICS];
+        NPRPrimPointerList _primitives[NPR_NUM_PRIMITIVES]; 
+        NPRDataSource*     _semantic_list[GQ_NUM_VERTEX_BUFFER_TYPES];
         NPRDataSourcePointerList _sources;
         NPRDataSourcePointerHash _source_hash;
 
