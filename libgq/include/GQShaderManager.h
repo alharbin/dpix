@@ -20,7 +20,6 @@ See the COPYING file for details.
 #include <QDomElement>
 #include <QHash>
 #include <QVector>
-#include <QDir>
 
 class GQTexture;
 

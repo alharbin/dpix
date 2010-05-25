@@ -29,10 +29,12 @@ void main()
     float elision = texture2DRect(priority_atlas, atlas_position).w;
     float focus = computeFocus(camera_pos, spine_position);
 
-    vec4 pen_color = computePenColor(visibility, focus, gl_TexCoord[0].xy);
+    vec4 pen_color = computePenColor(visibility, focus, gl_TexCoord[0].xyz);
     pen_color.a *= elision;
 
     gl_FragColor = pen_color;
+    //gl_FragColor = mix(pen_color,vec4(0.0,0.0,gl_TexCoord[0].z,visibility),0.75);
+    //gl_FragColor = mix(pen_color,vec4(gl_TexCoord[0].x,-gl_TexCoord[0].x,0.0,visibility),0.75);
     /*vec4 color = colorWheel(fmod(path_start*2.0, 3.14));
     color[3] = visibility;
     gl_FragColor = color;*/

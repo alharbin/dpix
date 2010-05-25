@@ -25,13 +25,12 @@ uniform vec4 color_transfer;
 uniform vec4 opacity_transfer;
 uniform vec4 texture_transfer;
 
-vec4 computePenColor( float visibility, float focus, vec2 tex_coord )
+vec4 computePenColor( float visibility, float focus, vec3 tex_coord )
 {
-    vec3 tex_coord_3d = vec3(tex_coord,0.0);
-    float vis_focus_pen = texture3D(vis_focus_texture, tex_coord_3d).r;
-    float invis_focus_pen = texture3D(invis_focus_texture, tex_coord_3d).r;
-    float vis_defocus_pen = texture3D(vis_defocus_texture, tex_coord_3d).r;
-    float invis_defocus_pen = texture3D(invis_defocus_texture, tex_coord_3d).r;
+    float vis_focus_pen = texture3D(vis_focus_texture, tex_coord).r;
+    float invis_focus_pen = texture3D(invis_focus_texture, tex_coord).r;
+    float vis_defocus_pen = texture3D(vis_defocus_texture, tex_coord).r;
+    float invis_defocus_pen = texture3D(invis_defocus_texture, tex_coord).r;
 
     float color_mix = computeTransfer(color_transfer, focus);
     float opacity_mix = computeTransfer(opacity_transfer, focus);

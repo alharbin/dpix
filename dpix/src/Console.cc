@@ -10,6 +10,7 @@ See the COPYING file for details.
 \*****************************************************************************/
 
 #include "Console.h"
+#include <stdio.h>
 #include <QMessageBox>
 #include <assert.h>
 

@@ -15,6 +15,14 @@ See the COPYING file for details.
 #ifndef _GQ_INCLUDE_H_
 #define _GQ_INCLUDE_H_
 
+#include <QtGlobal>
+#include <QDir>
+#include <QVariant>
+#include <QTextStream>
+#include <QMessageBox>
+#include <QEvent>
+#include <QComboBox>
+
 #ifdef DARWIN
 #    include <GLee.h>
 #    include <glu.h>
@@ -37,7 +45,6 @@ See the COPYING file for details.
 
 #include <Vec.h>
 #include <XForm.h>
-#include <QtGlobal>
 
 typedef int             int32;
 typedef char            int8;

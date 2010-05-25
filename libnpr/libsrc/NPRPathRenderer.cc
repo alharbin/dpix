@@ -182,6 +182,10 @@ void NPRPathRenderer::setUniformPenStyleParams(const GQShaderRef& shader,
     if (vis_defocus->texture()) vis_defocus_tex = vis_defocus->texture();
     if (invis_focus->texture()) invis_focus_tex = invis_focus->texture();
     if (invis_defocus->texture()) invis_defocus_tex = invis_defocus->texture();
+    if (vis_focus_tex->depth()>1)
+      shader.setUniform1i("use_artmaps",1);
+    else
+      shader.setUniform1i("use_artmaps",0);
 
     shader.bindNamedTexture("vis_focus_texture", vis_focus_tex);
     shader.bindNamedTexture("vis_defocus_texture", vis_defocus_tex);

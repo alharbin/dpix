@@ -31,7 +31,7 @@ void main(void)
     float visibility = getDepthVisibility(test_position, spine_tangent);
     float focus = computeFocus( camera_pos, spine_position);
 
-    vec4 final_color = computePenColor( visibility, focus, tex_coord);
+    vec4 final_color = computePenColor( visibility, focus, vec3(tex_coord,0.0));
 
     gl_FragColor = final_color;
 }

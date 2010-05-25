@@ -8,6 +8,8 @@ See the COPYING file for details.
 
 \*****************************************************************************/
 
+#include <QMessageBox>
+
 #include <NPRStyle.h>
 #include <NPRSettings.h>
 #include <stdio.h>
@@ -18,7 +20,6 @@ See the COPYING file for details.
 #include <QDomDocument>
 #include <QDomText>
 #include <QFile>
-#include <QMessageBox>
 
 const int CURRENT_VERSION = 4;
 

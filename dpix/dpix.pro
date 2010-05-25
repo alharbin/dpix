@@ -58,7 +58,7 @@ LIBS += -L../libcda/$${DBGNAME} -lcda
 
 PRE_TARGETDEPS += ../qglviewer/$${DBGNAME}/libqglviewer.a
 DEPENDPATH += ../qglviewer
-INCLUDEPATH += ../qglviewer 
+INCLUDEPATH += ../qglviewer src
 LIBS += -L../qglviewer/$${DBGNAME} -lqglviewer
 DEFINES += QGLVIEWER_STATIC
 

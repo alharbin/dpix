@@ -15,12 +15,12 @@ See the COPYING file for details.
 #ifndef _NPR_UTIILITY_H_
 #define _NPR_UTIILITY_H_
 
+#include "GQInclude.h"
+
 #include <Vec.h>
 #include <XForm.h>
 #include <stdlib.h>
 #include <stdarg.h>
-
-#include "GQInclude.h"
 
 // returns a random double in [0, 1)
 double nprRand();
