@@ -39,13 +39,20 @@ This distribution contains:
 Also included is source from the following libraries:
 
     zlib:
-		A free compression library: http://www.zlib.net/
+		A free compression library.
+        http://www.zlib.net/
 		
 	libqglviewer:
-		A Qt-based viewer library: http://www.libqglviewer.com/
+		A Qt-based viewer library.
+        http://www.libqglviewer.com/
 		
 	GLee
-		A light-weight OpenGL extension manager: http://elf-stone.com/glee.php
+		A light-weight OpenGL extension manager.
+        http://elf-stone.com/glee.php
+
+    matio
+        Library for processing MATLAB files.
+        http://sourceforge.net/projects/matio/
 		
 		
 HOW TO USE
