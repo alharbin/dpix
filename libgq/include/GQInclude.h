@@ -15,19 +15,17 @@ See the COPYING file for details.
 #ifndef _GQ_INCLUDE_H_
 #define _GQ_INCLUDE_H_
 
-#include <QtGlobal>
-#include <QDir>
-#include <QVariant>
-#include <QTextStream>
-#include <QMessageBox>
-#include <QEvent>
-#include <QComboBox>
-
 #ifdef DARWIN
 #    include <GLee.h>
 #    include <glu.h>
 #endif
 #ifdef LINUX
+#    include <QVariant>
+#    include <QTextStream>
+#    include <QDir>
+#    include <QEvent>
+#    include <QComboBox>
+#    include <QMessageBox>
 #    include <GLee.h>
 #    include <GL/glu.h>
 #endif
