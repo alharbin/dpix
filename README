@@ -39,6 +39,9 @@ This distribution contains:
     samples:
         A few sample models, scenes, styles, and textures for use with dpix.
 
+    slam:
+        Example code and textures for self-similar line artmaps. See slam/README.
+
 Also included is source from the following libraries:
 
     zlib:
