@@ -76,10 +76,10 @@ files by typing "qmake -r" in the root directory. Distributing project files
 caused portability issues since the project files depend on the particular 
 location of Qt.
 
-Mac:
-The usual procedure of "qmake -r" and "make" should work.  You may need to use
-"qmake -r -spec macx-g++" to create Makefiles, rather than Xcode projects.
-Building with Xcode should be possible, but has not been tested.
+Mac and Linux:
+The usual procedure of "qmake -r" and "make" should work. On Mac, you may need
+to use "qmake -r -spec macx-g++" to create Makefiles, rather than Xcode
+projects.  Building with Xcode should be possible, but has not been tested.
 
 To compile in release mode, run:
 qmake -r "CONFIG += release"
