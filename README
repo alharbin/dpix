@@ -6,6 +6,9 @@ INTRODUCTION
 This is dpix, a viewer and set of libraries to render NPR line drawings. 
 dpix is an implementation of algorithms presented in the following papers:
 
+"Self-Similar Texture for Coherent Line Stylization," Pierre Benard,
+Forrester Cole, Aleksey Golovinskiy, Adam Finkelstein, NPAR 2010
+
 "Fast High-Quality Line Visibility," Forrester Cole and Adam Finkelstein,
 Proceedings of I3D 2009
 
@@ -58,9 +61,9 @@ Also included is source from the following libraries:
 HOW TO USE
 
 Note:
-dpix is currently known to work only on Windows XP and Vista and Mac OS 10.5
-with an NVIDIA 8800 series or higher GPU. Other configurations may work as
-well, but have not been tested.
+dpix is currently known to work on Windows XP or later, Mac OS 10.5 or later,
+and Linux, with an NVIDIA 8800 series or higher GPU. Other configurations 
+may work as well, but have not been tested.
 
 You must have Qt 4.3 or higher installed prior to building dpix.
 
@@ -68,9 +71,9 @@ Windows:
 A Visual Studio 2008 solution file is provided. You can generate the project
 files by typing "qmake -r" in the root directory. Distributing project files
 caused portability issues since the project files depend on the particular 
-lcoation of Qt.
+location of Qt.
 
-Mac (Leopard):
+Mac:
 The usual procedure of "qmake -r" and "make" should work.  You may need to use
 "qmake -r -spec macx-g++" to create Makefiles, rather than Xcode projects.
 Building with Xcode should be possible, but has not been tested.
@@ -89,5 +92,5 @@ ACKNOWLEDGEMENTS
 
 Please see the COPYING file for license information.
 
-Forrester Cole, Michael Burns, Keith Morley, and Adam Finkelstein wrote the
-code.
+Forrester Cole, Michael Burns, Keith Morley, Adam Finkelstein, and Pierre
+Benard wrote the code.
