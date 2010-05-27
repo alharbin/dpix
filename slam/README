@@ -1,0 +1,54 @@
+This package contains MATLAB code and example textures to accompany the paper,
+
+ "Self-Similar Texture for Coherent Line Stylization,"
+  Pierre Benard, Forrester Cole, Aleksey Golovinskiy, Adam Finkelstein,
+  NPAR 2010.
+
+  http://artis.inrialpes.fr/Publications/2010/BCGF10/
+
+-----------------------------------------------------------------------
+
+Archive contents:
+    ./code      : MATLAB scripts. Depends on the matlabPyrTools and 
+                  textureSynth libraries (see below).
+
+    ./textures  : a few example textures from the paper.
+
+Quickstart:
+
+    1. Download Javier Portilla and Eero Simoncelli's matlabPyrTools 
+       and textureSynth code from:
+
+       http://www.cns.nyu.edu/~lcv/texture/
+
+       and place them next to the 'code' directory. You will probably
+       also want to compile the associated MEX files.
+
+    2. Load an exemplar texture. For example, 
+       
+       dots = imread('../textures/dotted-512x8.png');
+
+    3. Create the artmap by specifying the exemplar, the width of the 
+       bottom of the pyramid, and the distance between levels (use
+       powers of two):
+
+       artmap = makeHalfPyramidArtmap(dots, 1024, 32);
+
+    4. View the results and their associated noise seeds:
+
+       showLineArtmap(artmap);
+
+    5. Save the images, along with a '3dt' text file of the filenames:
+
+       saveLineArtmap(artmap, 'myartmap');
+
+
+Notes:
+
+    The artmaps are meant to be loaded into an OpenGL 3D texture. Hence, 
+    by default saveLineArtmaps stretches each image to the maximum dimensions 
+    of the artmap before saving. This behavior can be changed in
+    saveLineArtmaps.m. 
+
+
+Last modified May 17 2010 by Forrester Cole (fcole@csail.mit.edu)
