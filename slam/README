@@ -24,21 +24,28 @@ Quickstart:
        and place them next to the 'code' directory. You will probably
        also want to compile the associated MEX files.
 
-    2. Load an exemplar texture. For example, 
+    2. Include the matlabPyrTools and textureSynth functions in your
+       matlab path by running:
+
+       setPath();
+
+       Ignore any warnings about mod.m.
+
+    3. Load an exemplar texture. For example, 
        
        dots = imread('../textures/dotted-512x8.png');
 
-    3. Create the artmap by specifying the exemplar, the width of the 
+    4. Create the artmap by specifying the exemplar, the width of the 
        bottom of the pyramid, and the distance between levels (use
        powers of two):
 
        artmap = makeHalfPyramidArtmap(dots, 1024, 32);
 
-    4. View the results and their associated noise seeds:
+    5. View the results and their associated noise seeds:
 
        showLineArtmap(artmap);
 
-    5. Save the images, along with a '3dt' text file of the filenames:
+    6. Save the images, along with a '3dt' text file of the filenames:
 
        saveLineArtmap(artmap, 'myartmap');
 
@@ -51,4 +58,4 @@ Notes:
     saveLineArtmaps.m. 
 
 
-Last modified May 17 2010 by Forrester Cole (fcole@csail.mit.edu)
+Last modified Nov 22 2010 by Forrester Cole (fcole@csail.mit.edu)
